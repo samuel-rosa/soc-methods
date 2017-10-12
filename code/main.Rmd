@@ -16,8 +16,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-## Background
-
 Several methods are available to estimate the organic carbon/matter content of soil. The standard method is the dry combustion due to the high precision and accuracy of the results [@NelsonEtAl1996]. However, the wet digestion methods -- based on the reduction of Cr~2~O~7~^2-^ by organic compounds -- still are the most used due to the low cost and easiness. These methods have been criticized because the ion Cr^6+^ is toxic for all forms of life [@RodellaEtAl1994; @PimentelEtAl2006]. Because of this the loss on ignition method has been proposed as a substitute for the wet digestion method used in research laboratories and in the routine analysis of the laboratories under the Official Network of Laboratories for the Analysis of Soil and Plant Tissue of the States of Rio Grande do Sul and Santa Catarina (ROLAS) [@BrunettoEtAl2006; @EscosteguyEtAl2007]. It has also been recognized the need for calibrating the several methods to the standard method, i.e. dry combustion [@RheinheimerEtAl2008, @GattoEtAl2009].
 
 A few studies were developed in Brazil in the last decade in order to compare different methods and find proper pedotransfer functions -- more specificaly correction factors -- to the standard method. However, none of them compared the wet digestion, the loss on ignition, the routine method used in laboratories under ROLAS (wet digestion) and the standard dry combustion method at once. Besides, a few issues related to the representativeness of the datasets and to statistical assumptions appear in all studies.
@@ -32,4 +30,20 @@ The present study takes place due to the poor representativeness and failure in 
 
 ## Soil samples description and preparation
 
-We evaluated the methods of estimating the organic carbon/matter content in n = 105 air-dried < 2 mm-soil samples collected at 27 sites in the State of Rio Grande do Sul (RS), Brazil. The samples cover eleven soil groups (Acrisols, Alisols, Cambisols, Ferralsols, Fluvisols, Gleysols, Leptosols, Nitisols, Planosols, Regosols and Vertisols) derived from several parent materials (sedimentary, volcanic and metamorphic). The clay content of the soil samples varies between 40 and 800 g kg-1. The mineralogical assemblage is diverse (quartz, iron oxide, and 2:1 and 1:1 phyllosilicates). Several land use types are represented: rangeland, farmland, fallow land, plantation (Eucalyptus sp.) and native forests. The climate of the sampling sites varies from humid subtropical to temperate climate, both without a defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Soil samples collection procedures are described elsewhere (CasaliEtAl2006, Barros (2007), Zalamena2008, Britzke2010, PotesEtAl2010, Vieira (2010), SamuelRosa2012). We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
+We evaluated the methods of estimating the organic carbon/matter content in *n* = 105 air-dried < 2 mm-soil samples collected at 27 sites in the State of Rio Grande do Sul (RS), Brazil. The samples cover eleven soil groups (Acrisols, Alisols, Cambisols, Ferralsols, Fluvisols, Gleysols, Leptosols, Nitisols, Planosols, Regosols, and Vertisols) derived from several parent materials (sedimentary, volcanic, and metamorphic). The clay content of the soil samples varies between 40 and 800 g kg^-1^. The mineralogical assemblage is diverse (quartz, iron oxide, and 2:1 and 1:1 phyllosilicates). Several land use types are represented: rangeland, farmland, fallow land, plantation (Eucalyptus sp.) and native forests. The climate of the sampling sites varies from humid subtropical to temperate climate, both without a defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, Barros (2007), @Zalamena2008, @Britzke2010, PotesEtAl2010, Vieira (2010), SamuelRosa2012). We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
+
+## Analytical methods
+
+### Dry combustion
+
+### Loss on ignition
+
+### Wet digestion I
+
+### Wet digestion II
+
+## Data analysis
+
+# Results and Discussion
+
+# References
