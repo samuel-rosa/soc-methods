@@ -1,16 +1,18 @@
 ---
-title: "Soil organic carbon/matter pedotransfer functions for Southern Brazil"
+title: "Pedotransfer functions of organic carbon and organic matter content for Southern Brazil"
 author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
 date: "12 October 2017"
 bibliography: biblio.bib
-output: html_document
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "../docs") })
+output: bookdown::html_document2
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Abstract
+# Abstract {-}
 
 **Key words**:
 
@@ -30,17 +32,25 @@ The present study takes place due to the poor representativeness and failure in 
 
 ## Soil samples description and preparation
 
-We evaluated the methods of estimating the organic carbon/matter content in *n* = 105 air-dried < 2 mm-soil samples collected at 27 sites in the State of Rio Grande do Sul (RS), Brazil. The samples cover eleven soil groups (Acrisols, Alisols, Cambisols, Ferralsols, Fluvisols, Gleysols, Leptosols, Nitisols, Planosols, Regosols, and Vertisols) derived from several parent materials (sedimentary, volcanic, and metamorphic). The clay content of the soil samples varies between 40 and 800 g kg^-1^. The mineralogical assemblage is diverse (quartz, iron oxide, and 2:1 and 1:1 phyllosilicates). Several land use types are represented: rangeland, farmland, fallow land, plantation (Eucalyptus sp.) and native forests. The climate of the sampling sites varies from humid subtropical to temperate climate, both without a defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, Barros (2007), @Zalamena2008, @Britzke2010, PotesEtAl2010, Vieira (2010), SamuelRosa2012). We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
+We evaluated the methods of estimating the organic carbon/matter content in *n* = 105 air-dried < 2 mm-soil samples collected at 27 sites in the State of Rio Grande do Sul (RS), Brazil. The samples cover eleven soil groups (Acrisols, Alisols, Cambisols, Ferralsols, Fluvisols, Gleysols, Leptosols, Nitisols, Planosols, Regosols, and Vertisols) derived from several parent materials (sedimentary, volcanic, and metamorphic). The clay content of the soil samples varies between 40 and 800 g kg^-1^. The mineralogical assemblage is diverse (quartz, iron oxide, and 2:1 and 1:1 phyllosilicates). Several land use types are represented: rangeland, farmland, fallow land, plantation (Eucalyptus sp.) and native forests. The climate of the sampling sites varies from humid subtropical to temperate climate, both without a defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, Barros (2007), @Britzke2010, @PotesEtAl2010, Vieira (2010), @Samuel-RosaEtAl2013a, @Samuel-RosaEtAl2013]. We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
 
 ## Analytical methods
 
 ### Dry combustion
 
+Sample aliquots of 50 to 60 mg [ESTES VALORES ESTÃO CORRETOS???] in titanium capsules were used to estimate the total soil organic carbon content in an elementary CHNS analyzer (FlashEA 1112, Thermo Finnigan, Milan, Italy). We transformed the results to organic matter content using the Van Bemmelen factor (1.724). This factor considers that soil organic matter is composed of 58% of organic carbon. [NÃO FAZ SENTIDO TRANSFORMAR ESSES DADOS!!!]
+
 ### Loss on ignition
+
+Sample aliquots of 300 to 500 mg in hand-made aluminum capsules (20 mg) (oven dried at 360°C) were placed in an oven at 105°C for 24 hours. We varied the sample aliquot used due to sample availability what had no noticeable effect on the analytical results as showed by linear correlation analysis (data not shown). Next, we placed the oven-dried samples in a desiccator containing silica gel and weighted after they had cooled down. The amount of mass lost between the first and second weightings was used to calculate the water content in the sample. Next, we placed the samples in an oven at 360ºC for 2 hours. Next, samples were placed in a desiccator containing silica gel and weighted after they had cooled down. The organic matter content in the samples was calculated from the mass lost between the second and third weightings. This method was adapted from @SchulteEtAl1996.
 
 ### Wet digestion I
 
+Sample aliquots of 0.050 to 0.500 g were placed in glass digestion tubes (80 mL). The amount of sample used varied according to the SOM content estimated through visual interpretation of soil color. The correlation between SOM content and sample aliquot used as calculated in the input training dataset is r = -0.8436. Every digestion tube received an aliquot of 10 mL of 0.067 mol L-1 sulfocromic solution [K2Cr2O7 + H2SO4] and a small reflux funnel to avoid loss of reagent during digestion. A digestion block with capacity for 40 samples was used: 36 tubes with soil sample + 3 tubes with blank + 1 tube with sulfuric acid [H~2~SO~4~] and a thermometer for temperature measurement. Digestion at 150ºC last 30 min. Three blanks were prepared and set aside at room temperature to estimate the loss of reagent due to heat in the digestion block. After digestion the tubes were set aside at room temperature to cool down. Next, we transfered the solution to Erlenmeyer flasks (250 mL) with 60 mL of distilled water and 2 mL of concentrated orthophosphoric acid [H~3~PO~4~] and 3 drops of 1% diphenylamine. The solution was titrated using 0.1 mol L^-1^ ammonium ferrous sulfate [Fe(NH~4~)~2~(SO~4~])~2~.6H~2~O] until persistent green color. The results were transformed to organic matter content using the Van Bemmelen factor (1.724). This method was originaly adapted from @Mebius1960 and @YeomansEtAl1988. [NÃO FAZ SENTIDO TRANSFORMAR ESSES DADOS!!!]
+
 ### Wet digestion II
+
+Adapted from @TedescoEtAl1995. Sample aliquots of 2.5 mL were placed in Erlenmeyer flasks (50mL). Every Erlenmeyer flask received an aliquot of 15 mL of 0.067 mol L^-1^ sulfocromic solution [Na~2~Cr~2~O~7~ + H~2~SO~4~]. The flasks were heated in a water bath at 75 to 80°C during 30 min and shaken for 5 min. A water aliquot of 15 mL was added to the flask and let overnight (15 to 18 hours). In the next day, we sampled an aliquot of 3.0 mL to a small cup with 3.0 mL of distilled water. The supernatant absorbance was measured at 645 nm. We weighted 2.5 mL of each soil sample to calculate the sample density and transform the results to a weight basis.
 
 ## Data analysis
 
