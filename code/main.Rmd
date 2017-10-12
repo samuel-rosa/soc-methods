@@ -1,0 +1,34 @@
+---
+title: "Soil organic carbon/matter pedotransfer functions for Southern Brazil"
+author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
+date: "12 October 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Abstract
+
+**Key words**:
+
+# Introduction
+
+## Background
+
+Several methods are available to estimate the organic carbon/matter content of soils. The standard method is the dry combustion due to the high precision and accuracy of the results (NelsonEtAl1996). However, the wet digestion methods (based on the reduction of Cr2O72- by organic compounds) still are the most used due to its low cost and easiness. These methods have been criticized because the ion Cr6+ is toxic for all forms of life (RodellaEtAl1994, PimentelEtAl2006). Because of this the loss on ignition method has been proposed as a substitute for the wet digestion method used in research laboratories and in the routine analysis of the laboratories under the Official Network of Laboratories for the Analysis of Soil and Plant Tissue of the States of Rio Grande do Sul and Santa Catarina (ROLAS) (BrunettoEtAl2006, EscosteguyEtAl2007). It has also been recognized the need for calibrating the several methods to the standard method (dry combustion) (RheinheimerEtAl2008, GattoEtAl2009).
+
+A few studies were developed in Brazil in the last decade in order to compare different methods and find proper pedotransfer functions (i.e. correction factors) to the standard method. However, none of them compared the wet digestion, the loss on ignition, the routine method used in laboratories under ROLAS (wet digestion) and the standard dry combustion method at once. Besides, a few issues related to the representativeness of the datasets and to statistical assumptions appear in all studies.
+
+The loss on ignition method was evaluated as a substitute for the wet digestion and routine method by BrunettoEtAl2006. However, they used only n = 19 soil samples from the Serra Gaúcha region of the State of Rio Grande do Sul (RS). The clay content of the samples ranges between 210 and 530 g kg-1 and the organic matter content ranges between 2.9% and 13.3%. Besides, the data has an asymmetric distribution, with most data points concentrated bellow the value of 8% of organic matter. In similar study EscosteguyEtAl2007 evaluated the loss on ignition method as a substitute for the routine method, using n = 19 soil samples from eleven soil classes of the RS (clay content ranging between 89 and 729 g kg-1) and n = 49 soil samples (sandy soils) from the Central Depression region of the RS. The organic matter content of the samples is bellow 5.5 % and the data has a normal distribution.
+
+The precision of the wet digestion method in estimating the organic matter content of soils measured by the dry combustion method was evaluated by RheinheimerEtAl2008. They used n = 18 soil samples from a Ferralsol from the Planalto region of the RS and n = 75 soil samples from an Acrisol from the Central Depression region of the RS. The first set has a clay content ranging between 352 a 425 g kg-1 and the second set has a clay content ranging between 95 a 468 g kg-1. The organic matter content of the samples ranges between 0.3% and 7.0% and the data has an asymmetric distribution. In order to establish pedotransfer functions to estimate the organic matter content of soils from different climatic conditions under Eucaliptus plantation, GattoEtAl2009 compared the wet digestion with the dry combustion method. They used n = 99 soil samples from three soil classes collected in the Centro-Leste region of the State of Minas Gerais. No information is given about the clay content and mineralogy of the soils. The organic matter content in soils is bellow 4.0% and the data has a normal distribution.
+
+The present study takes place due to the poor representativeness and failure in attending to statistical assumptions of datasets used in previous studies and the need for more information about the loss on ignition method. The primary objective is to evaluate the use of three methods (wet digestion, loss on ignition and the routine method) to estimate the organic carbon/matter content of soils measured by the dry combustion method. Second, to evaluate the loss on ignition method as a substitute method for the routine method used in laboratories under ROLAS.
+
+# Material and Methods
+
+## Soil samples description and preparation
+
+We evaluated the methods of estimating the organic carbon/matter content in n = 105 air-dried < 2 mm-soil samples collected at 27 sites in the State of Rio Grande do Sul (RS), Brazil. The samples cover eleven soil groups (Acrisols, Alisols, Cambisols, Ferralsols, Fluvisols, Gleysols, Leptosols, Nitisols, Planosols, Regosols and Vertisols) derived from several parent materials (sedimentary, volcanic and metamorphic). The clay content of the soil samples varies between 40 and 800 g kg-1. The mineralogical assemblage is diverse (quartz, iron oxide, and 2:1 and 1:1 phyllosilicates). Several land use types are represented: rangeland, farmland, fallow land, plantation (Eucalyptus sp.) and native forests. The climate of the sampling sites varies from humid subtropical to temperate climate, both without a defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Soil samples collection procedures are described elsewhere (CasaliEtAl2006, Barros (2007), Zalamena2008, Britzke2010, PotesEtAl2010, Vieira (2010), SamuelRosa2012). We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
