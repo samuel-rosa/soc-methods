@@ -1,5 +1,5 @@
 ---
-title: "Pedotransfer functions of organic carbon and organic matter content for Southern Brazil"
+title: "Pedotransfer functions for estimating organic carbon and organic matter content in Rio Grande do Sul, Brazil"
 author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
 date: "12 October 2017"
 bibliography: biblio.bib
