@@ -2,7 +2,8 @@
 title: "Pedotransfer functions for estimating carbon and organic matter content in Rio Grande do Sul, Brazil"
 author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
 date: "12 October 2017"
-bibliography: biblio.bib
+bibliography: "~/Dropbox/jabref/biblio.bib"
+csl: abnt.csl
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "../docs") })
 output: bookdown::html_document2
@@ -14,11 +15,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Abstract {-}
 
-**Key words**:
+**Index terms**:
 
 # Introduction
 
-There exist several analythical methods to directly measure the content of carbon in soil samples. The standard method for measuring the total carbon content is the dry combustion method, which is based on the oxidation of both organic and inorganic forms of carbon at very high temperatures (>> 1000°C) in the presence of oxygen and copper oxide [@NelsonEtAl1996; @PansuEtAl2006]. However, wet digestion methods, which are based on the reduction of Cr~2~O~7~^2-^ by the organic compounds present in soil samples, still are commonly used [@DonagemaEtAl2011; @IUSSWorkingGroupWRB2015; ROLAS]. This is mainly due to three reasons: 1) implementation and maintenance costs are generally lower than for the standard method; 2) the accuracy is comparable to the estandard method -- provided that the quantity of inorganic forms of carbon is negligible; 3) used in most soil classification and fertilizer recomendation systems.
+There exist several analythical methods to directly measure the content of carbon in soil samples. The standard method for measuring the total carbon content is the dry combustion method, which is based on the oxidation of both organic and inorganic forms of carbon at very high temperatures (>> 1000°C) in the presence of oxygen and copper oxide [@NelsonEtAl1996; @PansuEtAl2006]. However, wet digestion methods, which are based on the reduction of Cr~2~O~7~^2-^ by the organic compounds present in soil samples, still are commonly used [@DonagemaEtAl2011; @IUSSWorkingGroupWRB2015]. This is mainly due to three reasons: 1) implementation and maintenance costs are generally lower than for the standard method; 2) the accuracy is comparable to the estandard method -- provided that the quantity of inorganic forms of carbon is negligible; 3) used in most soil classification and fertilizer recomendation systems. [ADICIONAR ROLAS COMO REFERÊNCIA ACIMA]
 
 Wet digestion methods have long been criticized because the ion Cr^6+^ is toxic for all forms of life [@RodellaEtAl1994; @PimentelEtAl2006]. Because of this the loss on ignition method has been proposed as a substitute for the wet digestion method used in research laboratories and in the routine analysis of the laboratories under the Official Network of Laboratories for the Analysis of Soil and Plant Tissue of the States of Rio Grande do Sul and Santa Catarina (ROLAS) [@BrunettoEtAl2006; @EscosteguyEtAl2007]. It has also been recognized the need for calibrating the several methods to the standard method, i.e. dry combustion [@RheinheimerEtAl2008, @GattoEtAl2009].
 
