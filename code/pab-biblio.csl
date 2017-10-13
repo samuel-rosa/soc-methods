@@ -131,13 +131,16 @@ aparecera a expess o 'et. al.'. Na regra da ABNT essa expressao deve aparecer em
       </substitute>
     </names>
   </macro>
-  <!--A macro 'author-short' e responsavel por mostrar os nomes dos autores na citacao (no meio do texto). Nela aparecera apenas o ultimo nome
-do autor. Na regra da ABNT o sobrenome deve aparecer com todas as letras em caixa alta-->
+  <!--A macro 'author-short' e responsavel por mostrar os nomes dos autores na citacao (no meio do texto). Nela
+  aparecera apenas o ultimo nome do autor. Na regra da PAB, diferente da ABNT, apenas a primeira letra do 
+  sobrenome deve aparecer em caixa alta-->
   <macro name="author-short">
     <names variable="author">
-      <name form="short" name-as-sort-order="all" sort-separator=", " initialize-with=". " delimiter="; " delimiter-precedes-last="never">
-        <name-part name="family" text-case="uppercase"/>
-        <name-part name="given" text-case="uppercase"/>
+      <!-- PAB: Citação com dois autores: sobrenomes grafados com a primeira letra maiúscula, separados pelo "e" 
+      comercial (&), seguidos de vírgula e ano de publicação. -->
+      <name form="short" name-as-sort-order="all" sort-separator=", " initialize-with=". " delimiter=" &amp; " delimiter-precedes-last="never">
+        <name-part name="family" text-case="capitalize-first"/>
+        <name-part name="given" text-case="capitalize-first"/>
       </name>
       <substitute>
         <names variable="editor"/>
@@ -361,8 +364,8 @@ em caixa alta. Utiliza-se antes do nome da conferencia a expressao "In". Segundo
     </group>
   </macro>
   <!--Citacao-->
-  <!--et al. aparece a partir de 04 autores-->
-  <citation et-al-min="4" et-al-use-first="1" collapse="year" disambiguate-add-year-suffix="true">
+  <!--et al. aparece a partir de 03 autores-->
+  <citation et-al-min="3" et-al-use-first="1" collapse="year" disambiguate-add-year-suffix="true">
     <sort>
       <key macro="author"/>
       <!--Puxa o autor primeiro-->

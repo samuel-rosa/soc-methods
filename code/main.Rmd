@@ -3,7 +3,7 @@ title: "Pedotransfer functions for estimating carbon and organic matter content 
 author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
 date: "12 October 2017"
 bibliography: "~/Dropbox/jabref/biblio.bib"
-csl: abnt.csl
+csl: pab-biblio.csl
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "../docs") })
 output: bookdown::html_document2
