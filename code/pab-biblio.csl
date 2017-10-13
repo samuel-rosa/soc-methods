@@ -430,7 +430,7 @@ em caixa alta. Utiliza-se antes do nome da conferencia a expressao "In". Segundo
             <!--autor-->
             <text macro="title" suffix=". "/>
             <!--Titulo-->
-            <text macro="translator" suffix=". "/>
+            <!--<text macro="translator" suffix=". "/>-->
             <!--Traducao-->
             <text macro="edition" suffix=". "/>
             <!--Edicao-->
@@ -455,7 +455,7 @@ em caixa alta. Utiliza-se antes do nome da conferencia a expressao "In". Segundo
             <text macro="container-title" suffix=". "/>
             <!--Titulo da conferencia-->
             <text variable="collection-title" suffix=". "/>
-            <text macro="translator" suffix=". "/>
+            <!--<text macro="translator" suffix=". "/>-->
             <!--Traducao-->
             <text macro="edition" suffix=". "/>
             <!--Edicao-->
