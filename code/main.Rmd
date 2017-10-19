@@ -11,6 +11,10 @@ output: bookdown::html_document2
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+# load packages
+library(dplyr)
+library(magrittr)
 ```
 
 # Abstract {-}
@@ -43,7 +47,7 @@ str(camada)
 We evaluated the methods of estimating the organic carbon/matter content in *n* = 105 air-dried < 2 mm-soil samples collected at 27 sites in the State of Rio Grande do Sul (RS), Brazil. The samples cover eleven soil groups (Acrisols, Alisols, Cambisols, Ferralsols, Fluvisols, Gleysols, Leptosols, Nitisols, Planosols, Regosols, and Vertisols) derived from several parent materials (sedimentary, volcanic, and metamorphic). The clay content of the soil samples varies between 40 and 800 g kg^-1^ (Figure \@ref(fig:clay-content)). The mineralogical assemblage is diverse (quartz, iron oxide, and 2:1 and 1:1 phyllosilicates). Several land use types are represented: rangeland, farmland, fallow land, plantation (Eucalyptus sp.) and native forests. The climate of the sampling sites varies from humid subtropical to temperate climate, both without a defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, Barros (2007), @Britzke2010, @PotesEtAl2010, Vieira (2010), @Samuel-RosaEtAl2013a, @Samuel-RosaEtAl2013]. We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
 
 ```{r clay-content, fig.asp=1, fig.cap='Clay content of soil samples.', dpi=600}
-lattice::histogram(~argila_naoh_pipeta, camada, xlab = 'Clay content', col = 'lightgray')
+lattice::histogram(~ argila_naoh_pipeta, camada, xlab = 'Clay content', col = 'lightgray')
 ```
 
 ## Analytical methods
