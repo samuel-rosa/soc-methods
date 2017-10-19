@@ -87,6 +87,18 @@ Sample aliquots of 300 to 500 mg in hand-made aluminum capsules (20 mg) (oven dr
 
 ## Data analysis
 
+```{r carbon-content, echo=FALSE, fig.cap='Carbon and organic matter content in soil samples according to the four analythical methods.', fig.width=14, fig.height=14}
+p1 <- histogram(
+  ~ carbono_dry, camada, xlab = 'Total carbon content by dry combustion (g/kg)', ylab = 'Percent of total', col = 'lightgray')
+p2 <- histogram(
+  ~ carbono_wet, camada, xlab = 'Organic carbon content by wet digestion (g/kg)', ylab = 'Percent of total', col = 'lightgray')
+p3 <- histogram(
+  ~ mo_wet, camada, xlab = 'Organic matter content by wet digestion (g/kg)', ylab = 'Percent of total', col = 'lightgray')
+p4 <- histogram(
+  ~ mo_loi, camada, xlab = 'Organic matter content by loss on ignition (g/kg)', ylab = 'Percent of total', col = 'lightgray')
+gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
+```
+
 # Results and Discussion
 
 # References
