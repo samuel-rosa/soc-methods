@@ -1,0 +1,106 @@
+observacao_id,provedor_id,prof_sup,prof_inf,coord_sistema,coord_y,coord_x,coord_precisao,coord_fonte,pais_id,estado_id,municipio_id,amostra_tipo,amostra_quanti,amostra_area,uso_id
+001,1,0,,,,,,,BR,RS,Itaara,,,,Campo nativo
+002,26,0,,,,,,,BR,RS,Itaara,,,,Agricultura
+003,37,0,,,,,,,BR,RS,Itaara,,,,Floresta
+004,Beto,0,20,,"-28,331389","-52,851111",10000,WEB,BR,RS,Paraíso do Sul,,,,Agricultura
+005,Beto,0,20,,"-28,315833","-52,193056",10000,WEB,BR,RS,Santa Maria,,,,Agricultura
+006,11,0,,,,,,,BR,RS,Itaara,,,,Vegetação secundária
+007,32,0,,,,,,,BR,RS,Itaara,,,,Campo nativo
+008,54,0,,,,,,,BR,RS,Itaara,,,,Campo nativo
+009,288,0,,,,,,,BR,RS,Itaara,,,,Campo nativo
+010,Darinês,0,20,,"-32,481111","-52,631944",10000,WEB,BR,RS,Santa Vitória do Palmar,,,,Agricultura
+011,118,0,,,,,,,BR,RS,Itaara,,,,Floresta
+012,Beto,0,20,,"-28,315833","-52,193056",10000,WEB,BR,RS,Santa Maria,,,,Agricultura
+013,295,0,,,,,,,BR,RS,Itaara,,,,Floresta
+014,243,0,,,,,,,BR,RS,Itaara,,,,Vegetação secundária
+015,Beto,0,20,,"-28,186667","-52,625000",10000,WEB,BR,RS,Restinga Seca,,,,Agricultura
+016,Beto,0,20,,"-28,182500","-49,480278",10000,WEB,BR,RS,Santo Antônio da Patrulha,,,,Agricultura
+017,178,0,,,,,,,BR,RS,Itaara,,,,Floresta
+018,272,0,,,,,,,BR,RS,Itaara,,,,Vegetação secundária
+019,318,0,,,,,,,BR,RS,Itaara,,,,Floresta
+020,271,0,,,,,,,BR,RS,Itaara,,,,Floresta
+021,258,0,,,,,,,BR,RS,Itaara,,,,Floresta
+022,273,0,,,,,,,BR,RS,Itaara,,,,Floresta
+023,Beto,0,20,,"-28,315833","-52,193056",10000,WEB,BR,RS,Santa Maria,,,,Agricultura
+024,Darinês,0,20,,"-28,048889","-50,906111",10000,WEB,BR,RS,Cachoeirinha,,,,Agricultura
+025,288,0,,,,,,,BR,RS,Itaara,,,,Floresta
+026,Beto,0,20,,"-29,663611","-53,680000",10000,WEB,BR,RS,São Gabriel,,,,Agricultura
+027,140,0,,,,,,,BR,RS,Itaara,,,,Floresta
+028,São Pedro A Davi,,,,"-28,379444","-53,821111",10000,WEB,BR,RS,São Pedro do Sul,,,,Agricultura
+029,143,0,,,,,,,BR,RS,Itaara,,,,Floresta
+030,315,0,,,,,,,BR,RS,Itaara,,,,Floresta
+031,283,0,,,,,,,BR,RS,Itaara,,,,Floresta
+032,289,0,,,,,,,BR,RS,Itaara,,,,Floresta
+033,242,0,,,,,,,BR,RS,Itaara,,,,Vegetação secundária
+034,303,0,,,,,,,BR,RS,Itaara,,,,Vegetação secundária
+035,297,0,,,,,,,BR,RS,Itaara,,,,Floresta
+036,SM-RF-10-20 Jovani,10,20,,,,,,BR,RS,Silveira Martins,,,,Silvicultura
+037,284,0,,,,,,,BR,RS,Itaara,,,,Floresta
+038,195,0,,,,,,,BR,RS,Itaara,,,,Vegetação secundária
+039,147,0,,,,,,,BR,RS,Itaara,,,,Campo nativo
+040,185,0,,,,,,,BR,RS,Itaara,,,,Agricultura
+041,107,0,,,,,,,BR,RS,Itaara,,,,Floresta
+042,108,0,,,,,,,BR,RS,Itaara,,,,Campo nativo
+043,SM-SD-0-10 Jovani,0,10,,,,,,BR,RS,Silveira Martins,,,,Agricultura
+044,Beto,0,20,,"-28,245278","-56,911667",10000,WEB,BR,RS,Uruguaiana,,,,Agricultura
+045,187,0,,,,,,,BR,RS,Itaara,,,,Silvicultura
+046,Darinês,0,20,,"-29,487778","-52,508611",10000,WEB,BR,RS,Caçapava do Sul,,,,Agricultura
+047,152,0,,,,,,,BR,RS,Itaara,,,,Agricultura
+048,298,0,,,,,,,BR,RS,Itaara,,,,Floresta
+049,SM-SC-10-20 Jovani,10,20,,,,,,BR,RS,Silveira Martins,,,,Agricultura
+050,SM-SC-0-10 Jovani,0,10,,,,,,BR,RS,Silveira Martins,,,,Agricultura
+051,Beto,0,20,,"-28,831944","-50,820556",10000,WEB,BR,RS,Caxias do Sul,,,,Agricultura
+052,202,0,,,,,,,BR,RS,Itaara,,,,Vegetação secundária
+053,267,0,,,,,,,BR,RS,Itaara,,,,Floresta
+054,Beto,0,20,,"-29,017222","-53,326944",10000,WEB,BR,RS,Dom Pedrito,,,,Agricultura
+055,155,0,,,,,,,BR,RS,Itaara,,,,Agricultura
+056,154,0,,,,,,,BR,RS,Itaara,,,,Silvicultura
+057,SJA-B2-0-5,0,,,"-27,251667","-49,934167",,,BR,RS,São José dos Ausentes,,,,Campo nativo
+058,SJA-B3-0-5,0,,,"-27,251667","-49,934167",,,BR,RS,São José dos Ausentes,,,,Campo nativo
+059,SJA-B1-5-10,5,10,,"-27,251667","-49,934167",,,BR,RS,São José dos Ausentes,,,,Campo nativo
+060,SJA-B4-0-5,0,5,,"-27,251667","-49,934167",,,BR,RS,São José dos Ausentes,,,,Campo nativo
+061,Beto,0,20,,"-28,551944","-49,416389",10000,WEB,BR,RS,São Francisco de Paula,,,,Agricultura
+062,Beto,0,20,,"-28,831944","-50,820556",10000,WEB,BR,RS,Caxias do Sul,,,,Agricultura
+063,Beto,0,20,,"-27,487778","-49,066111",10000,WEB,BR,RS,Vacaria,,,,Agricultura
+064,Beto,0,20,,"-28,971111","-50,818333",10000,WEB,BR,RS,Flores da Cunha,,,,Agricultura
+065,Beto,0,20,,"-27,332222","-49,583333",10000,WEB,BR,RS,Bom Jesus,,,,Agricultura
+066,Alto das Canas B Davi,,,,"-29,663611","-53,680000",10000,WEB,BR,RS,São Gabriel,,,,Agricultura
+067,Alto das Canas A Davi,,,,"-29,663611","-53,680000",10000,WEB,BR,RS,São Gabriel,,,,Agricultura
+068,Passo Fundo A Davi,,,,"-27,737222","-51,593333",10000,WEB,BR,RS,Passo Fundo,,,,Agricultura
+069,Piraí B Davi,,,,"-29,663611","-53,680000",10000,WEB,BR,RS,São Gabriel,,,,Campo nativo
+070,Farroupilha A Davi,,,,"-28,775000","-50,652222",10000,WEB,BR,RS,Farroupilha,,,,Agricultura
+071,SJA-B3-5-10,5,10,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+072,SJA-B4-5-10,5,10,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+073,SJA-B3-10-15,10,15,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+074,Beto,0,20,,"-27,180000","-50,720833",10000,WEB,BR,RS,Ipê,,,,Agricultura
+075,SJA-B2-5-10,5,10,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+076,SJA-B6-5-10,5,10,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+077,SJA-B4-10-15,10,15,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+078,Beto,0,20,,"-27,332222","-49,583333",10000,WEB,BR,RS,Bom Jesus,,,,Agricultura
+079,AR-MN-0-20,0,20,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Floresta
+080,SJA-B1-10-15,10,15,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+081,SJA-B3-15-30,15,30,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+082,AR-PN-0-20,0,20,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Campo nativo
+083,AR-PQ-0-20,0,20,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Campo nativo
+084,SJA-B14-10-15,10,15,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+085,SJA-B15-5-10,5,10,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+086,AR-PN-20-40,20,40,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Campo nativo
+087,SJA-B2-10-15,10,15,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+088,AR-MN-0-5,0,5,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Floresta
+089,AR-PQ-0-5,0,5,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Campo nativo
+090,AR-CM-0-5,0,5,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Campo nativo
+091,AR-PQ-20-40,20,40,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Campo nativo
+092,SJA-B6-10-15,10,15,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+093,AR-MN-20-40,20,40,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Floresta
+094,Erexim B Davi,,,,"-27,439722","-51,251667",10000,WEB,BR,RS,Victor Graeff,,,,Agricultura
+095,AR-PN-40-60,40,60,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Campo nativo
+096,SJA-B6-15-30,15,30,,"-27,251667","-49,934167",10000,WEB,BR,RS,São José dos Ausentes,,,,Campo nativo
+097,AR-MN-40-60,40,60,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Floresta
+098,AR-PQ-40-60,40,60,,"-27,369444","-50,428333",10000,WEB,BR,RS,André da Rocha,,,,Campo nativo
+099,Darinês,0,20,,"-29,148889","-50,187778",10000,WEB,BR,RS,Camaquã,,,,Agricultura
+100,Estação A Davi,,,,"-27,791389","-50,474167",10000,WEB,BR,RS,Lagoa Vermelha,,,,Agricultura
+101,Estação B Davi,,,,"-27,791389","-50,474167",10000,WEB,BR,RS,Lagoa Vermelha,,,,Agricultura
+102,Vacaria B Davi,,,,"-27,487778","-49,066111",10000,WEB,BR,RS,Vacaria,,,,Agricultura
+103,Erexim B Davi,,,,"-27,439722","-51,251667",10000,WEB,BR,RS,Victor Graeff,,,,Agricultura
+104,Escobar B Davi,,,,"-29,109167","-54,467222",10000,WEB,BR,RS,Santana do Livramento,,,,Campo nativo
+105,Farroupilha B Davi,,,,"-28,775000","-50,652222",10000,WEB,BR,RS,Farroupilha,,,,Agricultura
