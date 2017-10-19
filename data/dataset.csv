@@ -1,0 +1,23 @@
+item,dado
+dataset_id,"ctb00__"
+dataset_titulo,"Comparação de métodos de determinação do conteúdo de carbono e matéria orgânica em amostras do solo do Estado do Rio Grande do Sul"
+dataset_descricao,"O presente conjunto de dados foi elaborado a partir de estudo desenvolvido como parte do curso de Química do Solo do Programa de Pós-graduação em Ciência do Solo da Universidade Federal de Santa Maria (PPGCS-UFSM) no ano de 2011. Os dados foram produzidos a partir da análise de um conjunto de 105 amostras, coletadas em diferentes locais do Estado do Rio Grande do Sul, por outros pesquisadores do PPGCS-UFSM e do Programa de Pós-graduação em Ciência do Solo da Universidade Federal do Rio Grande do Sul (PPGCS-UFRGS), como parte de seus trabalhos de iniciação científica, mestrado ou doutorado. Dados de conteúdo de argila e classificação taxonômica foram obtidos dos trabalhos originais, sendo a classificação taxonômica harmonizada para a mesma edição do Sistema Brasileiro de Classificação de Solos. Os dados de conteúdo de carbono e matéria orgânica foram produzidos como parte das atividades do estudo."
+dataset_versao,"1.0"
+dataset_licenca,"CC BY 4.0"
+publicacao_data,"19-10-2017"
+organizacao_nome,"Universidade Federal de Santa Maria (UFSM)"
+organizacao_url,
+organizacao_pais_id,"Brasil"
+organizacao_municipio_id,"Santa Maria"
+organizacao_codigo_postal,
+organizacao_rua_nome,
+organizacao_rua_numero,"1000"
+autor_nome,"Alessandro Samuel-Rosa; Douglas Adams Weiler; Manoeli Lupatini"
+autor_email,"alessandrosamuelrosa@gmail.com;"
+contribuidor_nome,"-"
+contribuidor_email,"-"
+contribuidor_organizacao,"-"
+dataset_referencia_i,"-"
+area_conhecimento,"Fertilidade do Solo e Adubação"
+palavras_chave,"Função de pedotransferência; Fator de correção; Carbono orgânico"
+categoria_vcge,Pesquisa científica e tecnologia
