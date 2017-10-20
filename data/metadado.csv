@@ -1,0 +1,28 @@
+tabela_nome,coluna_nome,atributo_nome,atributo_descricao,atributo_unidade,atributo_dado_tipo,metodo_analitico,laboratorio_nome,laboratorio_pais_id,laboratorio_municipio_id,laboratorio_codigo_postal,laboratorio_rua_nome,laboratorio_rua_numero
+observacao,observacao_id,Identificação da observação,Identificador exclusivo da observação,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,provedor_id,Identificação do provedor,Identificador exclusivo da observação e respectivo conjunto de dados no febr de onde os dados foram originalmente obtidos,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,observacao_data,Data da observação,Data da observação no formato dd-mm-aaaa,sem unidade,Data,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,coord_sistema,Sistema de referência de coordenadas,Sistema de referência de coordenadas utilizado conforme código EPSG,sem unidade,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,coord_x,Longitude,"Longitude, para coordenadas geográficas (em graus)",graus,Real,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,coord_y,Latitude,"Latitude, para coordenadas geográficas (em graus)",graus,Real,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,coord_precisao,Precisão das coordenadas,Precisão com que as coordenadas espaciais foram determinadas (em metros),m,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,coord_fonte,Fonte das coordenadas,"Fonte das coordenadas. Opções são: GPS, se as coordenadas vêm de um GPS, MAPA, se as coordenadas vêm de um mapa, WEB, se as coordenadas vêm de um serviço web como o Google Maps.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,pais_id,País,"Código ISO 3166-1 alpha-2 do país onde a observação foi feita. Nesse caso, BR = Brasil.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,estado_id,Unidade federativa,"Sigla da unidade da federação onde a observação foi realizada. Nesse caso, RS = Rio Grande do Sul.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,municipio_id,Município,Nome da cidade/município onde a observação foi realizada.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,amostra_tipo,Tipo de amostragem,Tipo de amostragem. Opções: SIMPLES ou COMPOSTA.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,amostra_quanti,Quantidade de subamostras,Número de amostras. Um (1) quando o valor da variável anterior é SIMPLES ou mais para COMPOSTA. Expressar o valor com números inteiros.,sem unidade,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,amostra_area,Área amostral,"Área amostral (m²). Por exemplo, a área de uma trincheira costuma ser de 1 m².",m2,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,taxon_sibcs_2009,Classificação taxonômica,"Nome da classificação da observação até o segundo nível categórico do Sistema Brasileiro de Classificação do Solo (sibcs) de 2009. Observações com classificação anterior à foram atualizadas dedutivamente. Por exemplo, Planossolo Hidromórfico foi atualizado para Planossolo Háplico.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+observacao,uso_id,Uso e ocupação da terra,Tipo de uso e ocupação da terra no momento da observação.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+camada,observacao_id,Identificação da observação,Identificador exclusivo da observação usado no conjunto de dados de origem. Refere-se à aba “observacao”.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+camada,camada_numero,Número da camada,"Número da camada ou horizonte na observação, atribuído consecutivamente de cima para baixo.",sem unidade,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+camada,camada_nome,Nome da camada,"Nome da camada ou horizonte. Exemplo: A, B, C, etc.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+camada,amostra_codigo,Código da amostra,Código laboratorial da amostra. Usado para identificar as repetições de laboratório. Usar 1 se não houver repetição ou código laboratorial específico.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+camada,profund_sup,Profundidade superior,Profundidade do limite superior da camada ou horizonte (cm).,cm,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+camada,profund_inf,Profundidade inferior,Profundidade do limite inferior da camada ou horizonte (cm).,cm,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
+camada,argila_naoh_pipeta,Conteúdo de argila,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
+camada,carbono_dry,Conteúdo de carbono total,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
+camada,carbono_wet,Conteúdo de carbono orgânico,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
+camada,mo_loi,Conteúdo de matéria orgânica,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
+camada,mo_wet,Conteúdo de matéria orgânica,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
