@@ -9,6 +9,8 @@ knit: (function(inputFile, encoding) {
 output: bookdown::html_document2
 ---
 
+<script src="https://hypothes.is/embed.js" async></script>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
