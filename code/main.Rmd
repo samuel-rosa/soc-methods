@@ -54,13 +54,12 @@ Comparing and using soil carbon data produced in different studies that employed
 require the development of harmonization mechanisms. Harmonization consists of converting the values of a soil
 property produced using an arbitrary analytical method to values that "look like" the values that would be 
 produced if the reference analytical method had been used instead [@BatjesEtAl2017]. For example, the Van 
-Bemmelen factor, 1.724, which relies on the assumption that soil organic matter is composed of 58% of carbon, 
-is commonly used to transform organic carbon content to organic matter content [@Pribyl2010]. Similar 
-"conversion factors" have already been estimated in Brazil, for example, to enable the adoption of the loss 
-on ignition method as a substitute for the wet digestion method used to measure the organic matter content 
+Bemmelen factor, 1.724, which relies on the unrealistic assumption that soil organic matter is composed of 58%
+of carbon, is commonly used to transform organic carbon content to organic matter content [@Pribyl2010].
+Similar "conversion factors" have already been estimated in Brazil, for example, to enable the adoption of the 
+loss on ignition method as a substitute for the wet digestion method used to measure the organic matter content 
 [@EscosteguyEtAl2007], and to convert the organic carbon values produced via wet digestion methods to values 
-of standard dry combustion methods [@FrattiniEtAl1967; @VerlengiaEtAl1968; @PereiraEtAl2006; 
-@RheinheimerEtAl2008; @GattoEtAl2009].
+of standard dry combustion methods [@PereiraEtAl2006; @RheinheimerEtAl2008; @GattoEtAl2009].
 
 In a broader sense, a conversion factor can be understood as being a pedotransfer function. A pedotransfer
 function consists of an empirical model that can be used to predict the values of a soil property from other 
@@ -69,13 +68,24 @@ Applied to the context of soil carbon data, understanding conversion factors as 
 means taking the carbon content measured with disparate analytical methods as if they are different soil 
 properties -- which is specially true for total carbon, organic carbon, and organic matter content. These 
 empirical models generally take the form of statistical models such as a linear regression. Conversion factors 
-themselves are linear regression models based on the assumption that the regression line passes through the 
-origin [@Pribyl2010]. In Brazil, additionaly to conversion factors, many linear regression models have been 
+themselves are linear regression models based on the strong assumption that the regression line passes through
+the origin [@Pribyl2010]. In Brazil, additionally to conversion factors, many linear regression models have been 
 developed to predict soil carbon and organic matter content from one another under a variety of soil 
 conditions, e.g. granulometry, taxonomy, land use [@BrunettoEtAl2006; @PereiraEtAl2006; @GattoEtAl2009; 
 @SampaioEtAl2012].
 
-
+The recent Brazilian scientific literature lacks studies on the comparison of methods for measuring soil 
+carbon and organic matter content and to estimate conversion factors between analytical methods. We think that
+this should be a reason for soil scientists to worry because it means that some pedotransfer functions may be 
+being employed in soil conditions very different from those in which they have been estimated. Consider, for 
+example, the southernmost Brazilian state, Rio Grande do Sul (RS), where three of such studies have been 
+developed more recently. The first, conducted by @BrunettoEtAl2006, used *n* = 19 samples of the Serra Gaúcha 
+region (clay = 210-530 g kg^-1^; organic matter = 2.9-13.3%). The second, carried out by 
+@EscosteguyEtAl2007, employed only *n* = 19 samples to represent the entire territory of RS 
+(clay = 89-729 g kg^-1^), and another *n* = 49 samples from the Central Depression region (coarse texture) -- 
+in both dataset the organic matter content was below 5.5%. Finally, @RheinheimerEtAl2008 used *n* = 18 samples
+from the Planalto region (fine texture) and another *n* = 75 samples from the Central Depression region, their 
+organic matter content being bellow 7.0%.
 
 
 and that standard significance tests are resistant to the violation of the iid-normal 
