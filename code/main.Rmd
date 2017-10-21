@@ -4,10 +4,12 @@ author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
 date: "12 October 2017"
 bibliography: "~/Dropbox/jabref/biblio.bib"
 csl: pesquisa-agropecuaria-brasileira.csl
-knit: (function(inputFile, encoding) {
-  rmarkdown::render(inputFile, encoding = encoding, output_dir = "../docs") })
 output: bookdown::html_document2
 ---
+
+```{r, eval=FALSE, echo=FALSE}
+rmarkdown::render('main.Rmd', encoding = 'UTF-8', output_dir = "../docs")
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -54,7 +56,7 @@ Comparing and using soil carbon data produced in different studies that employed
 require the development of harmonization mechanisms. Harmonization consists of converting the values of a soil
 property produced using an arbitrary analytical method to values that "look like" the values that would be 
 produced if the reference analytical method had been used instead [@BatjesEtAl2017]. For example, the Van 
-Bemmelen factor, 1.724, which relies on the unrealistic assumption that soil organic matter is composed of 58%
+Bemmelen factor, 1.724, which relies on the strong assumption that soil organic matter is composed of 58%
 of carbon, is commonly used to transform organic carbon content to organic matter content [@Pribyl2010].
 Similar "conversion factors" have already been estimated in Brazil, for example, to enable the adoption of the 
 loss on ignition method as a substitute for the wet digestion method used to measure the organic matter content 
@@ -74,25 +76,23 @@ developed to predict soil carbon and organic matter content from one another und
 conditions, e.g. granulometry, taxonomy, land use [@BrunettoEtAl2006; @PereiraEtAl2006; @GattoEtAl2009; 
 @SampaioEtAl2012].
 
-The recent Brazilian scientific literature lacks studies on the comparison of methods for measuring soil 
-carbon and organic matter content and to estimate conversion factors between analytical methods. We think that
-this should be a reason for soil scientists to worry because it means that some pedotransfer functions may be 
-being employed in soil conditions very different from those in which they have been estimated. Consider, for 
-example, the southernmost Brazilian state, Rio Grande do Sul (RS), where three of such studies have been 
-developed more recently. The first, conducted by @BrunettoEtAl2006, used *n* = 19 samples of the Serra Gaúcha 
-region (clay = 210-530 g kg^-1^; organic matter = 2.9-13.3%). The second, carried out by 
-@EscosteguyEtAl2007, employed only *n* = 19 samples to represent the entire territory of RS 
-(clay = 89-729 g kg^-1^), and another *n* = 49 samples from the Central Depression region (coarse texture) -- 
-in both dataset the organic matter content was below 5.5%. Finally, @RheinheimerEtAl2008 used *n* = 18 samples
-from the Planalto region (fine texture) and another *n* = 75 samples from the Central Depression region, their 
-organic matter content being bellow 7.0%.
+Studies on the comparison of methods for measuring soil carbon and organic matter content and to estimate 
+conversion factors between analytical methods are absent in the recent Brazilian scientific literature. This 
+means that pedotransfer functions may have been employed under very different soil conditions from those in 
+which they were estimated, i.e. for extrapolation. For example, in the southernmost Brazilian state, Rio 
+Grande do Sul (RS), the most important studies on the subject, published about ten years ago, were more 
+concerned with the Serra Gaúcha, Planalto, and Depressão Central regions, and with soil samples with an 
+organic matter content lower than 15% [@BrunettoEtAl2006; @EscosteguyEtAl2007; @RheinheimerEtAl2008]. The aim 
+of the present study is to overcome these limitation by using a large set of soil samples covering various 
+land uses, soil classes, sampling depths, and clay contents, sampled in different regions of RS, for which we 
+have measured the carbon and organic matter contents using the four popular analytical methods.
+
+
+The present study takes place due to the poor representativeness and failure in attending to statistical assumptions of datasets used in previous studies and the need for more information about the loss on ignition method. The primary objective is to evaluate the use of three methods (wet digestion, loss on ignition and the routine method) to estimate the organic carbon/matter content of soils measured by the dry combustion method. Second, to evaluate the loss on ignition method as a substitute method for the routine method used in laboratories under ROLAS.
 
 
 and that standard significance tests are resistant to the violation of the iid-normal 
 assumption [@Webster2001; ].
-
-have already developed such linear regression models to predict soil carbon or organic matter content under 
-various soil conditions, specially with varying granulometry, taxonomy, and land use [@BrunettoEtAl2006; @PereiraEtAl2006; @GattoEtAl2009; @SampaioEtAl2012].
 
 
 
