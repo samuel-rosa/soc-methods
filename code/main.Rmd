@@ -36,7 +36,7 @@ maintenance costs associated with the use of the standard method are often high,
 small laboratories. Second, provided that the quantity of inorganic forms of carbon in soil samples is 
 negligible, the accuracy of wet digestion methods is comparable to the standard method [@RheinheimerEtAl2008, 
 @GattoEtAl2009]. Last, most soil classification and fertilizer recommendation systems were built using criteria 
-based on soil *organic carbon* and/or *organic matter* content as estimated using wet digestion methods 
+based on soil *organic carbon* and/or *organic matter* content as measured using wet digestion methods 
 [@IUSSWorkingGroupWRB2015; @SantosEtAl2013a; @SilvaEtAl2016].
 
 Wet digestion methods have long been criticized because the ion Cr^6+^ is toxic to all forms of life 
@@ -58,7 +58,7 @@ property produced using an arbitrary analytical method to values that "look like
 produced if the reference analytical method had been used instead [@BatjesEtAl2017]. For example, the Van 
 Bemmelen factor, 1.724, which relies on the strong assumption that soil organic matter is composed of 58%
 of carbon, is commonly used to transform organic carbon content to organic matter content [@Pribyl2010].
-Similar "conversion factors" have already been estimated in Brazil, for example, to enable the adoption of the 
+Similar conversion factors have already been estimated in Brazil, for example, to enable the adoption of the 
 loss on ignition method as a substitute for the wet digestion method used to measure the organic matter content 
 [@EscosteguyEtAl2007], and to convert the organic carbon values produced via wet digestion methods to values 
 of standard dry combustion methods [@PereiraEtAl2006; @RheinheimerEtAl2008; @GattoEtAl2009].
@@ -79,13 +79,18 @@ conditions, e.g. granulometry, taxonomy, land use [@BrunettoEtAl2006; @PereiraEt
 Studies on the comparison of methods for measuring soil carbon and organic matter content and to estimate 
 conversion factors between analytical methods are absent in the recent Brazilian scientific literature. This 
 means that pedotransfer functions may have been employed under very different soil conditions from those in 
-which they were estimated, i.e. for extrapolation. For example, in the southernmost Brazilian state, Rio 
+which they were calibrated, i.e. for extrapolation. For example, in the southernmost Brazilian state, Rio 
 Grande do Sul (RS), the most important studies on the subject, published about ten years ago, were more 
 concerned with the Serra Gaúcha, Planalto, and Depressão Central regions, and with soil samples with an 
 organic matter content lower than 15% [@BrunettoEtAl2006; @EscosteguyEtAl2007; @RheinheimerEtAl2008]. The aim 
-of the present study is to overcome these limitation by using a large set of soil samples covering various 
-land uses, soil classes, sampling depths, and clay contents, sampled in different regions of RS, for which we 
-have measured the carbon and organic matter contents using four popular analytical methods.
+of the present study is to overcome these limitation by using a large set of soil samples covering various land
+uses, soil classes, sampling depths, and clay contents, sampled in different regions of RS, for which we have 
+measured the carbon and organic matter contents using four popular analytical methods. The following section 
+describes our approach for calibrating pedotransfer functions to predict the carbon and organic matter content.
+We then present the soil data and the analytical methods employed. Later sections are reserved for the results 
+and some recommendations for future studies.
+
+
 
 
 The present study takes place due to the poor representativeness and failure in attending to statistical assumptions of datasets used in previous studies and the need for more information about the loss on ignition method. The primary objective is to evaluate the use of three methods (wet digestion, loss on ignition and the routine method) to estimate the organic carbon/matter content of soils measured by the dry combustion method. Second, to evaluate the loss on ignition method as a substitute method for the routine method used in laboratories under ROLAS.
