@@ -1,5 +1,5 @@
 ---
-title: "Pedotransfer functions for estimating carbon and organic matter content in Rio Grande do Sul, Brazil"
+title: "Pedotransfer functions for predicting carbon and organic matter content in Rio Grande do Sul, Brazil"
 author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
 date: "12 October 2017"
 bibliography: "~/Dropbox/jabref/biblio.bib"
@@ -85,7 +85,7 @@ concerned with the Serra Gaúcha, Planalto, and Depressão Central regions, and 
 organic matter content lower than 15% [@BrunettoEtAl2006; @EscosteguyEtAl2007; @RheinheimerEtAl2008]. The aim 
 of the present study is to overcome these limitation by using a large set of soil samples covering various 
 land uses, soil classes, sampling depths, and clay contents, sampled in different regions of RS, for which we 
-have measured the carbon and organic matter contents using the four popular analytical methods.
+have measured the carbon and organic matter contents using four popular analytical methods.
 
 
 The present study takes place due to the poor representativeness and failure in attending to statistical assumptions of datasets used in previous studies and the need for more information about the loss on ignition method. The primary objective is to evaluate the use of three methods (wet digestion, loss on ignition and the routine method) to estimate the organic carbon/matter content of soils measured by the dry combustion method. Second, to evaluate the loss on ignition method as a substitute method for the routine method used in laboratories under ROLAS.
