@@ -30,8 +30,8 @@ There exist several analytical methods to measure the content of carbon in soil 
 for measuring the *total carbon* content is the dry combustion method, which is based on the oxidation of 
 both organic and inorganic forms of carbon at very high temperatures (> 1000°C) in the presence of oxygen and 
 copper oxide [@NelsonEtAl1996; @PansuEtAl2006]. However, wet digestion methods, which are based on the 
-reduction of Cr~2~O~7~^2-^ by the organic compounds present in soil samples, are the most commonly used 
-[@PansuEtAl2006; @DonagemaEtAl2011]. This is mainly due to three reasons. First, the implementation and 
+reduction of Cr~2~O~7~^2-^ by organic compounds present in soil samples, are the most commonly used 
+[@PansuEtAl2006; @DonagemaEtAl2011]. This is mostly due to three reasons. First, the implementation and 
 maintenance costs associated with the use of the standard method are often high, what makes it unsuitable for 
 small laboratories. Second, provided that the quantity of inorganic forms of carbon in soil samples is 
 negligible, the accuracy of wet digestion methods is comparable to the standard method [@RheinheimerEtAl2008, 
@@ -43,7 +43,7 @@ Wet digestion methods have long been criticized because the ion Cr^6+^ is toxic 
 [@RodellaEtAl1994; @PimentelEtAl2006]. As such, efforts have been made to stimulate the use of alternative 
 methods. For example, the loss on ignition method, which is based on the quantification of the amount of mass 
 lost by soil samples after oxidation of organic compounds at relatively high temperatures (> 300ºC) in the 
-presence of oxygen [@PansuEtAl2006]. In Brazil, this method was pointed many times as being an attractive 
+presence of oxygen [@PansuEtAl2006]. In Brazil, this method was pointed as being an attractive 
 alternative to measure the soil organic matter content -- as used in fertilizer recommendation systems -- due 
 to the very low environmental hazards associated with it use [@BrunettoEtAl2006; @EscosteguyEtAl2007]. With 
 respect to the measurement of the organic carbon content, despite the standard dry combustion method being a 
