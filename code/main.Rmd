@@ -112,7 +112,7 @@ observacao <-
 
 We evaluated the methods of estimating the organic carbon/matter content in *n* = 105 air-dried < 2 mm-soil samples collected at 27 sites in the State of Rio Grande do Sul (RS), Brazil. The samples cover eleven soil groups (Acrisols, Alisols, Cambisols, Ferralsols, Fluvisols, Gleysols, Leptosols, Nitisols, Planosols, Regosols, and Vertisols) derived from several parent materials (sedimentary, volcanic, and metamorphic). The clay content of the soil samples varies between 40 and 800 g kg^-1^ (Figure \@ref(fig:clay-content)). The mineralogical assemblage is diverse (quartz, iron oxide, and 2:1 and 1:1 phyllosilicates). Several land use types are represented: rangeland, farmland, fallow land, plantation (Eucalyptus sp.) and native forests. The climate of the sampling sites varies from humid subtropical to temperate climate, both without a defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, @DickEtAl2008, @Britzke2010, @PotesEtAl2010, Vieira (2010), @Samuel-RosaEtAl2013a, @Samuel-RosaEtAl2013]. We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
 
-```{r clay-content, echo=FALSE, fig.cap='Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.', fig.width=14, fig.height=14, dpi=600}
+```{r clay-content, echo=FALSE, fig.cap='Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.', fig.width=14, fig.height=14, dpi=300}
 p1 <- histogram(
   ~ argila_naoh_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', col = 'lightgray')
 p2 <- histogram(
@@ -145,7 +145,7 @@ Sample aliquots of 300 to 500 mg in hand-made aluminum capsules (20 mg) (oven dr
 
 # Data analysis
 
-```{r carbon-content, echo=FALSE, fig.cap='Carbon and organic matter content in soil samples according to the four analythical methods.', fig.width=14, fig.height=14, dpi=600}
+```{r carbon-content, echo=FALSE, fig.cap='Carbon and organic matter content in soil samples according to the four analythical methods.', fig.width=14, fig.height=14, dpi=300}
 p1 <- histogram(
   ~ carbono_dry, camada, xlab = 'Total carbon content by dry combustion (g/kg)', ylab = 'Percent of total', col = 'lightgray')
 p2 <- histogram(
