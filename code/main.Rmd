@@ -157,6 +157,19 @@ p4 <- histogram(
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
+```{r, echo=FALSE, fig.width=14, fig.height=14, dpi=300, fig.cap='Scatter plot matrix of the carbon and organic matter content measured using four different analythical methods and their relation to the total clay content. The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.'}
+camada %>% 
+  select(carbono_dry, carbono_wet, mo_wet, mo_loi, argila_naoh_pipeta) %>% 
+  splom(col = 'black', grid = TRUE,
+        varnames = c('Total carbon\nby dry combustion\n(g/kg)', 'Organic carbon\nby wet digestion\n(g/kg)',
+                     'Organic matter\nby wet digestion\n(g/kg)', 'Organic matter\nby loss on ignition\n(g/kg)',
+                     'Total clay\n(g/kg)')) +
+  layer(panel.abline(a = 0, b = 1)) +
+  layer(panel.lmline(x, y, lty = 'dashed'))
+```
+
+
 # Results and Discussion
+
 
 # References
