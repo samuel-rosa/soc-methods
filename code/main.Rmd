@@ -177,36 +177,30 @@ camada %>%
   layer(panel.lmline(x, y, lty = 'dashed'))
 ```
 
-```{r}
-fit <- gls(carbono_dry ~ mo_loi, camada)
-plot(fit)
-summary(fit)
-```
-
-
-```{r}
-fit1 <- lme(carbono_dry ~ mo_loi, camada, random = ~ 1 | textura)
-anova(fit, fit1)
-plot(fit1, col = camada$textura)
-```
-
-```{r}
-fit_varFixed <- update(fit1, weights = ~ mo_loi)
-plot(fit_varFixed)
-```
-
-```{r}
-fit_varPower <- update(fit1, weights = varPower(form = ~ mo_loi))
-plot(fit_varPower)
-```
-
-```{r}
-anova(fit_varFixed, fit_varPower)
-anova(fit_varPower)
-```
-
-
 # Results and Discussion
 
+```{r, echo=FALSE}
+# Define formulas
+forms <- c("carbono_dry", "carbono_wet", "mo_wet", "mo_loi")
+forms <- expand.grid(forms, forms)
+forms <- 
+  forms[forms[, 1] != forms[, 2], ] %>% 
+  apply(1, function (x) list(reformulate(x[1], x[2]), reformulate(x[1])))
+```
+
+```{r, echo=FALSE}
+# Calibrate models WITH intercept
+fit_inter <- list()
+for (i in 1:length(forms)) {
+  fit_inter[[i]] <- gls(forms[[i]][[1]], data = camada, weights = varPower(form = forms[[1]][[2]]))
+}
+
+# Calibrate models WITHOUT intercept
+fit_nointer <- list()
+for (i in 1:length(forms)) {
+  up_form <- update(forms[[i]][[1]], ~ . - 1)
+  fit_nointer[[i]] <- gls(up_form, data = camada, weights = varPower(form = forms[[1]][[2]]))
+}
+```
 
 # References
