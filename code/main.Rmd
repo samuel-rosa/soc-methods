@@ -18,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(magrittr)
 library(latticeExtra)
+library(nlme)
 ```
 
 # Abstract {-}
@@ -100,6 +101,14 @@ and some recommendations for future studies.
 
 ```{r, echo=FALSE, message=FALSE}
 camada <- readr::read_csv('../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = 'unidade')
+camada <-
+  camada %>% 
+  mutate(textura = ifelse(argila_naoh_pipeta <= 250, '0-25', '25-50')) %>% 
+  mutate(textura = ifelse(argila_naoh_pipeta > 500, '50-100', textura)) %>% 
+  mutate(textura = as.factor(textura))
+```
+
+```{r, echo=FALSE, message=FALSE}
 observacao <- readr::read_csv('../data/observacao.csv', locale = readr::locale(decimal_mark = ','), na = '-')
 observacao <-
   observacao %>% 
@@ -160,12 +169,40 @@ gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```{r, echo=FALSE, fig.width=14, fig.height=14, dpi=300, fig.cap='Scatter plot matrix of the carbon and organic matter content measured using four different analythical methods and their relation to the total clay content. The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.'}
 camada %>% 
   select(carbono_dry, carbono_wet, mo_wet, mo_loi, argila_naoh_pipeta) %>% 
-  splom(col = 'black', grid = TRUE,
+  splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3),
         varnames = c('Total carbon\nby dry combustion\n(g/kg)', 'Organic carbon\nby wet digestion\n(g/kg)',
                      'Organic matter\nby wet digestion\n(g/kg)', 'Organic matter\nby loss on ignition\n(g/kg)',
                      'Total clay\n(g/kg)')) +
   layer(panel.abline(a = 0, b = 1)) +
   layer(panel.lmline(x, y, lty = 'dashed'))
+```
+
+```{r}
+fit <- gls(carbono_dry ~ mo_loi, camada)
+plot(fit)
+summary(fit)
+```
+
+
+```{r}
+fit1 <- lme(carbono_dry ~ mo_loi, camada, random = ~ 1 | textura)
+anova(fit, fit1)
+plot(fit1, col = camada$textura)
+```
+
+```{r}
+fit_varFixed <- update(fit1, weights = ~ mo_loi)
+plot(fit_varFixed)
+```
+
+```{r}
+fit_varPower <- update(fit1, weights = varPower(form = ~ mo_loi))
+plot(fit_varPower)
+```
+
+```{r}
+anova(fit_varFixed, fit_varPower)
+anova(fit_varPower)
 ```
 
 
