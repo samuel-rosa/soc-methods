@@ -192,15 +192,33 @@ forms <-
 # Calibrate models WITH intercept
 fit_inter <- list()
 for (i in 1:length(forms)) {
-  fit_inter[[i]] <- gls(forms[[i]][[1]], data = camada, weights = varPower(form = forms[[1]][[2]]))
+  fit_inter[[i]] <- gls(forms[[i]][[1]], data = camada, weights = varPower(form = forms[[i]][[2]]))
 }
 
 # Calibrate models WITHOUT intercept
 fit_nointer <- list()
 for (i in 1:length(forms)) {
   up_form <- update(forms[[i]][[1]], ~ . - 1)
-  fit_nointer[[i]] <- gls(up_form, data = camada, weights = varPower(form = forms[[1]][[2]]))
+  fit_nointer[[i]] <- gls(up_form, data = camada, weights = varPower(form = forms[[i]][[2]]))
 }
 ```
+
+```{r, echo=FALSE}
+# Cross-validate models
+cv <- list()
+for (j in 1:length(forms)) {
+  res <- data.frame(me = NA_real_, mae = NA_real_, mse = NA_real_, ave = NA_real_)
+  err <- vector()
+  for (i in 1:nrow(camada)) {
+    cv_fit <- gls(forms[[j]][[1]], data = camada[-i, ], weights = varPower(form = forms[[j]][[2]]))
+    err[i] <- predict(cv_fit, camada[i, ]) - camada[i, as.character(forms[[j]][[1]][[2]])][[1]]
+  }
+  res[, 1] <- mean(err)
+  res[, 2] <- mean(abs(err))
+  res[, 3] <- mean(err * err)
+  cv[[j]] <- res
+}
+```
+
 
 # References
