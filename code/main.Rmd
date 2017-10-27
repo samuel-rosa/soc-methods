@@ -19,6 +19,8 @@ library(dplyr)
 library(magrittr)
 library(latticeExtra)
 library(quantreg)
+library(pander)
+library(glue)
 ```
 
 # Abstract {-}
@@ -228,36 +230,17 @@ for (j in 1:length(forms)) {
 }
 names(cv) <- names(forms)
 cv <- do.call(rbind, cv) %>% round(4)
-cv
 ```
 
 ```{r, echo=FALSE}
-# Cross-validate models
-cv <- list()
-for (j in 1:length(forms)) {
-  res <- data.frame(me = NA_real_, mae = NA_real_, mse = NA_real_, ave = NA_real_)
-  err <- vector()
-  for (i in 1:nrow(camada)) {
-    y <- camada[as.character(forms[[j]][[2]])][[1]]
-    resid <- mean(y) - y
-    up_form <- update(forms[[j]], ~ . - 1)
-    # cv_fit <- gls(up_form, data = camada[-i, ], weights = varPower(form = forms[[j]][[2]]))
-    cv_fit <- rq(up_form, data = camada[-i, ], method = 'fn')
-    err[i] <- predict(cv_fit, camada[i, ]) - y[i]
-  }
-  res[, 1] <- median(err)
-  res[, 2] <- median(abs(err))
-  res[, 3] <- median(err * err)
-  res[, 4] <- 1 - (sum(err * err) / sum(resid * resid))
-  cv[[j]] <- res
-}
-cv_nointer <- do.call(rbind, cv) %>% round(4)
-cv_nointer
+colnames(cv) <- glue('**{colnames(cv)}**')
+panderOptions('round', rep(4, ncol(cv)))
+panderOptions('table.alignment.default', 'left')
+panderOptions('keep.trailing.zeros', TRUE)
+panderOptions('table.split.cells', rep(100 / ncol(cv), ncol(cv)))
+pander(cv, caption = '(\\#tab:cross-validation) Leave-one-out cross-validation results of soil carbon and organic matter pedotransfer functions calibrated using quantile regression models. Error statistics are as follows: ME -- mean error, MedE -- median error, MAE -- mean absolute error, MedAE -- median absolute error, MSE -- mean square error, MedSE -- median square error, AVE -- amount of variance explained.')
 ```
 
-```{r}
-cbind(cv_inter$mse, cv_nointer$mse)
-```
 
 
 # References
