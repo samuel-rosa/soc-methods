@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(magrittr)
 library(latticeExtra)
-library(nlme)
+library(quantreg)
 ```
 
 # Abstract {-}
@@ -123,7 +123,8 @@ We evaluated the methods of estimating the organic carbon/matter content in *n* 
 
 ```{r clay-content, echo=FALSE, fig.cap='Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.', fig.width=14, fig.height=14, dpi=300}
 p1 <- histogram(
-  ~ argila_naoh_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', col = 'lightgray')
+  ~ argila_naoh_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', col = 'lightgray') +
+  layer(panel.abline(v = c(250, 500), lty = 'dotted'))
 p2 <- histogram(
   ~ prof_sup, camada, xlab = 'Sampling depth (cm)', ylab = 'Percent of total', col = 'lightgray')
 p3 <- barchart(
@@ -152,7 +153,7 @@ Adapted from @TedescoEtAl1995. Sample aliquots of 2.5 mL were placed in Erlenmey
 
 Sample aliquots of 300 to 500 mg in hand-made aluminum capsules (20 mg) (oven dried at 360°C) were placed in an oven at 105°C for 24 hours. We varied the sample aliquot used due to sample availability what had no noticeable effect on the analytical results as showed by linear correlation analysis (data not shown). Next, we placed the oven-dried samples in a desiccator containing silica gel and weighted after they had cooled down. The amount of mass lost between the first and second weightings was used to calculate the water content in the sample. Next, we placed the samples in an oven at 360ºC for 2 hours. Next, samples were placed in a desiccator containing silica gel and weighted after they had cooled down. The organic matter content in the samples was calculated from the mass lost between the second and third weightings. This method was adapted from @SchulteEtAl1996.
 
-# Data analysis
+# Exploratory data analysis
 
 ```{r carbon-content, echo=FALSE, fig.cap='Carbon and organic matter content in soil samples according to the four analythical methods.', fig.width=14, fig.height=14, dpi=300}
 p1 <- histogram(
@@ -185,25 +186,49 @@ forms <- c("carbono_dry", "carbono_wet", "mo_wet", "mo_loi")
 forms <- expand.grid(forms, forms)
 forms <- 
   forms[forms[, 1] != forms[, 2], ] %>% 
-  apply(1, function (x) list(reformulate(x[1], x[2]), reformulate(x[1])))
+  apply(1, function (x) reformulate(x[1], x[2]))
+names(forms) <- sapply(forms, function (x) x)
+```
+
+```{r, echo=FALSE, fig.asp=1}
+# Calibrate models
+fit <- list()
+for (i in 1:length(forms)) {
+  fit[[i]] <- rq(forms[[i]], data = camada, method = 'fn')
+}
+names(fit) <- names(forms)
 ```
 
 ```{r, echo=FALSE}
-# Calibrate models WITH intercept
-fit_inter <- list()
-for (i in 1:length(forms)) {
-  fit_inter[[i]] <- gls(forms[[i]][[1]], data = camada, weights = varPower(form = forms[[i]][[2]]))
+# Function to extract the name of the dependent variable in a formula
+get_y <- function (form) {
+  terms(form, simplify = T)[[2]] %>% as.character()
 }
-# lapply(fit_inter, function (x) summary(x)$tTable)
 ```
 
-```{r}
-# Calibrate models WITHOUT intercept
-fit_nointer <- list()
-for (i in 1:length(forms)) {
-  up_form <- update(forms[[i]][[1]], ~ . - 1)
-  fit_nointer[[i]] <- gls(up_form, data = camada, weights = varPower(form = forms[[i]][[2]]))
+```{r, echo=FALSE}
+# Cross-validate models
+cv <- list()
+for (j in 1:length(forms)) {
+  err <- vector()
+  for (i in 1:nrow(camada)) {
+    y <- camada[[get_y(forms[[j]])]]
+    resid <- mean(y) - y
+    cv_fit <- rq(forms[[j]], data = camada[-i, ], method = 'fn')
+    err[i] <- predict(cv_fit, camada[i, ]) - y[i]
+  }
+  cv[[j]] <- data.frame(
+    ME = mean(err),
+    MedE = median(err),
+    MAE = mean(abs(err)),
+    MedAE = median(abs(err)),
+    MSE = mean(err * err), 
+    MedSE = median(err * err), 
+    AVE = 1 - (sum(err * err) / sum(resid * resid)))
 }
+names(cv) <- names(forms)
+cv <- do.call(rbind, cv) %>% round(4)
+cv
 ```
 
 ```{r, echo=FALSE}
@@ -213,37 +238,16 @@ for (j in 1:length(forms)) {
   res <- data.frame(me = NA_real_, mae = NA_real_, mse = NA_real_, ave = NA_real_)
   err <- vector()
   for (i in 1:nrow(camada)) {
-    y <- camada[as.character(forms[[j]][[1]][[2]])][[1]]
+    y <- camada[as.character(forms[[j]][[2]])][[1]]
     resid <- mean(y) - y
-    cv_fit <- gls(forms[[j]][[1]], data = camada[-i, ], weights = varPower(form = forms[[j]][[2]]))
+    up_form <- update(forms[[j]], ~ . - 1)
+    # cv_fit <- gls(up_form, data = camada[-i, ], weights = varPower(form = forms[[j]][[2]]))
+    cv_fit <- rq(up_form, data = camada[-i, ], method = 'fn')
     err[i] <- predict(cv_fit, camada[i, ]) - y[i]
   }
-  res[, 1] <- mean(err)
-  res[, 2] <- mean(abs(err))
-  res[, 3] <- mean(err * err)
-  res[, 4] <- 1 - (sum(err * err) / sum(resid * resid))
-  cv[[j]] <- res
-}
-cv_inter <- do.call(rbind, cv) %>% round(4)
-cv_inter
-```
-
-```{r, echo=FALSE}
-# Cross-validate models
-cv <- list()
-for (j in 1:length(forms)) {
-  res <- data.frame(me = NA_real_, mae = NA_real_, mse = NA_real_, ave = NA_real_)
-  err <- vector()
-  for (i in 1:nrow(camada)) {
-    y <- camada[as.character(forms[[j]][[1]][[2]])][[1]]
-    resid <- mean(y) - y
-    up_form <- update(forms[[j]][[1]], ~ . - 1)
-    cv_fit <- gls(up_form, data = camada[-i, ], weights = varPower(form = forms[[j]][[2]]))
-    err[i] <- predict(cv_fit, camada[i, ]) - y[i]
-  }
-  res[, 1] <- mean(err)
-  res[, 2] <- mean(abs(err))
-  res[, 3] <- mean(err * err)
+  res[, 1] <- median(err)
+  res[, 2] <- median(abs(err))
+  res[, 3] <- median(err * err)
   res[, 4] <- 1 - (sum(err * err) / sum(resid * resid))
   cv[[j]] <- res
 }
@@ -252,7 +256,7 @@ cv_nointer
 ```
 
 ```{r}
-cbind(cv_inter$ave, cv_nointer$ave)
+cbind(cv_inter$mse, cv_nointer$mse)
 ```
 
 
