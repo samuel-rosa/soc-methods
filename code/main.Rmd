@@ -11,7 +11,7 @@ output: bookdown::html_document2
 rmarkdown::render('main.Rmd', encoding = 'UTF-8', output_dir = "../docs")
 ```
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 # load packages
@@ -19,8 +19,10 @@ library(dplyr)
 library(magrittr)
 library(latticeExtra)
 library(quantreg)
-library(pander)
 library(glue)
+library(pander)
+panderOptions('table.alignment.default', 'left')
+panderOptions('keep.trailing.zeros', TRUE)
 ```
 
 # Abstract {-}
@@ -201,6 +203,24 @@ for (i in 1:length(forms)) {
 names(fit) <- names(forms)
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+betas <- lapply(fit, function (x) summary(x)$coefficients)
+betas <- do.call(rbind, betas) %>% round(4)
+betas <- data.frame(PTF = rep(names(forms), each = 2), Beta = rownames(betas), betas)
+betas$PTF <- glue('**{betas$PTF}**')
+betas$PTF[seq(2, length(betas$PTF), 2)] <- ''
+rownames(betas) <- NULL
+```
+
+```{r, echo=FALSE}
+colnames(betas)[3:5] <- c('Estimate', 'Lower', 'Upper')
+colnames(betas) <- glue('**{colnames(betas)}**')
+panderOptions('round', rep(4, ncol(betas)))
+panderOptions('table.split.cells', rep(100 / ncol(betas), ncol(betas)))
+pander(betas, caption = '(\\#tab:coefficients) Estimated coefficients of soil carbon and organic matter pedotransfer functions and their respective lower and upper bounds. Coefficients of the $\\tau = 0.5$ quantile regression models are as follows: $\\Beta_0$ -- intercept, $\\Beta_1$ -- soil carbon and organic matter content.')
+```
+
+
 ```{r, echo=FALSE}
 # Function to extract the name of the dependent variable in a formula
 get_y <- function (form) {
@@ -235,10 +255,8 @@ cv <- do.call(rbind, cv) %>% round(4)
 ```{r, echo=FALSE}
 colnames(cv) <- glue('**{colnames(cv)}**')
 panderOptions('round', rep(4, ncol(cv)))
-panderOptions('table.alignment.default', 'left')
-panderOptions('keep.trailing.zeros', TRUE)
 panderOptions('table.split.cells', rep(100 / ncol(cv), ncol(cv)))
-pander(cv, caption = '(\\#tab:cross-validation) Leave-one-out cross-validation results of soil carbon and organic matter pedotransfer functions calibrated using quantile regression models. Error statistics are as follows: ME -- mean error, MedE -- median error, MAE -- mean absolute error, MedAE -- median absolute error, MSE -- mean square error, MedSE -- median square error, AVE -- amount of variance explained.')
+pander(cv, caption = '(\\#tab:cross-validation) Leave-one-out cross-validation results of soil carbon and organic matter pedotransfer functions. Error statistics are as follows: ME -- mean error, MedE -- median error, MAE -- mean absolute error, MedAE -- median absolute error, MSE -- mean square error, MedSE -- median square error, AVE -- amount of variance explained.')
 ```
 
 
