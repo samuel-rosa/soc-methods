@@ -101,8 +101,8 @@ and some recommendations for future studies.
 camada <- readr::read_csv('../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = 'unidade')
 camada <-
   camada %>% 
-  mutate(textura = ifelse(argila_naoh_pipeta <= 250, '0-25', '25-50')) %>% 
-  mutate(textura = ifelse(argila_naoh_pipeta > 500, '50-100', textura)) %>% 
+  mutate(textura = ifelse(argila_naoh_pipeta <= 250, '0-250', '250-500')) %>% 
+  mutate(textura = ifelse(argila_naoh_pipeta > 500, '500-1000', textura)) %>% 
   mutate(textura = as.factor(textura))
 ```
 
@@ -119,7 +119,9 @@ observacao <-
 
 We evaluated the methods of estimating the organic carbon/matter content in *n* = 105 air-dried < 2 mm-soil samples collected at 27 sites in the State of Rio Grande do Sul (RS), Brazil. The samples cover eleven soil groups (Acrisols, Alisols, Cambisols, Ferralsols, Fluvisols, Gleysols, Leptosols, Nitisols, Planosols, Regosols, and Vertisols) derived from several parent materials (sedimentary, volcanic, and metamorphic). The clay content of the soil samples varies between 40 and 800 g kg^-1^ (Figure \@ref(fig:clay-content)). The mineralogical assemblage is diverse (quartz, iron oxide, and 2:1 and 1:1 phyllosilicates). Several land use types are represented: rangeland, farmland, fallow land, plantation (Eucalyptus sp.) and native forests. The climate of the sampling sites varies from humid subtropical to temperate climate, both without a defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, @DickEtAl2008, @Britzke2010, @PotesEtAl2010, Vieira (2010), @Samuel-RosaEtAl2013a, @Samuel-RosaEtAl2013]. We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
 
-```{r clay-content, echo=FALSE, fig.cap='Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.', fig.width=14, fig.height=14, dpi=300}
+Figure \@ref(fig:soil-features)
+
+```{r soil-features, echo=FALSE, fig.cap='Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.', fig.width=14, fig.height=14, dpi=300}
 p1 <- histogram(
   ~ argila_naoh_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', col = 'lightgray') +
   layer(panel.abline(v = c(250, 500), lty = 'dotted'))
@@ -153,22 +155,27 @@ Sample aliquots of 300 to 500 mg in hand-made aluminum capsules (20 mg) (oven dr
 
 # Exploratory data analysis
 
-```{r carbon-content, echo=FALSE, fig.cap='Carbon and organic matter content in soil samples according to the four analythical methods.', fig.width=14, fig.height=14, dpi=300}
+Figure \@ref(fig:carbon-histogram)
+
+```{r carbon-histogram, echo=FALSE, fig.cap='Empirical probability density of carbon and organic matter content in soil samples according to the four analythical methods and the theoretical normal probability density function (dashed line).', fig.width=14, fig.height=14, dpi=300}
+l <- layer(panel.mathdensity(dmath = dnorm, args = list(mean = mean(x), sd = sd(x)), n = length(x), col = 'black', lty = 'dashed'))
 p1 <- histogram(
-  ~ carbono_dry, camada, xlab = 'Total carbon content by dry combustion (g/kg)', ylab = 'Percent of total', col = 'lightgray')
+  ~ carbono_dry, camada, xlab = 'Total carbon content by dry combustion (g/kg)', col = 'lightgray', type = "density") + l
 p2 <- histogram(
-  ~ carbono_wet, camada, xlab = 'Organic carbon content by wet digestion (g/kg)', ylab = 'Percent of total', col = 'lightgray')
+  ~ carbono_wet, camada, xlab = 'Organic carbon content by wet digestion (g/kg)', col = 'lightgray', type = "density") + l
 p3 <- histogram(
-  ~ mo_wet, camada, xlab = 'Organic matter content by wet digestion (g/kg)', ylab = 'Percent of total', col = 'lightgray')
+  ~ mo_wet, camada, xlab = 'Organic matter content by wet digestion (g/kg)', col = 'lightgray', type = "density") + l
 p4 <- histogram(
-  ~ mo_loi, camada, xlab = 'Organic matter content by loss on ignition (g/kg)', ylab = 'Percent of total', col = 'lightgray')
+  ~ mo_loi, camada, xlab = 'Organic matter content by loss on ignition (g/kg)', col = 'lightgray', type = "density") + l
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
-```{r, echo=FALSE, fig.width=14, fig.height=14, dpi=300, fig.cap='Scatter plot matrix of the carbon and organic matter content measured using four different analythical methods and their relation to the total clay content. The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.'}
+Figure \@ref(fig:correlation-matrix)
+
+```{r correlation-matrix, echo=FALSE, fig.width=14, fig.height=14, dpi=300, fig.cap='Scatter plot matrix of the carbon and organic matter content measured using four different analythical methods and their relation to the total clay content and class (0-250, 250-500, 500-1000 g/kg). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.'}
 camada %>% 
   select(carbono_dry, carbono_wet, mo_wet, mo_loi, argila_naoh_pipeta) %>% 
-  splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3),
+  splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
         varnames = c('Total carbon\nby dry combustion\n(g/kg)', 'Organic carbon\nby wet digestion\n(g/kg)',
                      'Organic matter\nby wet digestion\n(g/kg)', 'Organic matter\nby loss on ignition\n(g/kg)',
                      'Total clay\n(g/kg)')) +
