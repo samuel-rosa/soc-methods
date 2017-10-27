@@ -231,30 +231,12 @@ prepare_beta_table <-
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Table with estimated model parameters por tau = 0.025
-tau <- 0.025
-betas_lower <- prepare_beta_table(fit_lower)
-panderOptions('round', rep(4, ncol(betas_lower)))
-panderOptions('table.split.cells', rep(100 / ncol(betas_lower), ncol(betas_lower)))
-pander(betas_lower, caption = glue('(\\#tab:coefficients) Estimated coefficients of soil carbon and organic matter pedotransfer functions and their respective lower and upper bounds. Coefficients of the $\\tau = {tau}$ quantile regression models are as follows: $\\Beta_0$ -- intercept, $\\Beta_1$ -- soil carbon and organic matter content.'))
-```
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Table with estimated model parameters por tau = 0.5
 tau <- 0.5
 betas_median <- prepare_beta_table(fit_median)
 panderOptions('round', rep(4, ncol(betas_median)))
 panderOptions('table.split.cells', rep(100 / ncol(betas_median), ncol(betas_median)))
-pander(betas_median, caption = glue('(\\#tab:coefficients) Estimated coefficients of soil carbon and organic matter pedotransfer functions and their respective lower and upper bounds. Coefficients of the $\\tau = {tau}$ quantile regression models are as follows: $\\Beta_0$ -- intercept, $\\Beta_1$ -- soil carbon and organic matter content.'))
-```
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Table with estimated model parameters por tau = 0.975
-tau <- 0.975
-betas_upper <- prepare_beta_table(fit_upper)
-panderOptions('round', rep(4, ncol(betas_upper)))
-panderOptions('table.split.cells', rep(100 / ncol(betas_upper), ncol(betas_upper)))
-pander(betas_upper, caption = glue('(\\#tab:coefficients) Estimated coefficients of soil carbon and organic matter pedotransfer functions and their respective lower and upper bounds. Coefficients of the $\\tau = {tau}$ quantile regression models are as follows: $\\Beta_0$ -- intercept, $\\Beta_1$ -- soil carbon and organic matter content.'))
+pander(betas_median, caption = glue('(\\#tab:coefficients-median) Estimated coefficients of carbon and organic matter pedotransfer functions and their respective confidence interval. Coefficients are as follows: $\\Beta_0$ -- intercept, $\\Beta_1$ -- soil carbon and organic matter content.'))
 ```
 
 ```{r get_y, echo=FALSE}
@@ -293,6 +275,28 @@ colnames(cv) <- glue('**{colnames(cv)}**')
 panderOptions('round', rep(4, ncol(cv)))
 panderOptions('table.split.cells', rep(100 / ncol(cv), ncol(cv)))
 pander(cv, caption = '(\\#tab:cross-validation) Leave-one-out cross-validation results of soil carbon and organic matter pedotransfer functions. Error statistics are as follows: ME -- mean error, MedE -- median error, MAE -- mean absolute error, MedAE -- median absolute error, MSE -- mean square error, MedSE -- median square error, AVE -- amount of variance explained.')
+```
+
+The estimated parameters of the quantile regressions for the lower ($\tau = 0.025$) and upper ($\tau = 0.975$) 
+bounds of the 90% prediction interval of the carbon and organic matter pedotransfer functions are shown in 
+Tables \@ref{tab:coefficients-lower} and \@ref{tab:coefficients-upper}, respectively.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Table with estimated model parameters por tau = 0.025
+tau <- 0.025
+betas_lower <- prepare_beta_table(fit_lower)
+panderOptions('round', rep(4, ncol(betas_lower)))
+panderOptions('table.split.cells', rep(100 / ncol(betas_lower), ncol(betas_lower)))
+pander(betas_lower, caption = glue('(\\#tab:coefficients-lower) Estimated coefficients for computing the lower bound ($\\tau = {tau}$) of the prediction interval of carbon and organic matter pedotransfer functions. Coefficients are as follows: $\\Beta_0$ -- intercept, $\\Beta_1$ -- soil carbon and organic matter content.'))
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Table with estimated model parameters por tau = 0.975
+tau <- 0.975
+betas_upper <- prepare_beta_table(fit_upper)
+panderOptions('round', rep(4, ncol(betas_upper)))
+panderOptions('table.split.cells', rep(100 / ncol(betas_upper), ncol(betas_upper)))
+pander(betas_upper, caption = glue('(\\#tab:coefficients-upper) Estimated coefficients for computing the upper bound ($\\tau = {tau}$) of the prediction interval of carbon and organic matter pedotransfer functions. Coefficients are as follows: $\\Beta_0$ -- intercept, $\\Beta_1$ -- soil carbon and organic matter content.'))
 ```
 
 # References
