@@ -95,12 +95,6 @@ describes our approach for calibrating pedotransfer functions to predict the car
 We then present the soil data and the analytical methods employed. Later sections are reserved for the results 
 and some recommendations for future studies.
 
-# Pedotransfer functions
-
-<!-- and that standard significance tests are resistant to the violation of the iid-normal assumption [@Webster2001; ]. -->
-
-<!-- enabling estimating the most likely value of a soil property along with an uncertainty measure, e.g. the prediction interval. -->
-
 # Soil data
 
 ```{r, echo=FALSE, message=FALSE}
@@ -181,6 +175,12 @@ camada %>%
   layer(panel.abline(a = 0, b = 1)) +
   layer(panel.lmline(x, y, lty = 'dashed'))
 ```
+
+# Pedotransfer functions
+
+<!-- and that standard significance tests are resistant to the violation of the iid-normal assumption [@Webster2001; ]. -->
+
+<!-- enabling estimating the most likely value of a soil property along with an uncertainty measure, e.g. the prediction interval. -->
 
 # Results and Discussion
 
