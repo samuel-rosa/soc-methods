@@ -115,9 +115,34 @@ observacao <-
   mutate(uso_id = gsub('Agricultura', 'Crop agriculture', .data$uso_id)) %>% 
   mutate(uso_id = gsub('Silvicultura', 'Forestry', .data$uso_id)) %>% 
   mutate(uso_id = gsub('Campo nativo', 'Animal husbandry', .data$uso_id))
+ntaxa <- nlevels(as.factor(observacao$taxon_sibcs_2009))
 ```
 
-We evaluated the methods of estimating the organic carbon/matter content in *n* = 105 air-dried < 2 mm-soil samples collected at 27 sites in the State of Rio Grande do Sul (RS), Brazil. The samples cover eleven soil groups (Acrisols, Alisols, Cambisols, Ferralsols, Fluvisols, Gleysols, Leptosols, Nitisols, Planosols, Regosols, and Vertisols) derived from several parent materials (sedimentary, volcanic, and metamorphic). The clay content of the soil samples varies between 40 and 800 g kg^-1^ (Figure \@ref(fig:clay-content)). The mineralogical assemblage is diverse (quartz, iron oxide, and 2:1 and 1:1 phyllosilicates). Several land use types are represented: rangeland, farmland, fallow land, plantation (Eucalyptus sp.) and native forests. The climate of the sampling sites varies from humid subtropical to temperate climate, both without a defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, @DickEtAl2008, @Britzke2010, @PotesEtAl2010, Vieira (2010), @Samuel-RosaEtAl2013a, @Samuel-RosaEtAl2013]. We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
+A set of *n* = 105 air-dried < 2 mm-soil samples were used to develop our study. These soil samples were 
+collected at 27 different study sites throughout the State of Rio Grande do Sul (RS), Brazil, and cover 
+`r ntaxa` classes ofthe second hierarchical level of the Brazilian System of Soil Classification (Figure 
+\@ref(fig:soil-features)). Soil parent material varies from site to site (sedimentary, volcanic, and 
+metamorphic). The same applies to the climate, varying from humid subtropical to temperate, both without a 
+defined dry season. Mean annual precipitation across RS ranges from approximately 1300 to 2000 mm. The mean 
+annual temperature across RS is about 18°C, whichever is colder in higher sites (> 800 m a.s.l.) and warmer in
+lower sites (< 200 m a.s.l.). The combination of parent material and climate create diffrent environments for 
+soil formation and thus result in considerably different soil features. For instance, the clay content of the 
+soil samples has a large variation, going from `r min(camada$argila_naoh_pipeta)` to 
+`r max(camada$argila_naoh_pipeta)` g kg^-1^ (Figure \@ref(fig:soil-features)). The mineralogical assemblage is 
+diverse as well, including very different quantities of quartz, iron oxides, and 2:1 and 1:1 phyllosilicates. 
+Five of the most common land use types found in RS, mostly conditioned by soil features but also influencing 
+soil carbon and organic matter content are represented: animal husbandry, annual crop agriculture (rice, soya, 
+mayze, wheat), various forms of secondary vegetation, forestry (Eucalyptus and Pinus), and native forest 
+(Atlantic Forest).
+
+All soil samples were obtained with the various research groups of the Department of Soil Science of the 
+Federal University of Santa Maria who kindly agreed to share the soil material in their possession. During the
+reunion of the samples we asked the researches for samples covering various carbon contents withing three clay
+content classes: <250, 250-500, and >500 g kg^-1^. This was done to guarantee that the final set of soil 
+samples would cover the various soil types and land uses found throughout RS.
+
+
+Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, @DickEtAl2008, @Britzke2010, @PotesEtAl2010, Vieira (2010), @Samuel-RosaEtAl2013a, @Samuel-RosaEtAl2013]. We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
 
 Figure \@ref(fig:soil-features)
 
