@@ -119,8 +119,8 @@ ntaxa <- nlevels(as.factor(observacao$taxon_sibcs_2009))
 ```
 
 A set of *n* = 105 soil samples was used to develop our study. These soil samples were kindly provided by the
-various research groups of the Department of Soil Science of the Federal University of Santa Maria, located in 
-the central region of RS. Researchers were asked for air-dried <2 mm-soil samples covering various carbon 
+various research groups of the Department of Soils of the Federal University of Santa Maria (DS-UFSM), located 
+in the central region of RS. Researchers were asked for air-dried <2 mm-soil samples covering various carbon 
 contents withing three classes of clay content: <250, 250-500, and >500 g kg^-1^. These classes were created 
 as to guarantee that the final set of soil samples would likely cover most of the soil and land use types found 
 throughout RS. We then grounded the soil samples in an agate mortar (<1 mm diameter) and stored them in
@@ -156,9 +156,16 @@ p4 <- barchart(
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
-with a higher concentration between 150 and 650 g kg^-1^. 
-
-Figure \@ref(fig:soil-features)
+Many secondary features of the set of soil samples arise from Figure \@ref(fig:soil-features). For exemple, a
+large proportion of soil samples has a clay content between 150 and 650 g kg^-1^. This likely indicates that
+fewer soil reasearch has been conducted in the DS-UFSM under conditions of very low or very high clay content.
+Moreover, the topmost soil layers appear to be the most commonly studied, as well as those that present the 
+largest variation in carbon content throughout RS. Such a large variation in carbon content can also be 
+observed in the soil class RL (Neossolo Litólico), which had the largest proportion of samples (ca. 40%). 
+However, this soil class also is one of the most commonly occupied with native forests and secondary 
+vegetation, and used for forestry, due to its limitations for crop agriculture. On the other hand, animal 
+husbandry and, mainly crop agriculture, can take place on many different types of soil. In our sample set, 
+the most important soil types for crop agriculture are LV (Latossolo Vermelho) and PV (Argissolo Vermelho).
 
 # Analytical methods
 
