@@ -85,15 +85,15 @@ Studies on the comparison of methods for measuring soil carbon and organic matte
 conversion factors between analytical methods are absent in the recent Brazilian scientific literature. This 
 means that pedotransfer functions may have been employed under very different soil conditions from those in 
 which they were calibrated, i.e. for extrapolation. For example, in the southernmost Brazilian state, Rio 
-Grande do Sul (RS), the most important studies on the subject, published about ten years ago, were more 
-concerned with the Serra Gaúcha, Planalto, and Depressão Central regions, and with soil samples with an 
-organic matter content lower than 15% [@BrunettoEtAl2006; @EscosteguyEtAl2007; @RheinheimerEtAl2008]. The aim 
-of the present study is to overcome these limitation by using a large set of soil samples covering various land
-uses, soil classes, sampling depths, and clay contents, sampled in different regions of RS, for which we have 
-measured the carbon and organic matter contents using four popular analytical methods. The following section 
-describes our approach for calibrating pedotransfer functions to predict the carbon and organic matter content.
-We then present the soil data and the analytical methods employed. Later sections are reserved for the results 
-and some recommendations for future studies.
+Grande do Sul (RS), focus of this study, the most important studies on the subject, published about ten years 
+ago, were more concerned with the Serra Gaúcha, Planalto, and Depressão Central regions, and with soil samples
+with an organic matter content lower than 15% [@BrunettoEtAl2006; @EscosteguyEtAl2007; @RheinheimerEtAl2008]. 
+The aim of the present study is to overcome these regional limitation by using a large set of soil samples 
+covering various land uses, soil classes, sampling depths, and clay contents, sampled in different regions of 
+RS, for which we have measured the content of carbon by dry combustion and wet digestion, and organic matter by
+wet digestion and loss on ignition. The following sections present the soil data and the analytical methods 
+employed, and our approach for calibrating pedotransfer functions to predict the carbon and organic matter 
+content. Later sections are reserved for the results and some recommendations for future studies.
 
 # Soil data
 
