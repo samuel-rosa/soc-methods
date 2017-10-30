@@ -118,6 +118,21 @@ observacao <-
 ntaxa <- nlevels(as.factor(observacao$taxon_sibcs_2009))
 ```
 
+A set of *n* = 105 soil samples was used to develop our study. These soil samples were kindly provided by the
+various research groups of the Department of Soil Science of the Federal University of Santa Maria, located in 
+the central region of RS. Researchers were asked for air-dried <2 mm-soil samples covering various carbon 
+contents withing three classes of clay content: <250, 250-500, and >500 g kg^-1^. These classes were created 
+as to guarantee that the final set of soil would likely cover most of the soil and land use types found 
+throughout RS. We then grounded the soil samples in an agate mortar (<1 mm diameter) and stored them in
+microtubes (Eppendorf type) in the dark at room temperature until analysis. A description of the soil samples
+collection procedures can be found in the studies of @CasaliEtAl2006, @DickEtAl2008, @Britzke2010, 
+@PotesEtAl2010, Vieira (2010), @Samuel-RosaEtAl2013a and @Samuel-RosaEtAl2013.
+
+<!-- During the reunion of the samples we asked the researches for soil samples covering various carbon contents  -->
+<!-- withing three clay content classes: <250, 250-500, and >500 g kg^-1^. This was done to guarantee that the final -->
+<!-- set of soil samples would cover the various soil types and land uses found throughout RS. -->
+
+
 A set of *n* = 105 air-dried < 2 mm-soil samples were used to develop our study. These soil samples were 
 collected at 27 different study sites throughout the State of Rio Grande do Sul (RS), Brazil, and cover 
 `r ntaxa` classes ofthe second hierarchical level of the Brazilian System of Soil Classification (Figure 
@@ -135,14 +150,17 @@ soil carbon and organic matter content are represented: animal husbandry, annual
 mayze, wheat), various forms of secondary vegetation, forestry (Eucalyptus and Pinus), and native forest 
 (Atlantic Forest).
 
-All soil samples were obtained with the various research groups of the Department of Soil Science of the 
-Federal University of Santa Maria who kindly agreed to share the soil material in their possession. During the
-reunion of the samples we asked the researches for samples covering various carbon contents withing three clay
-content classes: <250, 250-500, and >500 g kg^-1^. This was done to guarantee that the final set of soil 
-samples would cover the various soil types and land uses found throughout RS.
+<!-- All soil samples were obtained with the various research groups of the Department of Soil Science of the  -->
+<!-- Federal University of Santa Maria who kindly agreed to share the soil material in their possession. During the -->
+<!-- reunion of the samples we asked the researches for samples covering various carbon contents withing three clay -->
+<!-- content classes: <250, 250-500, and >500 g kg^-1^. This was done to guarantee that the final set of soil  -->
+<!-- samples would cover the various soil types and land uses found throughout RS. -->
 
 
-Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, @DickEtAl2008, @Britzke2010, @PotesEtAl2010, Vieira (2010), @Samuel-RosaEtAl2013a, @Samuel-RosaEtAl2013]. We grounded the soil samples in an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until analysis.
+<!-- Soil samples collection procedures are described elsewhere [@CasaliEtAl2006, @DickEtAl2008, @Britzke2010, -->
+<!-- @PotesEtAl2010, Vieira (2010), @Samuel-RosaEtAl2013a, @Samuel-RosaEtAl2013]. We grounded the soil samples in  -->
+<!-- an agate mortar (< 1 mm) and stored them in microtubes (Eppendorf type) in the dark at room temperature until -->
+<!-- analysis. -->
 
 Figure \@ref(fig:soil-features)
 
