@@ -121,10 +121,10 @@ ntaxa <- nlevels(as.factor(observacao$taxon_sibcs_2009))
 A set of *n* = 105 soil samples was used to develop our study. These soil samples were kindly provided by the
 various research groups of the Department of Soils of the Federal University of Santa Maria (DS-UFSM), located 
 in the central region of RS. Researchers were asked for air-dried <2 mm-soil samples covering various carbon 
-contents withing three classes of clay content: <250, 250-500, and >500 g kg^-1^. These classes were created 
+contents within three classes of clay content: <250, 250-500, and >500 g kg^-1^. These classes were created 
 as to guarantee that the final set of soil samples would likely cover most of the soil and land use types found 
 throughout RS. We then grounded the soil samples in an agate mortar (<1 mm diameter) and stored them in
-microtubes (Eppendorf type) in the dark at room temperature until analysis. A description of the soil sampling
+micro tubes (Eppendorf type) in the dark at room temperature until analysis. A description of the soil sampling
 procedures can be found in the studies of @CasaliEtAl2006, @DickEtAl2008, @Britzke2010, @PotesEtAl2010, 
 @Vieira2010, @Samuel-RosaEtAl2013a and @Samuel-RosaEtAl2013.
 
@@ -138,8 +138,8 @@ of the samples is diverse, with soil samples containing very different quantitie
 2:1 and 1:1 phyllosilicates. This variation has also been conditioned by the climate of RS, varying from humid 
 subtropical to temperate, both without a defined dry season. The mean annual precipitation ranges from 
 approximately 1300 to 2000 mm. The mean annual temperature is about 18°C, whichever is colder in higher sites 
-(> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Finnaly, five of the most common land use types 
-found in RS are represented: animal husbandry, annual crop agriculture (rice, soya, mayze, wheat), various 
+(> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Finally, five of the most common land use types 
+found in RS are represented: animal husbandry, annual crop agriculture (rice, soya, maize, wheat), various 
 forms of secondary vegetation, forestry (Eucalyptus and Pinus), and native forest (Atlantic Forest).
 
 ```{r soil-features, echo=FALSE, fig.cap='Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.', fig.width=14, fig.height=14, dpi=300}
@@ -156,9 +156,9 @@ p4 <- barchart(
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
-Many secondary features of the set of soil samples arise from Figure \@ref(fig:soil-features). For exemple, a
+Many secondary features of the set of soil samples arise from Figure \@ref(fig:soil-features). For example, a
 large proportion of soil samples has a clay content between 150 and 650 g kg^-1^. This likely indicates that
-fewer soil reasearch has been conducted in the DS-UFSM under conditions of very low or very high clay content.
+fewer soil research has been conducted in the DS-UFSM under conditions of very low or very high clay content.
 Moreover, the topmost soil layers appear to be the most commonly studied, as well as those that present the 
 largest variation in carbon content throughout RS. Such a large variation in carbon content can also be 
 observed in the soil class RL (Neossolo Litólico), which had the largest proportion of samples (ca. 40%). 
@@ -171,7 +171,14 @@ the most important soil types for crop agriculture are LV (Latossolo Vermelho) a
 
 ## Total carbon by dry combustion
 
-Sample aliquots of 50 to 60 mg [ESTES VALORES ESTÃO CORRETOS???] in titanium capsules were used to estimate the total soil organic carbon content in an elementary CHNS analyzer (FlashEA 1112, Thermo Finnigan, Milan, Italy).
+Sample aliquots of 50 to 60 mg -- depending on the expected carbon content -- were placed in titanium 
+micro-capsules with a net capacity of 100 mg. Weighing was done on an analytical balance with a precision of 
+0.01 mg. Micro-capsules were sealed and placed in a furnace at a temperature of 950°C in the presence of oxygen
+and chromium oxide (Cr~2~O~3~). The carbon dioxide (CO~2~) resulting from the oxidation of soil carbon was 
+carried by helium (He) through a magnesium perchlorate (Mg(ClO~4~)~2~) column to remove water molecules. Next 
+the carbon dioxide entered a gas chromatograph column at 50°C where it was detected by thermal conductivity. 
+The quantity of carbon in the soil sample was determined by integrating the chromatographic peaks. These 
+analytical procedures were carried out using a Thermo Finnigan FlashEA 1112 Series CHNS analyser.
 
 ## Organic carbon by wet digestion
 
