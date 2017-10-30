@@ -174,15 +174,26 @@ the most important soil types for crop agriculture are LV (Latossolo Vermelho) a
 Sample aliquots of 50 to 60 mg -- depending on the expected carbon content -- were placed in titanium 
 micro-capsules with a net capacity of 100 mg. Weighing was done on an analytical balance with a precision of 
 0.01 mg. Micro-capsules were sealed and placed in a furnace at a temperature of 950°C in the presence of oxygen
-and chromium oxide (Cr~2~O~3~). The carbon dioxide (CO~2~) resulting from the oxidation of soil carbon was 
-carried by helium (He) through a magnesium perchlorate (Mg(ClO~4~)~2~) column to remove water molecules. Next 
+and chromium oxide [Cr~2~O~3~]. The carbon dioxide [CO~2~] resulting from the oxidation of soil carbon was 
+carried by helium [He] through a magnesium perchlorate [Mg(ClO~4~)~2~] column to remove water molecules. Next 
 the carbon dioxide entered a gas chromatograph column at 50°C where it was detected by thermal conductivity. 
 The quantity of carbon in the soil sample was determined by integrating the chromatographic peaks. These 
 analytical procedures were carried out using a Thermo Finnigan FlashEA 1112 Series CHNS analyser.
 
 ## Organic carbon by wet digestion
 
-Sample aliquots of 0.050 to 0.500 g were placed in glass digestion tubes (80 mL). The amount of sample used varied according to the SOM content estimated through visual interpretation of soil color. The correlation between SOM content and sample aliquot used as calculated in the input training dataset is r = -0.8436. Every digestion tube received an aliquot of 10 mL of 0.067 mol L-1 sulfocromic solution [K2Cr2O7 + H2SO4] and a small reflux funnel to avoid loss of reagent during digestion. A digestion block with capacity for 40 samples was used: 36 tubes with soil sample + 3 tubes with blank + 1 tube with sulfuric acid [H~2~SO~4~] and a thermometer for temperature measurement. Digestion at 150ºC last 30 min. Three blanks were prepared and set aside at room temperature to estimate the loss of reagent due to heat in the digestion block. After digestion the tubes were set aside at room temperature to cool down. Next, we transfered the solution to Erlenmeyer flasks (250 mL) with 60 mL of distilled water and 2 mL of concentrated orthophosphoric acid [H~3~PO~4~] and 3 drops of 1% diphenylamine. The solution was titrated using 0.1 mol L^-1^ ammonium ferrous sulfate [Fe(NH~4~)~2~(SO~4~])~2~.6H~2~O] until persistent green color. This method was originaly adapted from @Mebius1960 and @YeomansEtAl1988.
+Sample aliquots of 0.050 to 0.500 g were placed in glass digestion tubes with a net capacity of 80 mL. The 
+amount of sample used varied according to the carbon content estimated through visual interpretation of soil 
+color. Every digestion tube received an aliquot of 10 mL of 0.067 mol L-1 sulfocromic solution 
+[K~2~Cr~2~O~7~ + H~2~SO~4~] and a small reflux funnel to avoid loss of reagent during digestion. A digestion 
+block with capacity for 40 samples was used: 36 tubes with soil sample + 3 tubes with blank + 1 tube with 
+sulfuric acid [H~2~SO~4~] and a thermometer for temperature measurement. Digestion at 150ºC last 30 min. Three
+blanks were prepared and set aside at room temperature to estimate the loss of reagent due to heat in the 
+digestion block. After digestion the tubes were set aside at room temperature to cool down. Next, we transfered
+the solution to Erlenmeyer flasks (250 mL) with 60 mL of distilled water and 2 mL of concentrated 
+orthophosphoric acid [H~3~PO~4~] and 3 drops of 1% diphenylamine. The solution was titrated using 0.1 mol 
+L^-1^ ammonium ferrous sulfate [Fe(NH~4~)~2~(SO~4~])~2~.6H~2~O] until persistent green color. Further
+references to this analytical method are made by @Mebius1960, @YeomansEtAl1988 and @RheinheimerEtAl2008.
 
 ## Organic matter by wet digestion
 
