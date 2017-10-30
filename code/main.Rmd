@@ -197,7 +197,15 @@ references to this analytical method are made by @Mebius1960, @YeomansEtAl1988 a
 
 ## Organic matter by wet digestion
 
-Adapted from @TedescoEtAl1995. Sample aliquots of 2.5 mL were placed in Erlenmeyer flasks (50mL). Every Erlenmeyer flask received an aliquot of 15 mL of 0.067 mol L^-1^ sulfocromic solution [Na~2~Cr~2~O~7~ + H~2~SO~4~]. The flasks were heated in a water bath at 75 to 80°C during 30 min and shaken for 5 min. A water aliquot of 15 mL was added to the flask and let overnight (15 to 18 hours). In the next day, we sampled an aliquot of 3.0 mL to a small cup with 3.0 mL of distilled water. The supernatant absorbance was measured at 645 nm. We weighted 2.5 mL of each soil sample to calculate the sample density and transform the results to a weight basis.
+Sample aliquots of 2.5 mL were placed in Erlenmeyer flasks with a net capacity of 50 mL. Every Erlenmeyer flask
+received an aliquot of 15 mL of 0.067 mol L^-1^ sulfocromic solution [Na~2~Cr~2~O~7~ + H~2~SO~4~]. The flasks 
+were heated in a water bath at 75 to 80°C during 30 min and shaken for 5 min. A water aliquot of 15 mL was 
+added to the flask, which was then let overnight (15 to 18 hours). In the next day, an aliquot of 3.0 mL was 
+sampled to a small cup with 3.0 mL of distilled water. The supernatant absorbance was measured at 645 nm.
+
+We weighted 2.5 mL of each soil sample to calculate the sample density and transform the results to a weight basis.
+
+Adapted from @TedescoEtAl1995. 
 
 ## Organic matter by loss on ignition
 
