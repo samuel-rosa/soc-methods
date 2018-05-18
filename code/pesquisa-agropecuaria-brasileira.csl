@@ -125,7 +125,7 @@
   </macro>
   
   <!--A macro 'author' e responsavel por mostrar os nomes dos autores na bibliografia, serao no formato 
-  SOBRENOME, INICIAIS PRENOMES, tendo as inicias separadas por ponto.-->
+  SOBRENOME, INICIAIS PRENOMES, tendo as inicias separadas por ponto e um espaço.-->
   <macro name="author">
     <names variable="author">
       <name name-as-sort-order="all" sort-separator=", " initialize-with=". " delimiter="; " delimiter-precedes-last="always">
@@ -141,7 +141,7 @@
     </names>
   </macro>
   
-  <!--A macro 'author-short' e responsavel por mostrar os nomes dos autores na citacao (no meio do texto). Nela
+  <!--A macro 'author-short' é responsável por mostrar os nomes dos autores na citacao (no meio do texto). Nela
   aparecera apenas o ultimo nome do autor. Na regra da PAB, diferente da ABNT, apenas a primeira letra do 
   sobrenome deve aparecer em caixa alta-->
   <macro name="author-short">

@@ -2,7 +2,7 @@
 title: "Pedotransfer functions for predicting carbon and organic matter content in Rio Grande do Sul, Brazil"
 author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
 date: "12 October 2017"
-bibliography: "~/Dropbox/jabref/biblio.bib"
+bibliography: "/home/alessandro/Dropbox/jabref/biblio.bib"
 csl: pesquisa-agropecuaria-brasileira.csl
 output: bookdown::html_document2
 ---
@@ -20,6 +20,7 @@ library(magrittr)
 library(latticeExtra)
 library(quantreg)
 library(glue)
+library(febr)
 library(pander)
 panderOptions('table.alignment.default', 'left')
 panderOptions('keep.trailing.zeros', TRUE)
@@ -98,6 +99,7 @@ content. Later sections are reserved for the results and some recommendations fo
 # Soil data
 
 ```{r, echo=FALSE, message=FALSE}
+# camada <- layers(dataset = "ctb0029", soil.vars = "all")
 camada <- readr::read_csv('../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = 'unidade')
 camada <-
   camada %>% 
@@ -107,6 +109,7 @@ camada <-
 ```
 
 ```{r, echo=FALSE, message=FALSE}
+# observacao <- observations(dataset = "ctb0029", variable = "all", missing.coords = "keep", stack.obs = FALSE)
 observacao <- readr::read_csv('../data/observacao.csv', locale = readr::locale(decimal_mark = ','), na = '-')
 observacao <-
   observacao %>% 
@@ -145,7 +148,7 @@ forms of secondary vegetation, forestry (Eucalyptus and Pinus), and native fores
 ```{r soil-features, echo=FALSE, fig.cap='Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.', fig.width=14, fig.height=14, dpi=300}
 p1 <- histogram(
   ~ argila_naoh_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', col = 'lightgray') +
-  layer(panel.abline(v = c(250, 500), lty = 'dotted'))
+  latticeExtra::layer(panel.abline(v = c(250, 500), lty = 'dotted'))
 p2 <- histogram(
   ~ prof_sup, camada, xlab = 'Sampling depth (cm)', ylab = 'Percent of total', col = 'lightgray')
 p3 <- barchart(
@@ -224,15 +227,21 @@ Sample aliquots of 300 to 500 mg in hand-made aluminium capsules (20 mg) (oven d
 Figure \@ref(fig:carbon-histogram)
 
 ```{r carbon-histogram, echo=FALSE, fig.cap='Empirical probability density of carbon and organic matter content in soil samples according to the four analythical methods and the theoretical normal probability density function (dashed line).', fig.width=14, fig.height=14, dpi=300}
-l <- layer(panel.mathdensity(dmath = dnorm, args = list(mean = mean(x), sd = sd(x)), n = length(x), col = 'black', lty = 'dashed'))
+l <- latticeExtra::layer(
+  panel.mathdensity(
+    dmath = dnorm, args = list(mean = mean(x), sd = sd(x)), n = length(x), col = 'black', lty = 'dashed'))
 p1 <- histogram(
-  ~ carbono_dry, camada, xlab = 'Total carbon content by dry combustion (g/kg)', col = 'lightgray', type = "density") + l
+  ~ carbono_dry, camada, xlab = 'Total carbon content by dry combustion (g/kg)', col = 'lightgray',
+  type = "density") + l
 p2 <- histogram(
-  ~ carbono_wet, camada, xlab = 'Organic carbon content by wet digestion (g/kg)', col = 'lightgray', type = "density") + l
+  ~ carbono_wet, camada, xlab = 'Organic carbon content by wet digestion (g/kg)', col = 'lightgray', 
+  type = "density") + l
 p3 <- histogram(
-  ~ mo_wet, camada, xlab = 'Organic matter content by wet digestion (g/kg)', col = 'lightgray', type = "density") + l
+  ~ mo_wet, camada, xlab = 'Organic matter content by wet digestion (g/kg)', col = 'lightgray', 
+  type = "density") + l
 p4 <- histogram(
-  ~ mo_loi, camada, xlab = 'Organic matter content by loss on ignition (g/kg)', col = 'lightgray', type = "density") + l
+  ~ mo_loi, camada, xlab = 'Organic matter content by loss on ignition (g/kg)', col = 'lightgray', 
+  type = "density") + l
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
@@ -245,8 +254,8 @@ camada %>%
         varnames = c('Total carbon\nby dry combustion\n(g/kg)', 'Organic carbon\nby wet digestion\n(g/kg)',
                      'Organic matter\nby wet digestion\n(g/kg)', 'Organic matter\nby loss on ignition\n(g/kg)',
                      'Total clay\n(g/kg)')) +
-  layer(panel.abline(a = 0, b = 1)) +
-  layer(panel.lmline(x, y, lty = 'dashed'))
+  latticeExtra::layer(panel.abline(a = 0, b = 1)) +
+  latticeExtra::layer(panel.lmline(x, y, lty = 'dashed'))
 ```
 
 # Pedotransfer functions
