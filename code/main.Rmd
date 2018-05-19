@@ -113,11 +113,11 @@ camada <-
 observacao <- readr::read_csv('../data/observacao.csv', locale = readr::locale(decimal_mark = ','), na = '-')
 observacao <-
   observacao %>% 
-  mutate(uso_id = gsub('Floresta', 'Native forest', .data$uso_id)) %>% 
-  mutate(uso_id = gsub('Vegetação secundária', 'Secondary vegetation', .data$uso_id)) %>% 
-  mutate(uso_id = gsub('Agricultura', 'Crop agriculture', .data$uso_id)) %>% 
-  mutate(uso_id = gsub('Silvicultura', 'Forestry', .data$uso_id)) %>% 
-  mutate(uso_id = gsub('Campo nativo', 'Animal husbandry', .data$uso_id))
+  mutate(uso_id = gsub('Floresta', 'FS', .data$uso_id)) %>% # Semi-deciduous forest (vegetation slightly disturbed)
+  mutate(uso_id = gsub('Vegetação secundária', 'U', .data$uso_id)) %>% # Not used and not managed, vegetation strongly disturbed by clearing, burning, ploughing (secondary vegetation, mix of semi-deciduous shrubs and tall grassland)
+  mutate(uso_id = gsub('Agricultura', 'AA', .data$uso_id)) %>% # Annual field cropping
+  mutate(uso_id = gsub('Silvicultura', 'FP', .data$uso_id)) %>% # Plantation forestry
+  mutate(uso_id = gsub('Campo nativo', 'HE', .data$uso_id)) # Animal husbandry (extensive grazing)
 ntaxa <- nlevels(as.factor(observacao$taxon_sibcs_2009))
 ```
 
@@ -147,16 +147,35 @@ forms of secondary vegetation, forestry (Eucalyptus and Pinus), and native fores
 
 ```{r soil-features, echo=FALSE, fig.cap='Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.', fig.width=14, fig.height=14, dpi=300}
 p1 <- histogram(
-  ~ argila_naoh_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', col = 'lightgray') +
+  ~ argila_naoh_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', col = 'lightgray',
+  panel = function (...) {
+    lattice::panel.grid(v = -1, h = -1)
+    lattice::panel.histogram(...)
+  }) +
   latticeExtra::layer(panel.abline(v = c(250, 500), lty = 'dotted'))
 p2 <- histogram(
-  ~ prof_sup, camada, xlab = 'Sampling depth (cm)', ylab = 'Percent of total', col = 'lightgray')
+  ~ prof_sup, camada, xlab = 'Sampling depth (cm)', ylab = 'Percent of total', col = 'lightgray',
+  panel = function (...) {
+    lattice::panel.grid(v = -1, h = -1)
+    lattice::panel.histogram(...)
+  })
 p3 <- barchart(
   observacao$taxon_sibcs_2009, xlab = 'Soil classification', ylab = 'Percent of total', horizontal = FALSE, 
-  col = 'lightgray')
+  col = 'lightgray', scales = list(x = list(rot = 60)),
+  panel = function (...) {
+    lattice::panel.grid(h = -1, v = 0)
+    lattice::panel.barchart(...)
+  })
 p4 <- barchart(
-  observacao$uso_id, xlab = 'Land use and ocupation', ylab = 'Percent of total', horizontal = FALSE, col = 'lightgray')
+  observacao$uso_id, xlab = 'Land use and ocupation', ylab = 'Percent of total', horizontal = FALSE, 
+  col = 'lightgray',
+  panel = function (...) {
+    lattice::panel.grid(h = -1, v = 0)
+    lattice::panel.barchart(...)
+  })
+png("../res/fig/features-soil-samples.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
+dev.off()
 ```
 
 Many secondary features of the set of soil samples arise from Figure \@ref(fig:soil-features). For example, a
