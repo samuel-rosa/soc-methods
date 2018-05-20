@@ -127,33 +127,32 @@ Includes a description of the four analytical methods used:
 3. Organic matter (OM) by wet digestion
 4. Total organic matter (TOM) by loss on ignition
 
+## Exploratory data analysis
 
+### Figure 3
 
+Empirical probability density of carbon and organic matter content in soil samples according to the four analythical methods and the theoretical normal probability density function (dashed line).
 
-
-
-
-# Exploratory data analysis
-
-Figure \@ref(fig:carbon-histogram)
-
-```{r carbon-histogram, echo=FALSE, fig.cap='Empirical probability density of carbon and organic matter content in soil samples according to the four analythical methods and the theoretical normal probability density function (dashed line).', fig.width=14, fig.height=14, dpi=300}
+```{r}
 l <- latticeExtra::layer(
   panel.mathdensity(
-    dmath = dnorm, args = list(mean = mean(x), sd = sd(x)), n = length(x), col = 'black', lty = 'dashed'))
+    dmath = dnorm, args = list(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)), n = length(x), 
+    col = 'black', lty = 'dashed'))
 p1 <- histogram(
-  ~ carbono_dry, camada, xlab = 'Total carbon content by dry combustion (g/kg)', col = 'lightgray',
-  type = "density") + l
+  ~ carbono_fornalha_1min950_cgdct, camada, 
+  xlab = expression('Total organic carbon (TOC), g kg'^'-1'), col = 'lightgray', type = "density") + l
 p2 <- histogram(
-  ~ carbono_wet, camada, xlab = 'Organic carbon content by wet digestion (g/kg)', col = 'lightgray', 
-  type = "density") + l
+  ~ carbono_dicromato_30min150_mohr, camada, 
+  xlab = expression('Organic carbon (OC), g kg'^'-1'), col = 'lightgray', type = "density") + l
 p3 <- histogram(
-  ~ mo_wet, camada, xlab = 'Organic matter content by wet digestion (g/kg)', col = 'lightgray', 
-  type = "density") + l
+  ~ matorg_dicromato_30min80_eam, camada, 
+  xlab = expression('Organic matter (OM), g dm'^'-3'), col = 'lightgray', type = "density") + l
 p4 <- histogram(
-  ~ mo_loi, camada, xlab = 'Organic matter content by loss on ignition (g/kg)', col = 'lightgray', 
-  type = "density") + l
+  ~ matorg_fornalha_120min360_massa, camada, 
+  xlab = expression('Total organic matter (TOM), g kg'^'-1'), col = 'lightgray', type = "density") + l
+png("../res/fig/carbon-histograms.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
+dev.off()
 ```
 
 Figure \@ref(fig:correlation-matrix)
