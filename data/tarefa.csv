@@ -1,0 +1,15 @@
+dataset_versao,publicacao_data,contribuidor_nome,tarefa_descricao
+1.0,15/01/2018,Alessandro Samuel-Rosa,"Tabela dataset: dados carregados para febr; informações básicas adicionadas; dados publicados;
+Tabela observacao: dados carregados para febr; processamento inicial dos dados; dados publicados;"
+1.1,16/01/2018,Alessandro Samuel-Rosa,"Tabela camada: dados carregados para febr; formatação básica; redefinição de variáveis; dados publicados;
+Tabela metadado: dados carregados para febr; formatação básica; redefinição de variáveis; dados publicados;"
+1.2,17/01/2018,Alessandro Samuel-Rosa,"Tabela camada: redefinição de variáveis;
+Tabela metadado: redefinição de variáveis; descrição de variáveis;"
+1.3,29/01/2018,Alessandro Samuel-Rosa,"dataset: atualiza versão;
+observacao: renomeia coluna terra_usoatual;
+camada: renomeia coluna argila e densidade;
+metadado: atualiza código, nome e descrição das variáveis;"
+1.4,20/05/2018,Alessandro Samuel-Rosa,"camada: adiciona repetições da densidade das alíquotas; adiciona dados originais do laboratório de rotina (matéria orgânica em % * 10 = g/dm^3)
+observacao: define EPSG:4326 como sistema de referência de coordenadas para todas as observações; adiciona coluna com informação de identificação;
+metadado: atualiza conforme alterações;
+dataset: atualiza conforme alterações;"

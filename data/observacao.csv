@@ -1,106 +1,107 @@
-observacao_id,provedor_id,observacao_data,coord_sistema,coord_x,coord_y,coord_precisao,coord_fonte,pais_id,estado_id,municipio_id,amostra_tipo,amostra_quanti,amostra_area,taxon_sibcs_2009,uso_id
-67,Alto das Canas A Davi,,,"-53,680000","-29,663611",10000,WEB,BR,RS,São Gabriel,simples,1,1,PV,Agricultura
-66,Alto das Canas B Davi,,,"-53,680000","-29,663611",10000,WEB,BR,RS,São Gabriel,simples,1,1,PV,Agricultura
-90,AR-CM-0-5,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
-79,AR-MN-0-20,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Floresta
-88,AR-MN-0-5,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Floresta
-93,AR-MN-20-40,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Floresta
-97,AR-MN-40-60,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Floresta
-82,AR-PN-0-20,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
-86,AR-PN-20-40,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
-95,AR-PN-40-60,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
-83,AR-PQ-0-20,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
-89,AR-PQ-0-5,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
-91,AR-PQ-20-40,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
-98,AR-PQ-40-60,xx-xx-2006,,"-50,428333","-27,369444",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
-4,Beto,,,"-52,851111","-28,331389",10000,WEB,BR,RS,Paraíso do Sul,simples,1,1,-,Agricultura
-5,Beto,,,"-52,193056","-28,315833",10000,WEB,BR,RS,Santa Maria,simples,1,1,-,Agricultura
-12,Beto,,,"-52,193056","-28,315833",10000,WEB,BR,RS,Santa Maria,simples,1,1,-,Agricultura
-15,Beto,,,"-52,625000","-28,186667",10000,WEB,BR,RS,Restinga Seca,simples,1,1,-,Agricultura
-16,Beto,,,"-49,480278","-28,182500",10000,WEB,BR,RS,Santo Antônio da Patrulha,simples,1,1,-,Agricultura
-23,Beto,,,"-52,193056","-28,315833",10000,WEB,BR,RS,Santa Maria,simples,1,1,-,Agricultura
-26,Beto,,,"-53,680000","-29,663611",10000,WEB,BR,RS,São Gabriel,simples,1,1,-,Agricultura
-44,Beto,,,"-56,911667","-28,245278",10000,WEB,BR,RS,Uruguaiana,simples,1,1,-,Agricultura
-51,Beto,,,"-50,820556","-28,831944",10000,WEB,BR,RS,Caxias do Sul,simples,1,1,-,Agricultura
-54,Beto,,,"-53,326944","-29,017222",10000,WEB,BR,RS,Dom Pedrito,simples,1,1,-,Agricultura
-61,Beto,,,"-49,416389","-28,551944",10000,WEB,BR,RS,São Francisco de Paula,simples,1,1,-,Agricultura
-62,Beto,,,"-50,820556","-28,831944",10000,WEB,BR,RS,Caxias do Sul,simples,1,1,-,Agricultura
-63,Beto,,,"-49,066111","-27,487778",10000,WEB,BR,RS,Vacaria,simples,1,1,-,Agricultura
-64,Beto,,,"-50,818333","-28,971111",10000,WEB,BR,RS,Flores da Cunha,simples,1,1,-,Agricultura
-65,Beto,,,"-49,583333","-27,332222",10000,WEB,BR,RS,Bom Jesus,simples,1,1,-,Agricultura
-74,Beto,,,"-50,720833","-27,180000",10000,WEB,BR,RS,Ipê,simples,1,1,-,Agricultura
-78,Beto,,,"-49,583333","-27,332222",10000,WEB,BR,RS,Bom Jesus,simples,1,1,-,Agricultura
-10,Darinês,,,"-52,631944","-32,481111",10000,WEB,BR,RS,Santa Vitória do Palmar,simples,1,1,SX,Agricultura
-24,Darinês,,,"-50,906111","-28,048889",10000,WEB,BR,RS,Cachoeirinha,simples,1,1,GX,Agricultura
-46,Darinês,,,"-52,508611","-29,487778",10000,WEB,BR,RS,Caçapava do Sul,simples,1,1,SX,Agricultura
-99,Darinês,,,"-50,187778","-29,148889",10000,WEB,BR,RS,Camaquã,simples,1,1,GM,Agricultura
-94,Erexim A Davi,,,"-51,251667","-27,439722",10000,WEB,BR,RS,Victor Graeff,simples,1,1,LV,Agricultura
-103,Erexim B Davi,,,"-51,251667","-27,439722",10000,WEB,BR,RS,Victor Graeff,simples,1,1,LV,Agricultura
-104,Escobar B Davi,,,"-54,467222","-29,109167",10000,WEB,BR,RS,Santana do Livramento,simples,1,1,VE,Campo nativo
-100,Estação A Davi,,,"-50,474167","-27,791389",10000,WEB,BR,RS,Lagoa Vermelha,simples,1,1,NV,Agricultura
-101,Estação B Davi,,,"-50,474167","-27,791389",10000,WEB,BR,RS,Lagoa Vermelha,simples,1,1,NV,Agricultura
-70,Farroupilha A Davi,,,"-50,652222","-28,775000",10000,WEB,BR,RS,Farroupilha,simples,1,1,CH,Agricultura
-105,Farroupilha B Davi,,,"-50,652222","-28,775000",10000,WEB,BR,RS,Farroupilha,simples,1,1,CH,Agricultura
-68,Passo Fundo A Davi,,,"-51,593333","-27,737222",10000,WEB,BR,RS,Passo Fundo,simples,1,1,LV,Agricultura
-69,Piraí B Davi,,,"-53,680000","-29,663611",10000,WEB,BR,RS,São Gabriel,simples,1,1,TX,Campo nativo
-28,São Pedro A Davi,,,"-53,821111","-28,379444",10000,WEB,BR,RS,São Pedro do Sul,simples,1,1,PV,Agricultura
-80,SJA-B1-10-15,05-05-2006,EPSG:4326,"-49,886694","-28,594722",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-59,SJA-B1-5-10,05-05-2006,EPSG:4326,"-49,886694","-28,594722",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-84,SJA-B14-10-15,05-05-2006,EPSG:4326,"-49,956242","-28,657612",100,MAP,BR,RS,São José dos Ausentes,simples,1,1,CH,Campo nativo
-85,SJA-B15-5-10,05-05-2006,EPSG:4326,"-49,956111","-28,657778",100,MAP,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-57,SJA-B2-0-5,05-05-2006,EPSG:4326,"-49,886778","-28,594306",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-87,SJA-B2-10-15,05-05-2006,EPSG:4326,"-49,886778","-28,594306",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-75,SJA-B2-5-10,05-05-2006,EPSG:4326,"-49,886778","-28,594306",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-58,SJA-B3-0-5,05-05-2006,EPSG:4326,"-49,860361","-28,593444",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-73,SJA-B3-10-15,05-05-2006,EPSG:4326,"-49,860361","-28,593444",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-81,SJA-B3-15-30,05-05-2006,EPSG:4326,"-49,860361","-28,593444",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-71,SJA-B3-5-10,05-05-2006,EPSG:4326,"-49,860361","-28,593444",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-60,SJA-B4-0-5,05-05-2006,EPSG:4326,"-49,860194","-28,593306",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-77,SJA-B4-10-15,05-05-2006,EPSG:4326,"-49,860194","-28,593306",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-72,SJA-B4-5-10,05-05-2006,EPSG:4326,"-49,860194","-28,593306",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-92,SJA-B6-10-15,05-05-2006,EPSG:4326,"-49,865806","-28,594833",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-96,SJA-B6-15-30,05-05-2006,EPSG:4326,"-49,865806","-28,594833",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-76,SJA-B6-5-10,05-05-2006,EPSG:4326,"-49,865806","-28,594833",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
-1,sm-dnos-001@ctb0003,10/02/09,EPSG:4326,"-53,794645","-29,651271",15,GPS,BR,RS,,composta,3,100,RY,Campo nativo
-6,sm-dnos-011@ctb0003,10/02/09,EPSG:4326,"-53,792816","-29,648040",15,GPS,BR,RS,,composta,3,100,PBAC,Vegetação secundária
-2,sm-dnos-026@ctb0003,11/02/09,EPSG:4326,"-53,786729","-29,650198",15,GPS,BR,RS,,composta,3,100,PBAC,Vegetação secundária
-7,sm-dnos-032@ctb0003,11/02/09,EPSG:4326,"-53,783580","-29,643612",15,GPS,BR,RS,,composta,3,100,PBAC,Floresta
-3,sm-dnos-037@ctb0003,11/02/09,EPSG:4326,"-53,789106","-29,649981",15,GPS,BR,RS,,composta,3,100,PBAC,Floresta
-8,sm-dnos-054@ctb0003,12/02/09,EPSG:4326,"-53,794759","-29,657190",15,GPS,BR,RS,,composta,3,100,PBAC,Campo nativo
-41,sm-dnos-107@ctb0003,06/03/09,EPSG:4326,"-53,819961","-29,644967",15,GPS,BR,RS,,composta,3,100,RR,Floresta
-42,sm-dnos-108@ctb0003,06/03/09,EPSG:4326,"-53,817577","-29,645775",15,GPS,BR,RS,,composta,3,100,CX,Campo nativo
-11,sm-dnos-118@ctb0003,07/03/09,EPSG:4326,"-53,813880","-29,647975",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-27,sm-dnos-140@ctb0003,14/03/09,EPSG:4326,"-53,787549","-29,641442",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-29,sm-dnos-143@ctb0003,14/03/09,EPSG:4326,"-53,786019","-29,637508",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-39,sm-dnos-147@ctb0003,14/03/09,EPSG:4326,"-53,770017","-29,640732",15,GPS,BR,RS,,composta,3,100,RL,Silvicultura
-47,sm-dnos-152@ctb0003,14/03/09,EPSG:4326,"-53,770344","-29,638366",15,GPS,BR,RS,,composta,3,100,PVA,Agricultura
-56,sm-dnos-154@ctb0003,14/03/09,EPSG:4326,"-53,770128","-29,635703",15,GPS,BR,RS,,composta,3,100,PV,Silvicultura
-55,sm-dnos-155@ctb0003,14/03/09,EPSG:4326,"-53,770967","-29,633143",15,GPS,BR,RS,,composta,3,100,PV,Agricultura
-17,sm-dnos-178@ctb0003,17/03/09,EPSG:4326,"-53,783879","-29,649234",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-40,sm-dnos-185@ctb0003,18/03/09,EPSG:4326,"-53,775240","-29,627960",15,GPS,BR,RS,,composta,3,100,PVA,Agricultura
-45,sm-dnos-187@ctb0003,18/03/09,EPSG:4326,"-53,779139","-29,628052",15,GPS,BR,RS,,composta,3,100,PV,Silvicultura
-38,sm-dnos-195@ctb0003,18/03/09,EPSG:4326,"-53,793258","-29,618216",15,GPS,BR,RS,,composta,3,100,RL,Vegetação secundária
-52,sm-dnos-202@ctb0003,20/03/09,EPSG:4326,"-53,789514","-29,625137",15,GPS,BR,RS,,composta,3,100,RL,Vegetação secundária
-33,sm-dnos-242@ctb0003,21/03/09,EPSG:4326,"-53,821581","-29,644180",15,GPS,BR,RS,,composta,3,100,RL,Vegetação secundária
-14,sm-dnos-243@ctb0003,21/03/09,EPSG:4326,"-53,816667","-29,643214",15,GPS,BR,RS,,composta,3,100,RL,Vegetação secundária
-21,sm-dnos-258@ctb0003,14/07/09,EPSG:4326,"-53,811102","-29,622458",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-53,sm-dnos-267@ctb0003,17/04/09,EPSG:4326,"-53,805440","-29,612475",50,GPS,BR,RS,,composta,3,100,RL,Floresta
-20,sm-dnos-271@ctb0003,19/06/09,EPSG:4326,"-53,805212","-29,627586",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-18,sm-dnos-272@ctb0003,19/06/09,EPSG:4326,"-53,806629","-29,628861",15,GPS,BR,RS,,composta,3,100,RL,Vegetação secundária
-22,sm-dnos-273@ctb0003,19/06/09,EPSG:4326,"-53,805395","-29,630352",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-31,sm-dnos-283@ctb0003,14/07/09,EPSG:4326,"-53,807754","-29,622186",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-37,sm-dnos-284@ctb0003,14/07/09,EPSG:4326,"-53,810271","-29,619944",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-9,sm-dnos-288@ctb0003,14/07/09,EPSG:4326,"-53,793397","-29,643112",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-25,sm-dnos-288@ctb0003,14/07/09,EPSG:4326,"-53,793397","-29,643112",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-32,sm-dnos-289@ctb0003,14/07/09,EPSG:4326,"-53,794785","-29,644984",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-13,sm-dnos-295@ctb0003,15/07/09,EPSG:4326,"-53,787066","-29,630181",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-35,sm-dnos-297@ctb0003,15/07/09,EPSG:4326,"-53,781947","-29,633002",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-48,sm-dnos-298@ctb0003,17/07/09,EPSG:4326,"-53,778198","-29,633508",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-34,sm-dnos-303@ctb0003,17/07/09,EPSG:4326,"-53,782053","-29,629925",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-30,sm-dnos-315@ctb0003,19/07/09,EPSG:4326,"-53,793425","-29,628681",15,GPS,BR,RS,,composta,3,100,RR,Floresta
-19,sm-dnos-318@ctb0003,19/07/09,EPSG:4326,"-53,802661","-29,635847",15,GPS,BR,RS,,composta,3,100,RL,Floresta
-36,SM-RF-10-20 @ctb0012,xx-xx-2007,EPSG:4326,"-53,580861","-29,648235",100,MAP,BR,RS,Silveira Martins,simples,1,"0,04",CX,Silvicultura
-50,SM-SC-0-10 @ctb0012,xx-xx-2007,EPSG:4326,"-53,581768","-29,648491",100,MAP,BR,RS,Silveira Martins,simples,1,"0,04",CX,Agricultura
-49,SM-SC-10-20 @ctb0012,xx-xx-2007,EPSG:4326,"-53,581768","-29,648491",100,MAP,BR,RS,Silveira Martins,simples,1,"0,04",CX,Agricultura
-43,SM-SD-0-10 @ctb0012,xx-xx-2007,EPSG:4326,"-53,580282","-29,647556",100,MAP,BR,RS,Silveira Martins,simples,1,"0,04",CX,Agricultura
-102,Vacaria B Davi,,,"-49,066111","-27,487778",10000,WEB,BR,RS,Vacaria,simples,1,1,LB,Agricultura
+observacao_id,info_identificacao,provedor_id,observacao_autor,observacao_data,coord_sistema,coord_x,coord_y,coord_precisao,coord_fonte,pais_id,estado_id,municipio_id,amostra_tipo,amostra_quanti,amostra_area,taxon_sibcs_2009,terra_usoatual
+#unidade,-,-,-,-,-,-,-,m,-,-,-,-,-,-,m^2,-,-
+67,Alto das Canas A,-,Davi Alexandre Vieira,-,EPSG:4326,"-53,68000000","-29,66361100",10000,WEB,BR,RS,São Gabriel,simples,1,1,PV,Agricultura
+66,Alto das Canas B,-,Davi Alexandre Vieira,-,EPSG:4326,"-53,68000000","-29,66361100",10000,WEB,BR,RS,São Gabriel,simples,1,1,PV,Agricultura
+90,AR-CM-0-5,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
+79,AR-MN-0-20,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Floresta
+88,AR-MN-0-5,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Floresta
+93,AR-MN-20-40,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Floresta
+97,AR-MN-40-60,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Floresta
+82,AR-PN-0-20,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
+86,AR-PN-20-40,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
+95,AR-PN-40-60,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
+83,AR-PQ-0-20,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
+89,AR-PQ-0-5,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
+91,AR-PQ-20-40,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
+98,AR-PQ-40-60,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,LV,Campo nativo
+4,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,85111100","-28,33138900",10000,WEB,BR,RS,Paraíso do Sul,simples,1,1,-,Agricultura
+5,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,19305600","-28,31583300",10000,WEB,BR,RS,Santa Maria,simples,1,1,-,Agricultura
+12,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,19305600","-28,31583300",10000,WEB,BR,RS,Santa Maria,simples,1,1,-,Agricultura
+15,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,62500000","-28,18666700",10000,WEB,BR,RS,Restinga Seca,simples,1,1,-,Agricultura
+16,-,-,Carlos Alberto Casali,-,EPSG:4326,"-49,48027800","-28,18250000",10000,WEB,BR,RS,Santo Antônio da Patrulha,simples,1,1,-,Agricultura
+23,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,19305600","-28,31583300",10000,WEB,BR,RS,Santa Maria,simples,1,1,-,Agricultura
+26,-,-,Carlos Alberto Casali,-,EPSG:4326,"-53,68000000","-29,66361100",10000,WEB,BR,RS,São Gabriel,simples,1,1,-,Agricultura
+44,-,-,Carlos Alberto Casali,-,EPSG:4326,"-56,91166700","-28,24527800",10000,WEB,BR,RS,Uruguaiana,simples,1,1,-,Agricultura
+51,-,-,Carlos Alberto Casali,-,EPSG:4326,"-50,82055600","-28,83194400",10000,WEB,BR,RS,Caxias do Sul,simples,1,1,-,Agricultura
+54,-,-,Carlos Alberto Casali,-,EPSG:4326,"-53,32694400","-29,01722200",10000,WEB,BR,RS,Dom Pedrito,simples,1,1,-,Agricultura
+61,-,-,Carlos Alberto Casali,-,EPSG:4326,"-49,41638900","-28,55194400",10000,WEB,BR,RS,São Francisco de Paula,simples,1,1,-,Agricultura
+62,-,-,Carlos Alberto Casali,-,EPSG:4326,"-50,82055600","-28,83194400",10000,WEB,BR,RS,Caxias do Sul,simples,1,1,-,Agricultura
+63,-,-,Carlos Alberto Casali,-,EPSG:4326,"-49,06611100","-27,48777800",10000,WEB,BR,RS,Vacaria,simples,1,1,-,Agricultura
+64,-,-,Carlos Alberto Casali,-,EPSG:4326,"-50,81833300","-28,97111100",10000,WEB,BR,RS,Flores da Cunha,simples,1,1,-,Agricultura
+65,-,-,Carlos Alberto Casali,-,EPSG:4326,"-49,58333300","-27,33222200",10000,WEB,BR,RS,Bom Jesus,simples,1,1,-,Agricultura
+74,-,-,Carlos Alberto Casali,-,EPSG:4326,"-50,72083300","-27,18000000",10000,WEB,BR,RS,Ipê,simples,1,1,-,Agricultura
+78,-,-,Carlos Alberto Casali,-,EPSG:4326,"-49,58333300","-27,33222200",10000,WEB,BR,RS,Bom Jesus,simples,1,1,-,Agricultura
+10,-,-,Darines Britzke,-,EPSG:4326,"-52,63194400","-32,48111100",10000,WEB,BR,RS,Santa Vitória do Palmar,simples,1,1,SX,Agricultura
+24,-,-,Darines Britzke,-,EPSG:4326,"-50,90611100","-28,04888900",10000,WEB,BR,RS,Cachoeirinha,simples,1,1,GX,Agricultura
+46,-,-,Darines Britzke,-,EPSG:4326,"-52,50861100","-29,48777800",10000,WEB,BR,RS,Caçapava do Sul,simples,1,1,SX,Agricultura
+99,-,-,Darines Britzke,-,EPSG:4326,"-50,18777800","-29,14888900",10000,WEB,BR,RS,Camaquã,simples,1,1,GM,Agricultura
+94,Erexim A,-,Davi Alexandre Vieira,-,EPSG:4326,"-51,25166700","-27,43972200",10000,WEB,BR,RS,Victor Graeff,simples,1,1,LV,Agricultura
+103,Erexim B,-,Davi Alexandre Vieira,-,EPSG:4326,"-51,25166700","-27,43972200",10000,WEB,BR,RS,Victor Graeff,simples,1,1,LV,Agricultura
+104,Escobar B,-,Davi Alexandre Vieira,-,EPSG:4326,"-54,46722200","-29,10916700",10000,WEB,BR,RS,Santana do Livramento,simples,1,1,VE,Campo nativo
+100,Estação A,-,Davi Alexandre Vieira,-,EPSG:4326,"-50,47416700","-27,79138900",10000,WEB,BR,RS,Lagoa Vermelha,simples,1,1,NV,Agricultura
+101,Estação B,-,Davi Alexandre Vieira,-,EPSG:4326,"-50,47416700","-27,79138900",10000,WEB,BR,RS,Lagoa Vermelha,simples,1,1,NV,Agricultura
+70,Farroupilha A,-,Davi Alexandre Vieira,-,EPSG:4326,"-50,65222200","-28,77500000",10000,WEB,BR,RS,Farroupilha,simples,1,1,CH,Agricultura
+105,Farroupilha B,-,Davi Alexandre Vieira,-,EPSG:4326,"-50,65222200","-28,77500000",10000,WEB,BR,RS,Farroupilha,simples,1,1,CH,Agricultura
+68,Passo Fundo A,-,Davi Alexandre Vieira,-,EPSG:4326,"-51,59333300","-27,73722200",10000,WEB,BR,RS,Passo Fundo,simples,1,1,LV,Agricultura
+69,Piraí B,-,Davi Alexandre Vieira,-,EPSG:4326,"-53,68000000","-29,66361100",10000,WEB,BR,RS,São Gabriel,simples,1,1,TX,Campo nativo
+28,São Pedro A,-,Davi Alexandre Vieira,-,EPSG:4326,"-53,82111100","-28,37944400",10000,WEB,BR,RS,São Pedro do Sul,simples,1,1,PV,Agricultura
+80,SJA-B1-10-15,-,-,05-05-2006,EPSG:4326,"-49,88669400","-28,59472200",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+59,SJA-B1-5-10,-,-,05-05-2006,EPSG:4326,"-49,88669400","-28,59472200",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+84,SJA-B14-10-15,-,-,05-05-2006,EPSG:4326,"-49,95624200","-28,65761200",100,MAP,BR,RS,São José dos Ausentes,simples,1,1,CH,Campo nativo
+85,SJA-B15-5-10,-,-,05-05-2006,EPSG:4326,"-49,95611100","-28,65777800",100,MAP,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+57,SJA-B2-0-5,-,-,05-05-2006,EPSG:4326,"-49,88677800","-28,59430600",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+87,SJA-B2-10-15,-,-,05-05-2006,EPSG:4326,"-49,88677800","-28,59430600",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+75,SJA-B2-5-10,-,-,05-05-2006,EPSG:4326,"-49,88677800","-28,59430600",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+58,SJA-B3-0-5,-,-,05-05-2006,EPSG:4326,"-49,86036100","-28,59344400",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+73,SJA-B3-10-15,-,-,05-05-2006,EPSG:4326,"-49,86036100","-28,59344400",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+81,SJA-B3-15-30,-,-,05-05-2006,EPSG:4326,"-49,86036100","-28,59344400",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+71,SJA-B3-5-10,-,-,05-05-2006,EPSG:4326,"-49,86036100","-28,59344400",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+60,SJA-B4-0-5,-,-,05-05-2006,EPSG:4326,"-49,86019400","-28,59330600",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+77,SJA-B4-10-15,-,-,05-05-2006,EPSG:4326,"-49,86019400","-28,59330600",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+72,SJA-B4-5-10,-,-,05-05-2006,EPSG:4326,"-49,86019400","-28,59330600",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+92,SJA-B6-10-15,-,-,05-05-2006,EPSG:4326,"-49,86580600","-28,59483300",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+96,SJA-B6-15-30,-,-,05-05-2006,EPSG:4326,"-49,86580600","-28,59483300",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+76,SJA-B6-5-10,-,-,05-05-2006,EPSG:4326,"-49,86580600","-28,59483300",15,GPS,BR,RS,São José dos Ausentes,simples,1,1,RL,Campo nativo
+1,-,sm-dnos-001@ctb0003,-,02-10-2009,EPSG:4326,"-53,79464500","-29,65127100",15,GPS,BR,RS,-,composta,3,100,RY,Campo nativo
+6,-,sm-dnos-011@ctb0003,-,02-10-2009,EPSG:4326,"-53,79281600","-29,64804000",15,GPS,BR,RS,-,composta,3,100,PBAC,Vegetação secundária
+2,-,sm-dnos-026@ctb0003,-,02-11-2009,EPSG:4326,"-53,78672900","-29,65019800",15,GPS,BR,RS,-,composta,3,100,PBAC,Vegetação secundária
+7,-,sm-dnos-032@ctb0003,-,02-11-2009,EPSG:4326,"-53,78358000","-29,64361200",15,GPS,BR,RS,-,composta,3,100,PBAC,Floresta
+3,-,sm-dnos-037@ctb0003,-,02-11-2009,EPSG:4326,"-53,78910600","-29,64998100",15,GPS,BR,RS,-,composta,3,100,PBAC,Floresta
+8,-,sm-dnos-054@ctb0003,-,02-12-2009,EPSG:4326,"-53,79475900","-29,65719000",15,GPS,BR,RS,-,composta,3,100,PBAC,Campo nativo
+41,-,sm-dnos-107@ctb0003,-,03-06-2009,EPSG:4326,"-53,81996100","-29,64496700",15,GPS,BR,RS,-,composta,3,100,RR,Floresta
+42,-,sm-dnos-108@ctb0003,-,03-06-2009,EPSG:4326,"-53,81757700","-29,64577500",15,GPS,BR,RS,-,composta,3,100,CX,Campo nativo
+11,-,sm-dnos-118@ctb0003,-,03-07-2009,EPSG:4326,"-53,81388000","-29,64797500",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+27,-,sm-dnos-140@ctb0003,-,14-03-2009,EPSG:4326,"-53,78754900","-29,64144200",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+29,-,sm-dnos-143@ctb0003,-,14-03-2009,EPSG:4326,"-53,78601900","-29,63750800",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+39,-,sm-dnos-147@ctb0003,-,14-03-2009,EPSG:4326,"-53,77001700","-29,64073200",15,GPS,BR,RS,-,composta,3,100,RL,Silvicultura
+47,-,sm-dnos-152@ctb0003,-,14-03-2009,EPSG:4326,"-53,77034400","-29,63836600",15,GPS,BR,RS,-,composta,3,100,PVA,Agricultura
+56,-,sm-dnos-154@ctb0003,-,14-03-2009,EPSG:4326,"-53,77012800","-29,63570300",15,GPS,BR,RS,-,composta,3,100,PV,Silvicultura
+55,-,sm-dnos-155@ctb0003,-,14-03-2009,EPSG:4326,"-53,77096700","-29,63314300",15,GPS,BR,RS,-,composta,3,100,PV,Agricultura
+17,-,sm-dnos-178@ctb0003,-,17-03-2009,EPSG:4326,"-53,78387900","-29,64923400",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+40,-,sm-dnos-185@ctb0003,-,18-03-2009,EPSG:4326,"-53,77524000","-29,62796000",15,GPS,BR,RS,-,composta,3,100,PVA,Agricultura
+45,-,sm-dnos-187@ctb0003,-,18-03-2009,EPSG:4326,"-53,77913900","-29,62805200",15,GPS,BR,RS,-,composta,3,100,PV,Silvicultura
+38,-,sm-dnos-195@ctb0003,-,18-03-2009,EPSG:4326,"-53,79325800","-29,61821600",15,GPS,BR,RS,-,composta,3,100,RL,Vegetação secundária
+52,-,sm-dnos-202@ctb0003,-,20-03-2009,EPSG:4326,"-53,78951400","-29,62513700",15,GPS,BR,RS,-,composta,3,100,RL,Vegetação secundária
+33,-,sm-dnos-242@ctb0003,-,21-03-2009,EPSG:4326,"-53,82158100","-29,64418000",15,GPS,BR,RS,-,composta,3,100,RL,Vegetação secundária
+14,-,sm-dnos-243@ctb0003,-,21-03-2009,EPSG:4326,"-53,81666700","-29,64321400",15,GPS,BR,RS,-,composta,3,100,RL,Vegetação secundária
+21,-,sm-dnos-258@ctb0003,-,14-07-2009,EPSG:4326,"-53,81110200","-29,62245800",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+53,-,sm-dnos-267@ctb0003,-,17-04-2009,EPSG:4326,"-53,80544000","-29,61247500",50,GPS,BR,RS,-,composta,3,100,RL,Floresta
+20,-,sm-dnos-271@ctb0003,-,19-06-2009,EPSG:4326,"-53,80521200","-29,62758600",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+18,-,sm-dnos-272@ctb0003,-,19-06-2009,EPSG:4326,"-53,80662900","-29,62886100",15,GPS,BR,RS,-,composta,3,100,RL,Vegetação secundária
+22,-,sm-dnos-273@ctb0003,-,19-06-2009,EPSG:4326,"-53,80539500","-29,63035200",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+31,-,sm-dnos-283@ctb0003,-,14-07-2009,EPSG:4326,"-53,80775400","-29,62218600",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+37,-,sm-dnos-284@ctb0003,-,14-07-2009,EPSG:4326,"-53,81027100","-29,61994400",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+9,-,sm-dnos-288@ctb0003,-,14-07-2009,EPSG:4326,"-53,79339700","-29,64311200",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+25,-,sm-dnos-288@ctb0003,-,14-07-2009,EPSG:4326,"-53,79339700","-29,64311200",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+32,-,sm-dnos-289@ctb0003,-,14-07-2009,EPSG:4326,"-53,79478500","-29,64498400",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+13,-,sm-dnos-295@ctb0003,-,15-07-2009,EPSG:4326,"-53,78706600","-29,63018100",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+35,-,sm-dnos-297@ctb0003,-,15-07-2009,EPSG:4326,"-53,78194700","-29,63300200",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+48,-,sm-dnos-298@ctb0003,-,17-07-2009,EPSG:4326,"-53,77819800","-29,63350800",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+34,-,sm-dnos-303@ctb0003,-,17-07-2009,EPSG:4326,"-53,78205300","-29,62992500",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+30,-,sm-dnos-315@ctb0003,-,19-07-2009,EPSG:4326,"-53,79342500","-29,62868100",15,GPS,BR,RS,-,composta,3,100,RR,Floresta
+19,-,sm-dnos-318@ctb0003,-,19-07-2009,EPSG:4326,"-53,80266100","-29,63584700",15,GPS,BR,RS,-,composta,3,100,RL,Floresta
+36,-,SM-RF-10-20@ctb0012,-,xx-xx-2007,EPSG:4326,"-53,58086100","-29,64823500",100,MAP,BR,RS,Silveira Martins,simples,1,"0,04",CX,Silvicultura
+50,-,SM-SC-0-10@ctb0012,-,xx-xx-2007,EPSG:4326,"-53,58176800","-29,64849100",100,MAP,BR,RS,Silveira Martins,simples,1,"0,04",CX,Agricultura
+49,-,SM-SC-10-20@ctb0012,-,xx-xx-2007,EPSG:4326,"-53,58176800","-29,64849100",100,MAP,BR,RS,Silveira Martins,simples,1,"0,04",CX,Agricultura
+43,-,SM-SD-0-10@ctb0012,-,xx-xx-2007,EPSG:4326,"-53,58028200","-29,64755600",100,MAP,BR,RS,Silveira Martins,simples,1,"0,04",CX,Agricultura
+102,Vacaria B,-,Davi Alexandre Vieira,-,EPSG:4326,"-49,06611100","-27,48777800",10000,WEB,BR,RS,Vacaria,simples,1,1,LB,Agricultura
