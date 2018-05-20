@@ -2,18 +2,9 @@
 title: "Pedotransfer functions for predicting carbon and organic matter content in Rio Grande do Sul, Brazil"
 author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
 date: "12 October 2017"
-bibliography: "/home/alessandro/Dropbox/jabref/biblio.bib"
-csl: pesquisa-agropecuaria-brasileira.csl
-output: bookdown::html_document2
 ---
 
-```{r, eval=FALSE, echo=FALSE}
-rmarkdown::render('main.Rmd', encoding = 'UTF-8', output_dir = "../docs")
-```
-
-```{r setup, include=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
+```{r}
 # load packages
 library(dplyr)
 library(magrittr)
@@ -127,8 +118,6 @@ Includes a description of the four analytical methods used:
 3. Organic matter (OM) by wet digestion
 4. Total organic matter (TOM) by loss on ignition
 
-## Exploratory data analysis
-
 ### Figure 3
 
 Empirical probability density of carbon and organic matter content in soil samples according to the four analythical methods and the theoretical normal probability density function (dashed line).
@@ -155,17 +144,22 @@ gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 dev.off()
 ```
 
-Figure \@ref(fig:correlation-matrix)
+### Figure 4
 
-```{r correlation-matrix, echo=FALSE, fig.width=14, fig.height=14, dpi=300, fig.cap='Scatter plot matrix of the carbon and organic matter content measured using four different analythical methods and their relation to the total clay content and class (0-250, 250-500, 500-1000 g/kg). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.'}
+Scatter plot matrix of the carbon and organic matter content measured using four different analythical methods and their relation to the total clay content and class (0-250, 250-500, 500-1000 g/kg). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.
+
+```{r}
+png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 camada %>% 
-  select(carbono_dry, carbono_wet, mo_wet, mo_loi, argila_naoh_pipeta) %>% 
+  select(carbono_fornalha_1min950_cgdct, carbono_dicromato_30min150_mohr, matorg_dicromato_30min80_eam, 
+         matorg_fornalha_120min360_massa, argila_naoh_esferas_pipeta) %>% 
   splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
-        varnames = c('Total carbon\nby dry combustion\n(g/kg)', 'Organic carbon\nby wet digestion\n(g/kg)',
-                     'Organic matter\nby wet digestion\n(g/kg)', 'Organic matter\nby loss on ignition\n(g/kg)',
-                     'Total clay\n(g/kg)')) +
+        varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
+                     expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
+                     expression(atop('Clay', 'ng kg'^'-1')))) +
   latticeExtra::layer(panel.abline(a = 0, b = 1)) +
   latticeExtra::layer(panel.lmline(x, y, lty = 'dashed'))
+dev.off()
 ```
 
 # Pedotransfer functions
