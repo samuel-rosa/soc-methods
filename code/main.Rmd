@@ -2,8 +2,8 @@
 title: "Pedotransfer functions for predicting carbon and organic matter content in Rio Grande do Sul, Brazil"
 author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
 date: "12 October 2017"
-bibliography: "/home/alessandro/Dropbox/jabref/biblio.bib"
-csl: pesquisa-agropecuaria-brasileira.csl
+# bibliography: "/home/alessandrorosa/Dropbox/jabref/biblio.bib"
+# csl: pesquisa-agropecuaria-brasileira.csl
 output: bookdown::html_document2
 ---
 
