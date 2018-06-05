@@ -7,255 +7,162 @@ date: "12 October 2017"
 output: bookdown::html_document2
 ---
 
-```{r, eval=FALSE, echo=FALSE}
-rmarkdown::render('main.Rmd', encoding = 'UTF-8', output_dir = "../docs")
-```
-
-```{r setup, include=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
+```{r}
 # load packages
 library(dplyr)
 library(magrittr)
 library(latticeExtra)
 library(quantreg)
 library(glue)
-library(febr)
-library(pander)
-panderOptions('table.alignment.default', 'left')
-panderOptions('keep.trailing.zeros', TRUE)
 ```
 
-# Abstract {-}
+# Material and Methods
 
-**Index terms**:
+## Soil data
 
-# Background
+The data can be downloaded from the Free Brazilian Repository for Open Soil Data. The dataset identification code is `ctb0029`. Here we use a copy of the data stored in folder `data`.
 
-There exist several analytical methods to measure the content of carbon in soil samples. The standard method 
-for measuring the *total carbon* content is the dry combustion method, which is based on the oxidation of 
-both organic and inorganic forms of carbon at very high temperatures (> 1000°C) in the presence of oxygen and 
-copper oxide [@NelsonEtAl1996; @PansuEtAl2006]. However, wet digestion methods, which are based on the 
-reduction of Cr~2~O~7~^2-^ by organic compounds present in soil samples, are the most commonly used 
-[@PansuEtAl2006; @DonagemaEtAl2011]. This is mostly due to three reasons. First, the implementation and 
-maintenance costs associated with the use of the standard method are often high, what makes it unsuitable for 
-small laboratories. Second, provided that the quantity of inorganic forms of carbon in soil samples is 
-negligible, the accuracy of wet digestion methods is comparable to the standard method [@RheinheimerEtAl2008, 
-@GattoEtAl2009]. Last, most soil classification and fertilizer recommendation systems were built using criteria 
-based on soil *organic carbon* and/or *organic matter* content as measured using wet digestion methods 
-[@IUSSWorkingGroupWRB2015; @SantosEtAl2013a; @SilvaEtAl2016].
-
-Wet digestion methods have long been criticized because the ion Cr^6+^ is toxic to all forms of life 
-[@RodellaEtAl1994; @PimentelEtAl2006]. As such, efforts have been made to stimulate the use of alternative 
-methods. For example, the loss on ignition method, which is based on the quantification of the amount of mass 
-lost by soil samples after oxidation of organic compounds at relatively high temperatures (> 300ºC) in the 
-presence of oxygen [@PansuEtAl2006]. In Brazil, this method was pointed as being an attractive 
-alternative to measure the soil organic matter content -- as used in fertilizer recommendation systems -- due 
-to the very low environmental hazards associated with it use [@BrunettoEtAl2006; @EscosteguyEtAl2007]. With 
-respect to the measurement of the organic carbon content, despite the standard dry combustion method being a 
-natural alternative [@GattoEtAl2009], its widespread usage in Brazil has been hindered by the reasons mentioned
-above. Thus, alternative wet digestion methods that employ less Cr~2~O~7~^2-^ have been proposed to try to
-minimize their well known environmental hazards [@RheinheimerEtAl2008]. These efforts helped shaping a complex 
-scenario in which disparate analytical methods are employed in different studies and soil laboratories.
-
-Comparing and using soil carbon data produced in different studies that employed disparate analytical methods
-require the development of harmonization mechanisms. Harmonization consists of converting the values of a soil
-property produced using an arbitrary analytical method to values that "look like" the values that would be 
-produced if the reference analytical method had been used instead [@BatjesEtAl2017]. For example, the Van 
-Bemmelen factor, 1.724, which relies on the strong assumption that soil organic matter is composed of 58%
-of carbon, is commonly used to transform organic carbon content to organic matter content [@Pribyl2010].
-Similar conversion factors have already been estimated in Brazil, for example, to enable the adoption of the 
-loss on ignition method as a substitute for the wet digestion method used to measure the organic matter content 
-[@EscosteguyEtAl2007], and to convert the organic carbon values produced via wet digestion methods to values 
-of standard dry combustion methods [@PereiraEtAl2006; @RheinheimerEtAl2008; @GattoEtAl2009].
-
-In a broader sense, a conversion factor can be understood as being a pedotransfer function. A pedotransfer
-function consists of an empirical model that can be used to predict the values of a soil property from other 
-soil properties that are easier or cheaper to measure or that are more readily available [@McBratneyEtAl2002]. 
-Applied to the context of soil carbon data, understanding conversion factors as being pedotransfer functions 
-means taking the carbon content measured with disparate analytical methods as if they are different soil 
-properties -- which is specially true for total carbon, organic carbon, and organic matter content. These 
-empirical models generally take the form of statistical models such as a linear regression. Conversion factors 
-themselves are linear regression models based on the strong assumption that the regression line passes through
-the origin [@Pribyl2010]. In Brazil, additionally to conversion factors, many linear regression models have been 
-developed to predict soil carbon and organic matter content from one another under a variety of soil 
-conditions, e.g. granulometry, taxonomy, land use [@BrunettoEtAl2006; @PereiraEtAl2006; @GattoEtAl2009; 
-@SampaioEtAl2012].
-
-Studies on the comparison of methods for measuring soil carbon and organic matter content and to estimate 
-conversion factors between analytical methods are absent in the recent Brazilian scientific literature. This 
-means that pedotransfer functions may have been employed under very different soil conditions from those in 
-which they were calibrated, i.e. for extrapolation. For example, in the southernmost Brazilian state, Rio 
-Grande do Sul (RS), focus of this study, the most important studies on the subject, published about ten years 
-ago, were more concerned with the Serra Gaúcha, Planalto, and Depressão Central regions, and with soil samples
-with an organic matter content lower than 15% [@BrunettoEtAl2006; @EscosteguyEtAl2007; @RheinheimerEtAl2008]. 
-The aim of the present study is to overcome these regional limitation by using a large set of soil samples 
-covering various land uses, soil classes, sampling depths, and clay contents, sampled in different regions of 
-RS, for which we have measured the content of carbon by dry combustion and wet digestion, and organic matter by
-wet digestion and loss on ignition. The following sections present the soil data and the analytical methods 
-employed, and our approach for calibrating pedotransfer functions to predict the carbon and organic matter 
-content. Later sections are reserved for the results and some recommendations for future studies.
-
-# Soil data
+We create categorical variables using the clay content (`argila_naoh_esferas_pipeta`) and the organic matter content determined at the commercial soil analysis laboratory of the Universidade Federal de Santa Maria (`matorg_dicromato_30min80_eam`). For the latter, the classification is performed using the three classes used for fertilizer recommendations in Rio Grande do Sul and Santa Catarina.
 
 ```{r, echo=FALSE, message=FALSE}
-# camada <- layers(dataset = "ctb0029", soil.vars = "all")
-camada <- readr::read_csv('../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = 'unidade')
+camada <- readr::read_csv(
+  '../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = "-")
 camada <-
   camada %>% 
-  mutate(textura = ifelse(argila_naoh_pipeta <= 250, '0-250', '250-500')) %>% 
-  mutate(textura = ifelse(argila_naoh_pipeta > 500, '500-1000', textura)) %>% 
-  mutate(textura = as.factor(textura))
+  mutate(textura = ifelse(argila_naoh_esferas_pipeta <= 250, '0-250', '251-500')) %>% 
+  mutate(textura = ifelse(argila_naoh_esferas_pipeta > 500, '501-1000', textura)) %>% 
+  mutate(textura = as.factor(textura)) %>% 
+  mutate(matorg = ifelse(matorg_dicromato_30min80_eam <= 25, '<25', '26-50')) %>%
+  mutate(matorg = ifelse(matorg_dicromato_30min80_eam > 50, '>50', matorg)) %>%
+  mutate(matorg = as.factor(matorg)) %>% 
+  mutate(observacao_id = as.factor(observacao_id))
+camada
 ```
+
+Data on soil observations if processed. Land use info, `terra_usoatual`, is reclassified using FAO guidelines for soil description. The following codes are used:
+
+* FS (Floresta): Semi-deciduous forest (vegetation slightly disturbed)
+* U (Vegetação secundária): Not used and not managed, vegetation strongly disturbed by clearing, burning, ploughing (secondary vegetation, mix of semi-deciduous shrubs and tall grassland)
+* AA (Agricultura): Annual field cropping
+* FP (Silvicultura): Plantation forestry
+* HE (Campo nativo): Animal husbandry (extensive grazing)
 
 ```{r, echo=FALSE, message=FALSE}
-# observacao <- observations(dataset = "ctb0029", variable = "all", missing.coords = "keep", stack.obs = FALSE)
-observacao <- readr::read_csv('../data/observacao.csv', locale = readr::locale(decimal_mark = ','), na = '-')
+observacao <- readr::read_csv(
+  '../data/observacao.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = '-')
 observacao <-
   observacao %>% 
-  mutate(uso_id = gsub('Floresta', 'Native forest', .data$uso_id)) %>% 
-  mutate(uso_id = gsub('Vegetação secundária', 'Secondary vegetation', .data$uso_id)) %>% 
-  mutate(uso_id = gsub('Agricultura', 'Crop agriculture', .data$uso_id)) %>% 
-  mutate(uso_id = gsub('Silvicultura', 'Forestry', .data$uso_id)) %>% 
-  mutate(uso_id = gsub('Campo nativo', 'Animal husbandry', .data$uso_id))
-ntaxa <- nlevels(as.factor(observacao$taxon_sibcs_2009))
+  mutate(terra_usoatual = gsub('Floresta', 'FS', .data$terra_usoatual)) %>% 
+  mutate(terra_usoatual = gsub('Vegetação secundária', 'U', .data$terra_usoatual)) %>%
+  mutate(terra_usoatual = gsub('Agricultura', 'AA', .data$terra_usoatual)) %>%
+  mutate(terra_usoatual = gsub('Silvicultura', 'FP', .data$terra_usoatual)) %>%
+  mutate(terra_usoatual = gsub('Campo nativo', 'HE', .data$terra_usoatual))
+observacao
 ```
 
-A set of *n* = 105 soil samples was used to develop our study. These soil samples were kindly provided by the
-various research groups of the Department of Soils of the Federal University of Santa Maria (DS-UFSM), located 
-in the central region of RS. Researchers were asked for air-dried <2 mm-soil samples covering various carbon 
-contents within three classes of clay content: <250, 250-500, and >500 g kg^-1^. These classes were created 
-as to guarantee that the final set of soil samples would likely cover most of the soil and land use types found 
-throughout RS. We then grounded the soil samples in an agate mortar (<1 mm diameter) and stored them in
-micro tubes (Eppendorf type) in the dark at room temperature until analysis. A description of the soil sampling
-procedures can be found in the studies of @CasaliEtAl2006, @DickEtAl2008, @Britzke2010, @PotesEtAl2010, 
-@Vieira2010, @Samuel-RosaEtAl2013a and @Samuel-RosaEtAl2013.
+Compute some summary statistics: number of taxonomic classes, and range of clay content.
 
-Some key features of the soil samples and the environmental conditions under which they have been samples are 
-shown in Figure \@ref(fig:soil-features). As planned, the clay content covers a wide range, going from 
-`r min(camada$argila_naoh_pipeta)` to `r max(camada$argila_naoh_pipeta)` g kg^-1^. This variation is due to the
-fact the samples were collected at 27 different study sites throughout RS, covering `r ntaxa` classes (second 
-hierarchical level) of the Brazilian System of Soil Classification. The soil parent material varies from site 
-to site, including sedimentary, volcanic, and metamorphic material. Accordingly, the mineralogical assemblage 
-of the samples is diverse, with soil samples containing very different quantities of quartz, iron oxides, and 
-2:1 and 1:1 phyllosilicates. This variation has also been conditioned by the climate of RS, varying from humid 
-subtropical to temperate, both without a defined dry season. The mean annual precipitation ranges from 
-approximately 1300 to 2000 mm. The mean annual temperature is about 18°C, whichever is colder in higher sites 
-(> 800 m a.s.l.) and warmer in lower sites (< 200 m a.s.l.). Finally, five of the most common land use types 
-found in RS are represented: animal husbandry, annual crop agriculture (rice, soya, maize, wheat), various 
-forms of secondary vegetation, forestry (Eucalyptus and Pinus), and native forest (Atlantic Forest).
+```{r}
+data.frame(
+  taxa = nlevels(as.factor(observacao$taxon_sibcs_2009)),
+  min_clay = min(camada$argila_naoh_esferas_pipeta, na.rm = TRUE),
+  max_clay = max(camada$argila_naoh_esferas_pipeta, na.rm = TRUE)
+  )
+```
 
-```{r soil-features, echo=FALSE, fig.cap='Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.', fig.width=14, fig.height=14, dpi=300}
+### TODO: Figure 1
+
+Location of soil observations used in this study.
+
+### Figure 2
+
+Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.
+
+```{r}
 p1 <- histogram(
-  ~ argila_naoh_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', col = 'lightgray') +
+  ~ argila_naoh_esferas_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', 
+  col = 'lightgray',
+  panel = function (...) {
+    lattice::panel.grid(v = -1, h = -1)
+    lattice::panel.histogram(...)
+  }) +
   latticeExtra::layer(panel.abline(v = c(250, 500), lty = 'dotted'))
 p2 <- histogram(
-  ~ prof_sup, camada, xlab = 'Sampling depth (cm)', ylab = 'Percent of total', col = 'lightgray')
+  ~ profund_sup, camada, xlab = 'Sampling depth (cm)', ylab = 'Percent of total', col = 'lightgray',
+  panel = function (...) {
+    lattice::panel.grid(v = -1, h = -1)
+    lattice::panel.histogram(...)
+  })
 p3 <- barchart(
   observacao$taxon_sibcs_2009, xlab = 'Soil classification', ylab = 'Percent of total', horizontal = FALSE, 
-  col = 'lightgray')
+  col = 'lightgray', scales = list(x = list(rot = 60)),
+  panel = function (...) {
+    lattice::panel.grid(h = -1, v = 0)
+    lattice::panel.barchart(...)
+  })
 p4 <- barchart(
-  observacao$uso_id, xlab = 'Land use and ocupation', ylab = 'Percent of total', horizontal = FALSE, col = 'lightgray')
+  observacao$terra_usoatual, xlab = 'Land use and ocupation', ylab = 'Percent of total', horizontal = FALSE, 
+  col = 'lightgray',
+  panel = function (...) {
+    lattice::panel.grid(h = -1, v = 0)
+    lattice::panel.barchart(...)
+  })
+png("../res/fig/features-soil-samples.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
+dev.off()
 ```
 
-Many secondary features of the set of soil samples arise from Figure \@ref(fig:soil-features). For example, a
-large proportion of soil samples has a clay content between 150 and 650 g kg^-1^. This likely indicates that
-fewer soil research has been conducted in the DS-UFSM under conditions of very low or very high clay content.
-Moreover, the topmost soil layers appear to be the most commonly studied, as well as those that present the 
-largest variation in carbon content throughout RS. Such a large variation in carbon content can also be 
-observed in the soil class RL (Neossolo Litólico), which had the largest proportion of samples (ca. 40%). 
-However, this soil class also is one of the most commonly occupied with native forests and secondary 
-vegetation, and used for forestry, due to its limitations for crop agriculture. On the other hand, animal 
-husbandry and, mainly crop agriculture, can take place on many different types of soil. In our sample set, 
-the most important soil types for crop agriculture are LV (Latossolo Vermelho) and PV (Argissolo Vermelho).
+## Analytical methods
 
-# Analytical methods
+Includes a description of the four analytical methods used:
 
-## Total carbon by dry combustion
+1. Total organic carbon (TOC) by dry combustion
+2. Organic carbon (OC) by wet digestion
+3. Organic matter (OM) by wet digestion
+4. Total organic matter (TOM) by loss on ignition
 
-Sample aliquots of about 50-60 mg, depending on the expected carbon content, were placed in titanium micro 
-capsules with a capacity of 100 mg. Weighing was done on an analytical balance with a precision of 0.01 mg. 
-Micro-capsules were sealed and placed in a furnace at a temperature of 950°C in the presence of oxygen and 
-chromium oxide [Cr~2~O~3~]. The carbon dioxide [CO~2~] resulting from the oxidation of soil carbon was carried
-by helium [He] through a magnesium perchlorate [Mg(ClO~4~)~2~] column to remove water molecules. Next the 
-carbon dioxide entered a gas chromatograph column at 50°C where it was detected by thermal conductivity. The 
-quantity of carbon in the soil sample was determined by integrating the chromatographic peaks. These analytical
-procedures were carried out using a Thermo Finnigan FlashEA 1112 Series CHNS analyser. Details on this 
-analytical method were given by @PansuEtAl2006.
+### Figure 3
 
-## Organic carbon by wet digestion
+Empirical probability density of carbon and organic matter content in soil samples according to the four analythical methods and the theoretical normal probability density function (dashed line).
 
-Sample aliquots of 0.05 to 0.5 g, depending on the expected carbon content as indicated by the soil colour, 
-were placed in glass digestion tubes with a capacity of 80 mL. Weighing was done on an analytical balance with
-a precision of 0.001 g. Every digestion tube received 10 mL of 0.067 mol L^-1^ sulphocromic solution 
-[K~2~Cr~2~O~7~ + H~2~SO~4~] and was covered with a small reflux funnel to avoid loss of reagent during 
-digestion. A digestion block with capacity for 40 tubes was used: 36 tubes with soil sample + 3 tubes with 
-blank + 1 tube with sulphuric acid [H~2~SO~4~] and a thermometer for temperature measurement. Digestion at 
-150ºC last 30 min. Three blanks were prepared and set aside at room temperature to estimate the loss of 
-reagent due to heat in the digestion block. After digestion the tubes were set aside at room temperature to 
-cool down. Next, we transferred the solution to Erlenmeyer flasks (250 mL) along with 60 mL of distilled water 
-and 2 mL of concentrated orthophosphoric acid [H~3~PO~4~] and 3 drops of 1% diphenylamine. The solution was 
-titrated using 0.1 mol L^-1^ ammonium ferrous sulphate [Fe(NH~4~)~2~(SO~4~])~2~.6H~2~O] until persistent green 
-color. The content of carbon in soil samples was calculated based on the amount of excess non-reduced 
-dichromate. Further details on this analytical method were given by @Mebius1960 and @YeomansEtAl1988, and
-more recently by @RheinheimerEtAl2008.
-
-## Organic matter by wet digestion
-
-Sample aliquots of 2.5 mL were placed in Erlenmeyer flasks with a capacity of 50 mL using a standardized 
-plastic scoop. Every Erlenmeyer flask received 15 mL of 0.067 mol L^-1^ sulfocromic solution 
-[Na~2~Cr~2~O~7~ + H~2~SO~4~]. The flasks were placed in a water bath at 75 to 80°C for 30 min and then shaken 
-for 5 min. Next, a 15 mL of distilled water were added to each flask, which were then let overnight (15 to 18 
-hours). In the next day, an aliquot of 3.0 mL of the supernatant was sampled to a small cup along with 3.0 mL 
-of distilled water. The absorbance of the solutions was measured at 645 nm. The content of organic matter in
-soil samples was obtained by first predicting the mostly likely carbon content as measured with the method of 
-@WalkleyEtAl1934 using an empirically calibrated linear regression model. Predicted values were then multiplied
-by the Van Bemmelen factor, 1.724, to obtain the organic matter content. A detailed description of this 
-analytical method, as well as of the method of @WalkleyEtAl1934, was given by @TedescoEtAl1995. Further details
-on the calibration of the linear regression model used to predict the carbon content can be obtained with the
-coordination of the Soil Analysis Laboratory of DS-UFSM where soil analyses were carried out.
-
-We weighted 2.5 mL of each soil sample to calculate the sample density and transform the results to a weight basis.
-
-## Organic matter by loss on ignition
-
-Sample aliquots of 300 to 500 mg in hand-made aluminium capsules (20 mg) (oven dried at 360°C) were placed in an oven at 105°C for 24 hours. Next, we placed the oven-dried samples in a desiccator containing silica gel and weighted after they had cooled down. The amount of mass lost between the first and second weightings was used to calculate the water content in the sample. Next, we placed the samples in an oven at 360ºC for 2 hours. Next, samples were placed in a desiccator containing silica gel and weighted after they had cooled down. The organic matter content in the samples was calculated from the mass lost between the second and third weightings. This method was adapted from @SchulteEtAl1996.
-
-# Exploratory data analysis
-
-Figure \@ref(fig:carbon-histogram)
-
-```{r carbon-histogram, echo=FALSE, fig.cap='Empirical probability density of carbon and organic matter content in soil samples according to the four analythical methods and the theoretical normal probability density function (dashed line).', fig.width=14, fig.height=14, dpi=300}
+```{r}
 l <- latticeExtra::layer(
   panel.mathdensity(
-    dmath = dnorm, args = list(mean = mean(x), sd = sd(x)), n = length(x), col = 'black', lty = 'dashed'))
+    dmath = dnorm, args = list(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)), n = length(x), 
+    col = 'black', lty = 'dashed'))
 p1 <- histogram(
-  ~ carbono_dry, camada, xlab = 'Total carbon content by dry combustion (g/kg)', col = 'lightgray',
-  type = "density") + l
+  ~ carbono_fornalha_1min950_cgdct, camada, 
+  xlab = expression('Total organic carbon (TOC), g kg'^'-1'), col = 'lightgray', type = "density") + l
 p2 <- histogram(
-  ~ carbono_wet, camada, xlab = 'Organic carbon content by wet digestion (g/kg)', col = 'lightgray', 
-  type = "density") + l
+  ~ carbono_dicromato_30min150_mohr, camada, 
+  xlab = expression('Organic carbon (OC), g kg'^'-1'), col = 'lightgray', type = "density") + l
 p3 <- histogram(
-  ~ mo_wet, camada, xlab = 'Organic matter content by wet digestion (g/kg)', col = 'lightgray', 
-  type = "density") + l
+  ~ matorg_dicromato_30min80_eam, camada, 
+  xlab = expression('Organic matter (OM), g dm'^'-3'), col = 'lightgray', type = "density") + l
 p4 <- histogram(
-  ~ mo_loi, camada, xlab = 'Organic matter content by loss on ignition (g/kg)', col = 'lightgray', 
-  type = "density") + l
+  ~ matorg_fornalha_120min360_massa, camada, 
+  xlab = expression('Total organic matter (TOM), g kg'^'-1'), col = 'lightgray', type = "density") + l
+png("../res/fig/carbon-histograms.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
+dev.off()
 ```
 
-Figure \@ref(fig:correlation-matrix)
+### Figure 4
 
-```{r correlation-matrix, echo=FALSE, fig.width=14, fig.height=14, dpi=300, fig.cap='Scatter plot matrix of the carbon and organic matter content measured using four different analythical methods and their relation to the total clay content and class (0-250, 250-500, 500-1000 g/kg). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.'}
+Scatter plot matrix of the carbon and organic matter content measured using four different analythical methods and their relation to the total clay content and class (0-250, 250-500, 500-1000 g/kg). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.
+
+```{r}
+png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 camada %>% 
-  select(carbono_dry, carbono_wet, mo_wet, mo_loi, argila_naoh_pipeta) %>% 
+  select(carbono_fornalha_1min950_cgdct, carbono_dicromato_30min150_mohr, matorg_dicromato_30min80_eam, 
+         matorg_fornalha_120min360_massa, argila_naoh_esferas_pipeta) %>% 
   splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
-        varnames = c('Total carbon\nby dry combustion\n(g/kg)', 'Organic carbon\nby wet digestion\n(g/kg)',
-                     'Organic matter\nby wet digestion\n(g/kg)', 'Organic matter\nby loss on ignition\n(g/kg)',
-                     'Total clay\n(g/kg)')) +
+        varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
+                     expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
+                     expression(atop('Clay', 'ng kg'^'-1')))) +
   latticeExtra::layer(panel.abline(a = 0, b = 1)) +
   latticeExtra::layer(panel.lmline(x, y, lty = 'dashed'))
+dev.off()
 ```
 
 # Pedotransfer functions
@@ -265,6 +172,30 @@ camada %>%
 <!-- enabling estimating the most likely value of a soil property along with an uncertainty measure, e.g. the prediction interval. -->
 
 # Results and Discussion
+
+```{r}
+densidade <- 
+  read.table("../data/densidade.csv", sep = "\t", dec = ",", head = TRUE) %>% 
+  reshape(direction = "long", idvar = "id", varying = list(4:6), v.names = "d") %>% 
+  mutate(id = as.factor(id), clay = as.numeric(clay))
+fit1 <- nlme::lme(d ~ som + clay, data = densidade, random = ~1|id)
+summary(fit)
+plot(fit)
+nlme::intervals(fit)
+cbind(fit2$fitted, obs = densidade$d, fit = fitted(fit2)) %>% round(3)
+
+fit2 <- lm(d ~ som + clay, data = densidade)
+```
+
+
+```{r}
+summary(fit1)
+```
+
+
+```{r}
+summary(fit2)
+```
 
 ```{r, fig.asp=1}
 mo <- log1p(round((camada$mo_wet * camada$densidade) / 10, 1))

@@ -1,28 +1,31 @@
-tabela_nome,coluna_nome,atributo_nome,atributo_descricao,atributo_unidade,atributo_dado_tipo,metodo_analitico,laboratorio_nome,laboratorio_pais_id,laboratorio_municipio_id,laboratorio_codigo_postal,laboratorio_rua_nome,laboratorio_rua_numero
-observacao,observacao_id,Identificação da observação,Identificador exclusivo da observação,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,provedor_id,Identificação do provedor,Identificador exclusivo da observação e respectivo conjunto de dados no febr de onde os dados foram originalmente obtidos,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,observacao_data,Data da observação,Data da observação no formato dd-mm-aaaa,sem unidade,Data,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,coord_sistema,Sistema de referência de coordenadas,Sistema de referência de coordenadas utilizado conforme código EPSG,sem unidade,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,coord_x,Longitude,"Longitude, para coordenadas geográficas (em graus)",graus,Real,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,coord_y,Latitude,"Latitude, para coordenadas geográficas (em graus)",graus,Real,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,coord_precisao,Precisão das coordenadas,Precisão com que as coordenadas espaciais foram determinadas (em metros),m,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,coord_fonte,Fonte das coordenadas,"Fonte das coordenadas. Opções são: GPS, se as coordenadas vêm de um GPS, MAPA, se as coordenadas vêm de um mapa, WEB, se as coordenadas vêm de um serviço web como o Google Maps.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,pais_id,País,"Código ISO 3166-1 alpha-2 do país onde a observação foi feita. Nesse caso, BR = Brasil.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,estado_id,Unidade federativa,"Sigla da unidade da federação onde a observação foi realizada. Nesse caso, RS = Rio Grande do Sul.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,municipio_id,Município,Nome da cidade/município onde a observação foi realizada.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,amostra_tipo,Tipo de amostragem,Tipo de amostragem. Opções: SIMPLES ou COMPOSTA.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,amostra_quanti,Quantidade de subamostras,Número de amostras. Um (1) quando o valor da variável anterior é SIMPLES ou mais para COMPOSTA. Expressar o valor com números inteiros.,sem unidade,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,amostra_area,Área amostral,"Área amostral (m²). Por exemplo, a área de uma trincheira costuma ser de 1 m².",m2,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,taxon_sibcs_2009,Classificação taxonômica,"Nome da classificação da observação até o segundo nível categórico do Sistema Brasileiro de Classificação do Solo (sibcs) de 2009. Observações com classificação anterior à foram atualizadas dedutivamente. Por exemplo, Planossolo Hidromórfico foi atualizado para Planossolo Háplico.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-observacao,uso_id,Uso e ocupação da terra,Tipo de uso e ocupação da terra no momento da observação.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-camada,observacao_id,Identificação da observação,Identificador exclusivo da observação usado no conjunto de dados de origem. Refere-se à aba “observacao”.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-camada,camada_numero,Número da camada,"Número da camada ou horizonte na observação, atribuído consecutivamente de cima para baixo.",sem unidade,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-camada,camada_nome,Nome da camada,"Nome da camada ou horizonte. Exemplo: A, B, C, etc.",sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-camada,amostra_codigo,Código da amostra,Código laboratorial da amostra. Usado para identificar as repetições de laboratório. Usar 1 se não houver repetição ou código laboratorial específico.,sem unidade,Texto,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-camada,profund_sup,Profundidade superior,Profundidade do limite superior da camada ou horizonte (cm).,cm,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-camada,profund_inf,Profundidade inferior,Profundidade do limite inferior da camada ou horizonte (cm).,cm,Inteiro,n/a,n/a,n/a,n/a,n/a,n/a,n/a
-camada,argila_naoh_pipeta,Conteúdo de argila,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
-camada,carbono_dry,Conteúdo de carbono total,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
-camada,carbono_wet,Conteúdo de carbono orgânico,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
-camada,mo_loi,Conteúdo de matéria orgânica,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
-camada,mo_wet,Conteúdo de matéria orgânica,,g/kg,Inteiro,n/a,n/a,BR,Santa Maria,n/a,n/a,n/a
+tabela_id,campo_id,campo_nome,campo_descricao,campo_unidade,campo_tipo,metodo_id,lab_nome,lab_pais_id,lab_municipio_id,lab_codigo_postal,lab_rua_nome,lab_rua_numero
+observacao,observacao_id,Identificação da observação,Identificador exclusivo da observação,-,Texto,-,-,-,-,-,-,-
+observacao,info_identificacao,Informação sobre identificação,Informação sobre identificação,-,Texto,-,-,-,-,-,-,-
+observacao,provedor_id,Identificação do provedor,Identificador exclusivo da observação e respectivo conjunto de dados no febr de onde os dados foram originalmente obtidos,-,Texto,-,-,-,-,-,-,-
+observacao,observacao_autor,Autor da observação,,-,Texto,-,-,-,-,-,-,-
+observacao,observacao_data,Data da observação,Data da observação no formato dd-mm-aaaa,-,Data,-,-,-,-,-,-,-
+observacao,coord_sistema,Sistema de referência de coordenadas,Sistema de referência de coordenadas utilizado conforme código EPSG,-,Texto,-,-,-,-,-,-,-
+observacao,coord_x,Longitude,"Longitude, para coordenadas geográficas (em graus)",-,Real,-,-,-,-,-,-,-
+observacao,coord_y,Latitude,"Latitude, para coordenadas geográficas (em graus)",-,Real,-,-,-,-,-,-,-
+observacao,coord_precisao,Precisão das coordenadas,Precisão com que as coordenadas espaciais foram determinadas (em metros),m,Real,-,-,-,-,-,-,-
+observacao,coord_fonte,Fonte das coordenadas,"Fonte das coordenadas. Opções são: GPS, se as coordenadas vêm de um GPS, MAPA, se as coordenadas vêm de um mapa, WEB, se as coordenadas vêm de um serviço web como o Google Maps.",-,Texto,-,-,-,-,-,-,-
+observacao,pais_id,País,"Código ISO 3166-1 alpha-2 do país onde a observação foi feita. Nesse caso, BR = Brasil.",-,Texto,-,-,-,-,-,-,-
+observacao,estado_id,Unidade federativa,"Sigla da unidade da federação onde a observação foi realizada. Nesse caso, RS = Rio Grande do Sul.",-,Texto,-,-,-,-,-,-,-
+observacao,municipio_id,Município,Nome da cidade/município onde a observação foi realizada.,-,Texto,-,-,-,-,-,-,-
+observacao,amostra_tipo,Tipo de amostragem,Tipo de amostragem. Opções: SIMPLES ou COMPOSTA.,-,Texto,-,-,-,-,-,-,-
+observacao,amostra_quanti,Quantidade de subamostras,Número de amostras. Um (1) quando o valor da variável anterior é SIMPLES ou mais para COMPOSTA. Expressar o valor com números inteiros.,-,Inteiro,-,-,-,-,-,-,-
+observacao,amostra_area,Área amostral,"Área amostral (m²). Por exemplo, a área de uma trincheira costuma ser de 1 m².",m^2,Real,-,-,-,-,-,-,-
+observacao,taxon_sibcs_2009,Classificação taxonômica,"Nome da classificação da observação até o segundo nível categórico do Sistema Brasileiro de Classificação do Solo (sibcs) de 2009. Observações com classificação anterior à foram atualizadas dedutivamente. Por exemplo, Planossolo Hidromórfico foi atualizado para Planossolo Háplico.",-,Texto,-,-,-,-,-,-,-
+observacao,terra_usoatual,Uso e ocupação da terra,Tipo de uso e ocupação da terra no momento da observação.,-,Texto,-,-,-,-,-,-,-
+camada,observacao_id,Identificação da observação,Identificador exclusivo da observação usado no conjunto de dados de origem. Refere-se à aba “observacao”.,-,Texto,-,-,-,-,-,-,-
+camada,camada_numero,Número da camada,"Número da camada ou horizonte na observação, atribuído consecutivamente de cima para baixo.",-,Inteiro,-,-,-,-,-,-,-
+camada,camada_nome,Nome da camada,"Nome da camada ou horizonte. Exemplo: A, B, C, etc.",-,Texto,-,-,-,-,-,-,-
+camada,amostra_codigo,Código da amostra,Código laboratorial da amostra. Usado para identificar as repetições de laboratório. Usar 1 se não houver repetição ou código laboratorial específico.,-,Texto,-,-,-,-,-,-,-
+camada,profund_sup,Profundidade superior,Profundidade do limite superior da camada ou horizonte (cm).,cm,Real,-,-,-,-,-,-,-
+camada,profund_inf,Profundidade inferior,Profundidade do limite inferior da camada ou horizonte (cm).,cm,Real,-,-,-,-,-,-,-
+camada,argila_naoh_esferas_pipeta,Argila total,"Argila total (< 0,002 mm). Dispersão química com hidróxido de sódio [naoh] na concentração de 1 mol/L. Dispersão mecânica por agitação horizontal por quatro horas com esferas de nylon [esferas]. Quantificação pelo método da pipeta.",g/kg,Real,-,Laboratório de Pedologia do Departamento de Solos da UFSM,BR,Santa Maria,-,-,-
+camada,carbono_fornalha_1min950_cgdct,Conteúdo de carbono total,"Conteúdo de carbono total. Oxidação via combustão seca em fornalha à temperatura de 950°C, na presença de oxigênio e óxido de cromo, por 1 min, e determinação por cromatografia gasosa (CG) usando um detector por condutividade térmica (DCT). Esse método é comumente conhecido como o 'método do autoanalisador'.",g/kg,Real,-,Departamento de Solos da UFSM,BR,Santa Maria,-,-,-
+camada,carbono_dicromato_30min150_mohr,Conteúdo de carbono orgânico,"Conteúdo de carbono orgânico. Oxidação via digestão úmida usando solução sulfocrômica [K2Cr2O7 + H2SO4] 0,067 mol/L em um bloco de digestão a 150 ºC durante 30 min. A solução foi titulada usando sulfato ferroso amoniacal [Fe(NH4)2(SO4)2.6H2O] 0,1 mol/L. Esse método é conhecido como Mebius no bloco, proposto por Yeomans & Bremner (1988).",g/kg,Real,-,Laboratório de Pedologia do Departamento de Solos da UFSM,BR,Santa Maria,-,-,-
+camada,matorg_fornalha_120min360_massa,Conteúdo de matéria orgânica,"Conteúdo de matéria orgânica. Oxidação via combustão seca em fornalha à temperatura de 360°C, na presença de oxigênio, por 120 minutos, e determinação por perda de massa usando balança com precisão de quatro casas decimais. Esse método é comumente conhecido como o 'método da perda de massa'. ",g/kg,Real,-,Laboratório de Pedologia do Departamento de Solos da UFSM,BR,Santa Maria,-,-,-
+camada,matorg_dicromato_30min80_eam,Conteúdo de matéria orgânica,"Conteúdo de matéria orgânica. Oxidação via digestão úmida usando solução sulfocrômica [Na2Cr2O7 + H2SO4] 0,067 mol/L em banho-maria a 80°C durante 30 min, seguido de 18 horas de descanso a temperatura ambiente, com determinação via espectrofotometria de absorção molecular a 645 nm. Os resultados finais foram obtidos após aplicação de um modelo empírico de correlação com o método de Wakley & Black, seguido do fator de Van Bemmelen (1.724). Mais informações no livro 'Análises de solo, plantas e outros materiais' de Tedesco et al. (1995).",g/dm^3,Real,-,Laboratório de Rotina do Departamento de Solos da UFSM,BR,Santa Maria,-,-,-
+camada,densidade_aliquota,Densidade da alíquota de solo,Densidade de aliquota de solo usada para determinação do conteúdo de matéria orgânica por digestão úmida.,g/cm^3,Real,-,Laboratório de Pedologia do Departamento de Solos da UFSM,BR,Santa Maria,-,-,-
