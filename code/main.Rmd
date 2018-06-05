@@ -11,6 +11,7 @@ output: bookdown::html_document2
 # load packages
 library(dplyr)
 library(magrittr)
+library(grid)
 library(latticeExtra)
 library(quantreg)
 library(glue)
@@ -85,6 +86,9 @@ p1 <- histogram(
   panel = function (...) {
     lattice::panel.grid(v = -1, h = -1)
     lattice::panel.histogram(...)
+  },
+  page = function (n) {
+    grid.text(label = "A)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) +
   latticeExtra::layer(panel.abline(v = c(250, 500), lty = 'dotted'))
 p2 <- histogram(
@@ -92,6 +96,9 @@ p2 <- histogram(
   panel = function (...) {
     lattice::panel.grid(v = -1, h = -1)
     lattice::panel.histogram(...)
+  },
+  page = function (n) {
+    grid.text(label = "B)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   })
 p3 <- barchart(
   observacao$taxon_sibcs_2009, xlab = 'Soil classification', ylab = 'Percent of total', horizontal = FALSE, 
@@ -99,6 +106,9 @@ p3 <- barchart(
   panel = function (...) {
     lattice::panel.grid(h = -1, v = 0)
     lattice::panel.barchart(...)
+  },
+  page = function (n) {
+    grid.text(label = "C)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   })
 p4 <- barchart(
   observacao$terra_usoatual, xlab = 'Land use and ocupation', ylab = 'Percent of total', horizontal = FALSE, 
@@ -106,6 +116,9 @@ p4 <- barchart(
   panel = function (...) {
     lattice::panel.grid(h = -1, v = 0)
     lattice::panel.barchart(...)
+  },
+  page = function (n) {
+    grid.text(label = "D)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   })
 png("../res/fig/features-soil-samples.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
@@ -126,22 +139,51 @@ Includes a description of the four analytical methods used:
 Empirical probability density of carbon and organic matter content in soil samples according to the four analythical methods and the theoretical normal probability density function (dashed line).
 
 ```{r}
-l <- latticeExtra::layer(
+l <- layer(
   panel.mathdensity(
     dmath = dnorm, args = list(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)), n = length(x), 
     col = 'black', lty = 'dashed'))
 p1 <- histogram(
   ~ carbono_fornalha_1min950_cgdct, camada, 
-  xlab = expression('Total organic carbon (TOC), g kg'^'-1'), col = 'lightgray', type = "density") + l
+  xlab = expression('Total organic carbon (TOC), g kg'^'-1'), col = 'lightgray', type = "density", 
+  panel = function (...) {
+    panel.grid(v = -1, h = -1)
+    panel.histogram(...)
+  },
+  page = function (n) {
+    grid.text(label = "A)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+  }) + l
+p1
 p2 <- histogram(
   ~ carbono_dicromato_30min150_mohr, camada, 
-  xlab = expression('Organic carbon (OC), g kg'^'-1'), col = 'lightgray', type = "density") + l
+  xlab = expression('Organic carbon (OC), g kg'^'-1'), col = 'lightgray', type = "density", 
+  panel = function (...) {
+    panel.grid(v = -1, h = -1)
+    panel.histogram(...)
+  },
+  page = function (n) {
+    grid.text(label = "B)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+  }) + l
 p3 <- histogram(
   ~ matorg_dicromato_30min80_eam, camada, 
-  xlab = expression('Organic matter (OM), g dm'^'-3'), col = 'lightgray', type = "density") + l
+  xlab = expression('Organic matter (OM), g dm'^'-3'), col = 'lightgray', type = "density", 
+  panel = function (...) {
+    panel.grid(v = -1, h = -1)
+    panel.histogram(...)
+  },
+  page = function (n) {
+    grid.text(label = "C)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+  }) + l
 p4 <- histogram(
   ~ matorg_fornalha_120min360_massa, camada, 
-  xlab = expression('Total organic matter (TOM), g kg'^'-1'), col = 'lightgray', type = "density") + l
+  xlab = expression('Total organic matter (TOM), g kg'^'-1'), col = 'lightgray', type = "density", 
+  panel = function (...) {
+    panel.grid(v = -1, h = -1)
+    panel.histogram(...)
+  },
+  page = function (n) {
+    grid.text(label = "D)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+  }) + l
 png("../res/fig/carbon-histograms.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 dev.off()
@@ -161,7 +203,7 @@ camada %>%
                      expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
                      expression(atop('Clay', 'ng kg'^'-1')))) +
   latticeExtra::layer(panel.abline(a = 0, b = 1)) +
-  latticeExtra::layer(panel.lmline(x, y, lty = 'dashed'))
+  latticeExtra::layer(panel.lmline(x = x, y = y, lty = 'dashed'))
 dev.off()
 ```
 
