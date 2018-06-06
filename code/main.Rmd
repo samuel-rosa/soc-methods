@@ -134,9 +134,23 @@ Includes a description of the four analytical methods used:
 3. Organic matter (OM) by wet digestion
 4. Total organic matter (TOM) by loss on ignition
 
+# Pedotransfer functions
+
+<!-- and that standard significance tests are resistant to the violation of the iid-normal assumption [@Webster2001; ]. -->
+
+<!-- enabling estimating the most likely value of a soil property along with an uncertainty measure, e.g. the prediction interval. -->
+
+## Quantile regression
+
+## Performance assessment
+
+# Results
+
+## Carbon and organic matter data
+
 ### Figure 3
 
-Empirical probability density of carbon and organic matter content in soil samples according to the four analythical methods and the theoretical normal probability density function (dashed line).
+Empirical probability density of carbon (A and B) and organic matter (C and D) content in soil samples according to the four analytical methods and the theoretical normal probability density function (dashed line).
 
 ```{r}
 l <- layer(
@@ -190,7 +204,7 @@ dev.off()
 
 ### Figure 4
 
-Scatter plot matrix of the carbon and organic matter content measured using four different analythical methods and their relation to the total clay content and class (0-250, 250-500, 500-1000 g/kg). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.
+Scatter plot matrix of the soil carbon and organic matter content measured using four different analytical methods and their relation to the total clay content and class (0-250, 251-500, 501-1000 g kg-1). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.
 
 ```{r}
 png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
@@ -205,12 +219,6 @@ camada %>%
   latticeExtra::layer(panel.lmline(x = x, y = y, lty = 'dashed'))
 dev.off()
 ```
-
-# Pedotransfer functions
-
-<!-- and that standard significance tests are resistant to the violation of the iid-normal assumption [@Webster2001; ]. -->
-
-<!-- enabling estimating the most likely value of a soil property along with an uncertainty measure, e.g. the prediction interval. -->
 
 # Results and Discussion
 
