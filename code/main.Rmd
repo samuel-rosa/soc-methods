@@ -153,7 +153,6 @@ p1 <- histogram(
   page = function (n) {
     grid.text(label = "A)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) + l
-p1
 p2 <- histogram(
   ~ carbono_dicromato_30min150_mohr, camada, 
   xlab = expression('Organic carbon (OC), g kg'^'-1'), col = 'lightgray', type = "density", 
@@ -201,7 +200,7 @@ camada %>%
   splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
         varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
                      expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
-                     expression(atop('Clay', 'ng kg'^'-1')))) +
+                     expression(atop('Clay', 'g kg'^'-1')))) +
   latticeExtra::layer(panel.abline(a = 0, b = 1)) +
   latticeExtra::layer(panel.lmline(x = x, y = y, lty = 'dashed'))
 dev.off()
