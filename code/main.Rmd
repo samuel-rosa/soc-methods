@@ -1,10 +1,11 @@
 ---
-title: "Pedotransfer functions for predicting carbon and organic matter content in Rio Grande do Sul, Brazil"
-author: "Alessandro Samuel-Rosa, Douglas Adams Weiler, Sandro Giacomini"
+title: "Pedotransfer functions for prediction and harmonization of carbon and organic matter content data in southern Brazil: source code"
+author: "Alessandro Samuel-Rosa"
 date: "12 October 2017"
+url: "https://docs.google.com/document/d/13CJdr6huHhpuwKMfz_u03m8dJE3_xLqhmS7lwc5Y5yE/edit?usp=sharing"
 # bibliography: "/home/alessandrorosa/Dropbox/jabref/biblio.bib"
 # csl: pesquisa-agropecuaria-brasileira.csl
-output: bookdown::html_document2
+output: html_document
 ---
 
 ```{r}
@@ -134,20 +135,6 @@ Includes a description of the four analytical methods used:
 3. Organic matter (OM) by wet digestion
 4. Total organic matter (TOM) by loss on ignition
 
-# Pedotransfer functions
-
-<!-- and that standard significance tests are resistant to the violation of the iid-normal assumption [@Webster2001; ]. -->
-
-<!-- enabling estimating the most likely value of a soil property along with an uncertainty measure, e.g. the prediction interval. -->
-
-## Quantile regression
-
-## Performance assessment
-
-# Results
-
-## Carbon and organic matter data
-
 ### Figure 3
 
 Empirical probability density of carbon (A and B) and organic matter (C and D) content in soil samples according to the four analytical methods and the theoretical normal probability density function (dashed line).
@@ -201,6 +188,16 @@ png("../res/fig/carbon-histograms.png", width = 480 * 4, height = 480 * 4, res =
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 dev.off()
 ```
+
+# Pedotransfer functions
+
+## Quantile regression
+
+## Performance assessment
+
+# Results
+
+## Carbon and organic matter data
 
 ### Figure 4
 
