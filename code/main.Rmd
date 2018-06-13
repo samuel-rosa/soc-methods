@@ -224,6 +224,25 @@ dev.off()
 # Results and Discussion
 
 ```{r}
+camada <- camada[1:105, ]
+err <- data.frame(rq = NA, lm = NA)
+form <- toc ~ tom + I(tom^2) + clay
+y <- camada$toc
+for (i in 1:nrow(camada)) {
+  resid <- mean(y) - y
+  rq_fit <- rq(form, data = camada[-i, ])
+  err[i, "rq"] <- predict(rq_fit, camada[i, ]) - y[i]
+  lm_fit <- lm(form, data = camada[-i, ])
+  err[i, "lm"] <- predict(lm_fit, camada[i, ]) - y[i]
+}
+colMeans(err)
+```
+
+
+
+
+
+```{r}
 densidade <- 
   read.table("../data/densidade.csv", sep = "\t", dec = ",", head = TRUE) %>% 
   reshape(direction = "long", idvar = "id", varying = list(4:6), v.names = "d") %>% 
