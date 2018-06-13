@@ -37,7 +37,12 @@ camada <-
   mutate(matorg = ifelse(matorg_dicromato_30min80_eam <= 25, '<25', '26-50')) %>%
   mutate(matorg = ifelse(matorg_dicromato_30min80_eam > 50, '>50', matorg)) %>%
   mutate(matorg = as.factor(matorg)) %>% 
-  mutate(observacao_id = as.factor(observacao_id))
+  mutate(observacao_id = as.factor(observacao_id)) %>% 
+  rename(clay = argila_naoh_esferas_pipeta) %>% 
+  rename(toc = carbono_fornalha_1min950_cgdct) %>%
+  rename(oc = carbono_dicromato_30min150_mohr) %>% 
+  rename(tom = matorg_fornalha_120min360_massa) %>% 
+  rename(om = matorg_dicromato_30min80_eam)
 camada
 ```
 
@@ -67,8 +72,8 @@ Compute some summary statistics: number of taxonomic classes, and range of clay 
 ```{r}
 data.frame(
   taxa = nlevels(as.factor(observacao$taxon_sibcs_2009)),
-  min_clay = min(camada$argila_naoh_esferas_pipeta, na.rm = TRUE),
-  max_clay = max(camada$argila_naoh_esferas_pipeta, na.rm = TRUE)
+  min_clay = min(camada$clay, na.rm = TRUE),
+  max_clay = max(camada$clay, na.rm = TRUE)
   )
 ```
 
@@ -82,7 +87,7 @@ Key characteristics of the soil samples, such as the clay content and sampling d
 
 ```{r}
 p1 <- histogram(
-  ~ argila_naoh_esferas_pipeta, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', 
+  ~ clay, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', 
   col = 'lightgray',
   panel = function (...) {
     lattice::panel.grid(v = -1, h = -1)
@@ -145,7 +150,7 @@ l <- layer(
     dmath = dnorm, args = list(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)), n = length(x), 
     col = 'black', lty = 'dashed'))
 p1 <- histogram(
-  ~ carbono_fornalha_1min950_cgdct, camada, 
+  ~ toc, camada, 
   xlab = expression('Total organic carbon (TOC), g kg'^'-1'), col = 'lightgray', type = "density", 
   panel = function (...) {
     panel.grid(v = -1, h = -1)
@@ -155,7 +160,7 @@ p1 <- histogram(
     grid.text(label = "A)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) + l
 p2 <- histogram(
-  ~ carbono_dicromato_30min150_mohr, camada, 
+  ~ oc, camada, 
   xlab = expression('Organic carbon (OC), g kg'^'-1'), col = 'lightgray', type = "density", 
   panel = function (...) {
     panel.grid(v = -1, h = -1)
@@ -165,7 +170,7 @@ p2 <- histogram(
     grid.text(label = "B)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) + l
 p3 <- histogram(
-  ~ matorg_dicromato_30min80_eam, camada, 
+  ~ om, camada, 
   xlab = expression('Organic matter (OM), g dm'^'-3'), col = 'lightgray', type = "density", 
   panel = function (...) {
     panel.grid(v = -1, h = -1)
@@ -175,7 +180,7 @@ p3 <- histogram(
     grid.text(label = "C)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) + l
 p4 <- histogram(
-  ~ matorg_fornalha_120min360_massa, camada, 
+  ~ tom, camada, 
   xlab = expression('Total organic matter (TOM), g kg'^'-1'), col = 'lightgray', type = "density", 
   panel = function (...) {
     panel.grid(v = -1, h = -1)
@@ -206,8 +211,7 @@ Scatter plot matrix of the soil carbon and organic matter content measured using
 ```{r}
 png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 camada %>% 
-  select(carbono_fornalha_1min950_cgdct, carbono_dicromato_30min150_mohr, matorg_dicromato_30min80_eam, 
-         matorg_fornalha_120min360_massa, argila_naoh_esferas_pipeta) %>% 
+  select(toc, oc, om, tom, clay) %>% 
   splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
         varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
                      expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
@@ -265,7 +269,7 @@ abline(a = 0, b = 1)
 
 ```{r, echo=FALSE}
 # Define formulas
-forms <- c("carbono_dry", "carbono_wet", "mo_wet", "mo_loi")
+forms <- c("toc", "oc", "om", "tom")
 forms <- expand.grid(forms, forms)
 forms <- 
   forms[forms[, 1] != forms[, 2], ] %>% 
