@@ -69,7 +69,7 @@ observacao
 
 Compute some summary statistics: number of taxonomic classes, and range of clay content.
 
-```{r}
+```{r, eval = FALSE}
 data.frame(
   taxa = nlevels(as.factor(observacao$taxon_sibcs_2009)),
   min_clay = min(camada$clay, na.rm = TRUE),
@@ -85,7 +85,7 @@ Location of soil observations used in this study.
 
 Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.
 
-```{r}
+```{r, eval = FALSE}
 p1 <- histogram(
   ~ clay, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', 
   col = 'lightgray',
@@ -144,7 +144,7 @@ Includes a description of the four analytical methods used:
 
 Empirical probability density of carbon (A and B) and organic matter (C and D) content in soil samples according to the four analytical methods and the theoretical normal probability density function (dashed line).
 
-```{r}
+```{r, eval = FALSE}
 l <- layer(
   panel.mathdensity(
     dmath = dnorm, args = list(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)), n = length(x), 
@@ -208,7 +208,7 @@ dev.off()
 
 Scatter plot matrix of the soil carbon and organic matter content measured using four different analytical methods and their relation to the total clay content and class (0-250, 251-500, 501-1000 g kg-1). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.
 
-```{r}
+```{r, eval = FALSE}
 png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 camada %>% 
   select(toc, oc, om, tom, clay) %>% 
@@ -224,16 +224,80 @@ dev.off()
 # Results and Discussion
 
 ```{r, echo=FALSE}
-# Define formulas: Y = X1 + X2 + X3, where X2 = X1^2
-forms <- c("toc", "oc", "om", "tom")
-forms <- expand.grid(forms, forms)[, 2:1]
-forms <- forms[!forms[, 1] == forms[, 2], ]
-forms <- data.frame(y = forms[, 1], x1 = forms[, 2], x2 = glue("I({forms[, 2]}^2)"), x3 = "clay")
-forms <- apply(forms, 1, function (x) reformulate(x[2:4], x[1]))
-names(forms) <- sapply(forms, function (x) x)
+# Define formulas
+soil_vars <- c("toc", "oc", "om", "tom")
+soil_vars <- expand.grid(soil_vars, soil_vars, stringsAsFactors = FALSE)[, 2:1]
+soil_vars <- soil_vars[!soil_vars[, 1] == soil_vars[, 2], ]
+# One predictor
+forms1 <- data.frame(y = soil_vars[, 1], x1 = soil_vars[, 2])
+forms1 <- apply(forms1, 1, function (x) reformulate(x[2:ncol(forms1)], x[1]))
+# Two predictors
+forms2 <- data.frame(y = soil_vars[, 1], x1 = soil_vars[, 2], x2 = glue("I({soil_vars[, 2]}^2)"))
+forms2 <- apply(forms2, 1, function (x) reformulate(x[2:ncol(forms2)], x[1]))
+# Three predictors
+forms3 <- data.frame(y = soil_vars[, 1], x1 = soil_vars[, 2], x2 = glue("I({soil_vars[, 2]}^2)"), x3 = "clay")
+forms3 <- apply(forms3, 1, function (x) reformulate(x[2:ncol(forms3)], x[1]))
+# names
+names(forms1) <- sapply(forms1, function (x) x)
+names(forms2) <- sapply(forms2, function (x) x)
+names(forms3) <- sapply(forms3, function (x) x)
 ```
 
 ```{r}
+forms <- list(forms1, forms2, forms3)
+dataset <- camada[1:105, ]
+full_cv <- list()
+for (k in 1:length(forms)) {
+  formulas <- forms[[k]]
+  cv <- list()
+  for (j in 1:length(formulas)) {
+    f <- formulas[[j]]
+    y <- dataset[[soil_vars[j, 1]]]
+    x <- dataset[[soil_vars[j, 2]]]
+    w <- 1 / x^2
+    err <- data.frame(rq = NA_real_, lm = NA_real_)
+    # Leave-one-out cross-validation
+    for (i in 1:nrow(dataset)) {
+      # quantile regression
+      rq_fit <- rq(f, data = dataset[-i, ], method = "fn")
+      err[i, "rq"] <- predict(rq_fit, dataset[i, ]) - y[i]
+      # weighted least squares regression
+      lm_fit <- lm(f, data = dataset[-i, ], weights = w[-i])
+      err[i, "lm"] <- predict(lm_fit, dataset[i, ], weights = w[i]) - y[i]
+    }
+    resid <- mean(y) - y
+    err_sqr <- err^2
+    err_abs <- abs(err)
+    cv[[j]] <- data.frame(
+      ME = colMeans(err),
+      MAE = colMeans(err_abs),
+      MSE = colMeans(err_sqr), 
+      AVE = 1 - (colSums(err_sqr) / sum(resid^2))
+    )
+  }
+  names(cv) <- names(formulas)
+  cv <- do.call(rbind, cv) %>% round(3)
+  full_cv[[k]] <- cv
+  write.csv(cv, file = glue("../res/tab/cv-{k}-predictor.csv"))
+}
+```
+
+```{r}
+names(full_cv) <- 1:3
+full_cv <- do.call(rbind, full_cv)
+full_cv$p <- rep(1:3, each = 24)
+full_cv$m <- rep(c("rq", "lm"), nrow(full_cv) / 2)
+full_cv$y <- rep(soil_vars[, 1], each = 2) %>% rep(3)
+full_cv$x <- rep(soil_vars[, 2], each = 2) %>% rep(3)
+full_cv$id <- rep(1:24, 3)
+full_cv$id <- glue("{full_cv$y}~{full_cv$x}")
+```
+
+```{r}
+xyplot(AVE ~ as.factor(p) | m, full_cv, groups = as.factor(id), type = "l")
+```
+
+```{r, eval=FALSE}
 densidade <- 
   read.table("../data/densidade.csv", sep = "\t", dec = ",", head = TRUE) %>% 
   reshape(direction = "long", idvar = "id", varying = list(4:6), v.names = "d") %>% 
@@ -247,7 +311,7 @@ cbind(fit2$fitted, obs = densidade$d, fit = fitted(fit2)) %>% round(3)
 fit2 <- lm(d ~ som + clay, data = densidade)
 ```
 
-```{r, fig.asp=1}
+```{r, fig.asp=1, eval=FALSE}
 mo <- log1p(round((camada$mo_wet * camada$densidade) / 10, 1))
 clay <- camada$argila_naoh_pipeta
 dens <- camada$densidade
@@ -256,12 +320,12 @@ fit <- lm(dens ~ mo*clay)
 summary(fit)
 ```
 
-```{r}
+```{r, eval=FALSE}
 plot(fit, 1)
 ```
 
 
-```{r, fig.asp=1}
+```{r, fig.asp=1, eval=FALSE}
 plot(fit$fitted.values ~ dens)
 abline(lm(fit$fitted.values ~ dens), col = "red")
 abline(a = 0, b = 1)
@@ -269,7 +333,7 @@ abline(a = 0, b = 1)
 
 
 
-```{r calibrate_models, echo=FALSE}
+```{r calibrate_models, echo=FALSE, eval=FALSE}
 # Function to calibrate models for different values of tau
 calibrate_models <-
   function (tau) {
@@ -282,14 +346,14 @@ calibrate_models <-
   }
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 # Calibrate models for tau = {0.025, 0.5, 0.975}
 fit_lower <- calibrate_models(0.025)
 fit_median <- calibrate_models(0.5)
 fit_upper <- calibrate_models(0.975)
 ```
 
-```{r prepare_beta_table, echo=FALSE}
+```{r prepare_beta_table, echo=FALSE, eval=FALSE}
 # Function to prepare table with estimated model parameters (betas)
 prepare_beta_table <-
   function (fit) {
@@ -305,7 +369,7 @@ prepare_beta_table <-
   }
 ```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 # Table with estimated model parameters por tau = 0.5
 tau <- 0.5
 betas_median <- prepare_beta_table(fit_median)
@@ -314,14 +378,14 @@ panderOptions('table.split.cells', rep(100 / ncol(betas_median), ncol(betas_medi
 pander(betas_median, caption = glue('(\\#tab:coefficients-median) Estimated coefficients of carbon and organic matter pedotransfer functions and their respective confidence interval. Coefficients are as follows: $\\Beta_0$ -- intercept, $\\Beta_1$ -- soil carbon and organic matter content.'))
 ```
 
-```{r get_y, echo=FALSE}
+```{r get_y, echo=FALSE, eval=FALSE}
 # Function to extract the name of the dependent variable in a formula
 get_y <- function (form) {
   terms(form, simplify = T)[[2]] %>% as.character()
 }
 ```
 
-```{r cross-validation, echo=FALSE}
+```{r cross-validation, echo=FALSE, eval=FALSE}
 # Cross-validate models
 cv <- list()
 for (j in 1:length(forms)) {
@@ -345,7 +409,7 @@ names(cv) <- names(forms)
 cv <- do.call(rbind, cv) %>% round(4)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 colnames(cv) <- glue('**{colnames(cv)}**')
 panderOptions('round', rep(4, ncol(cv)))
 panderOptions('table.split.cells', rep(100 / ncol(cv), ncol(cv)))
@@ -356,7 +420,7 @@ The estimated parameters of the quantile regressions for the lower ($\tau = 0.02
 bounds of the 90% prediction interval of the carbon and organic matter pedotransfer functions are shown in 
 Tables \@ref{tab:coefficients-lower} and \@ref{tab:coefficients-upper}, respectively.
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 # Table with estimated model parameters por tau = 0.025
 tau <- 0.025
 betas_lower <- prepare_beta_table(fit_lower)
@@ -365,7 +429,7 @@ panderOptions('table.split.cells', rep(100 / ncol(betas_lower), ncol(betas_lower
 pander(betas_lower, caption = glue('(\\#tab:coefficients-lower) Estimated coefficients for computing the lower bound ($\\tau = {tau}$) of the prediction interval of carbon and organic matter pedotransfer functions. Coefficients are as follows: $\\Beta_0$ -- intercept, $\\Beta_1$ -- soil carbon and organic matter content.'))
 ```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 # Table with estimated model parameters por tau = 0.975
 tau <- 0.975
 betas_upper <- prepare_beta_table(fit_upper)
