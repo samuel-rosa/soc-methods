@@ -223,24 +223,15 @@ dev.off()
 
 # Results and Discussion
 
-```{r}
-camada <- camada[1:105, ]
-err <- data.frame(rq = NA, lm = NA)
-form <- toc ~ tom + I(tom^2) + clay
-y <- camada$toc
-for (i in 1:nrow(camada)) {
-  resid <- mean(y) - y
-  rq_fit <- rq(form, data = camada[-i, ])
-  err[i, "rq"] <- predict(rq_fit, camada[i, ]) - y[i]
-  lm_fit <- lm(form, data = camada[-i, ])
-  err[i, "lm"] <- predict(lm_fit, camada[i, ]) - y[i]
-}
-colMeans(err)
+```{r, echo=FALSE}
+# Define formulas: Y = X1 + X2 + X3, where X2 = X1^2
+forms <- c("toc", "oc", "om", "tom")
+forms <- expand.grid(forms, forms)[, 2:1]
+forms <- forms[!forms[, 1] == forms[, 2], ]
+forms <- data.frame(y = forms[, 1], x1 = forms[, 2], x2 = glue("I({forms[, 2]}^2)"), x3 = "clay")
+forms <- apply(forms, 1, function (x) reformulate(x[2:4], x[1]))
+names(forms) <- sapply(forms, function (x) x)
 ```
-
-
-
-
 
 ```{r}
 densidade <- 
@@ -254,16 +245,6 @@ nlme::intervals(fit)
 cbind(fit2$fitted, obs = densidade$d, fit = fitted(fit2)) %>% round(3)
 
 fit2 <- lm(d ~ som + clay, data = densidade)
-```
-
-
-```{r}
-summary(fit1)
-```
-
-
-```{r}
-summary(fit2)
 ```
 
 ```{r, fig.asp=1}
@@ -286,15 +267,7 @@ abline(lm(fit$fitted.values ~ dens), col = "red")
 abline(a = 0, b = 1)
 ```
 
-```{r, echo=FALSE}
-# Define formulas
-forms <- c("toc", "oc", "om", "tom")
-forms <- expand.grid(forms, forms)
-forms <- 
-  forms[forms[, 1] != forms[, 2], ] %>% 
-  apply(1, function (x) reformulate(x[1], x[2]))
-names(forms) <- sapply(forms, function (x) x)
-```
+
 
 ```{r calibrate_models, echo=FALSE}
 # Function to calibrate models for different values of tau
