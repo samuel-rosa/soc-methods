@@ -244,17 +244,17 @@ names(forms3) <- sapply(forms3, function (x) x)
 ```
 
 ```{r}
-forms <- list(forms1, forms2, forms3)
+all_forms <- list(forms1, forms2, forms3)
 dataset <- camada[1:105, ]
 full_cv <- list()
-for (k in 1:length(forms)) {
-  formulas <- forms[[k]]
+for (k in 1:length(all_forms)) {
+  forms <- all_forms[[k]]
   cv <- list()
-  for (j in 1:length(formulas)) {
-    f <- formulas[[j]]
+  for (j in 1:length(forms)) {
+    f <- forms[[j]]
     y <- dataset[[soil_vars[j, 1]]]
     x <- dataset[[soil_vars[j, 2]]]
-    w <- 1 / x^2
+    w <- 1 / x
     err <- data.frame(rq = NA_real_, lm = NA_real_)
     # Leave-one-out cross-validation
     for (i in 1:nrow(dataset)) {
@@ -265,6 +265,7 @@ for (k in 1:length(forms)) {
       lm_fit <- lm(f, data = dataset[-i, ], weights = w[-i])
       err[i, "lm"] <- predict(lm_fit, dataset[i, ], weights = w[i]) - y[i]
     }
+    # Error statistics
     resid <- mean(y) - y
     err_sqr <- err^2
     err_abs <- abs(err)
@@ -275,27 +276,49 @@ for (k in 1:length(forms)) {
       AVE = 1 - (colSums(err_sqr) / sum(resid^2))
     )
   }
-  names(cv) <- names(formulas)
+  names(cv) <- names(forms)
   cv <- do.call(rbind, cv) %>% round(3)
   full_cv[[k]] <- cv
   write.csv(cv, file = glue("../res/tab/cv-{k}-predictor.csv"))
 }
-```
-
-```{r}
 names(full_cv) <- 1:3
 full_cv <- do.call(rbind, full_cv)
-full_cv$p <- rep(1:3, each = 24)
-full_cv$m <- rep(c("rq", "lm"), nrow(full_cv) / 2)
-full_cv$y <- rep(soil_vars[, 1], each = 2) %>% rep(3)
-full_cv$x <- rep(soil_vars[, 2], each = 2) %>% rep(3)
-full_cv$id <- rep(1:24, 3)
-full_cv$id <- glue("{full_cv$y}~{full_cv$x}")
 ```
 
 ```{r}
-xyplot(AVE ~ as.factor(p) | m, full_cv, groups = as.factor(id), type = "l")
+full_cv$p <- rep(c("y ~ x1", "y ~ x1 + x2", "y ~ x1 + x2 + x3"), each = 24) %>% as.factor()
+full_cv$m <- rep(c("Quantile (median) regression", "Weighted least squares regression"), nrow(full_cv) / 2)
+full_cv$y <- rep(soil_vars[, 1], each = 2) %>% rep(3) %>% as.factor()
+full_cv$x <- rep(soil_vars[, 2], each = 2) %>% rep(3) %>% as.factor()
+full_cv$id <- glue("{full_cv$m}({full_cv$y} ~ {full_cv$x})") %>% toupper() %>% as.factor()
+full_cv$id2 <- glue("{full_cv$y} ~ {full_cv$x}") %>% toupper() %>% as.factor()
 ```
+
+```{r, fig.asp=1}
+col <- c("dodgerblue", "magenta", "olivedrab", "gold") %>% rep(each = 3)
+lty <- c(1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2)
+p1 <-
+xyplot(
+  AVE + MSE + MAE + ME ~ as.factor(p) | m, full_cv, groups = id2,  type = "l", col = col, lty = lty, lwd = 3,
+  xlab = "Linear model formulation", scales = list(x = list(relation = "same"), y = list(relation = "sliced")),
+  key = list(lines = list(col = col, lty = lty, lwd = 3), columns = 4, text = list(levels(full_cv$id2))),
+  panel = function (...) {
+    panel.grid(h = -1, v = 0)
+    panel.xyplot(...)
+  })
+p1 <- 
+  latticeExtra::useOuterStrips(
+    p1, strip = lattice::strip.custom(bg = "bisque"), strip.left = lattice::strip.custom(bg = "lightblue"))
+p1$aspect.ratio <- 1
+lim <- 
+  apply(full_cv[1:4], 2, function (x) by(x, full_cv$m, range)) %>% 
+  sapply(function (x) c(x) %>% extendrange)
+p1$y.limits <- lim[, rep(ncol(lim):1, each = 2)] %>% as.data.frame() %>% as.list()
+png("../res/fig/cross-validation.png", width = 480 * 4, height = 480 * 6, res = 72 * 3)
+p1
+dev.off()
+```
+
 
 ```{r, eval=FALSE}
 densidade <- 
