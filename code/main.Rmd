@@ -306,7 +306,7 @@ for (k in 1:length(all_forms)) {
       err[i, "rq"] <- predict(rq_fit, dataset[i, ]) - y[i]
       # weighted least squares regression
       lm_fit <- lm(f, data = dataset[-i, ], weights = w[-i])
-      err[i, "lm"] <- predict(lm_fit, dataset[i, ], weights = w[i]) - y[i]
+      err[i, "lm"] <- predict(lm_fit, dataset[i, ]) - y[i]
     }
     # Error statistics
     resid <- mean(y) - y
