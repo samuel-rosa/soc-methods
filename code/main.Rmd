@@ -243,9 +243,51 @@ names(forms2) <- sapply(forms2, function (x) x)
 names(forms3) <- sapply(forms3, function (x) x)
 ```
 
+We implement weighted least squares to estimate betas, make predictions and estimate prediction error variances.
+Estimates are compared with the output of `lm` and `predict.lm`. This is usefull to understand the estimation
+equations and their differences compared to ordinary least squares.
+
+```{r, eval=FALSE}
+# Temporary data
+tmp_data <- camada[1:105, ]
+
+# Test observations
+i <- 96:105
+
+# Estimate model using lm
+fit <- lm(tom ~ om + clay, data = tmp_data[-i, ], weights = 1/om)
+pred <- predict(fit, tmp_data[i, c("om", "clay")], se.fit = TRUE)
+
+# Dependent variable
+Y <- tmp_data[-i, "tom"] %>% as.matrix()
+
+# Predictor variables
+X <- data.frame(x0 = 1, tmp_data[-i, c("om", "clay")]) %>% as.matrix()
+
+# Weights
+W <- matrix(0, ncol = nrow(X), nrow = nrow(X))
+diag(W) <- 1 / X[, "om"]
+
+# Estimate betas: (X'WX)⁻¹X'WY
+b_hat <- solve(t(X) %*% W %*% X) %*% t(X) %*% W %*% Y %>% drop()
+data.frame(b_hat = b_hat, lm = fit$coefficients)
+
+# Residual sum of squares
+rss <- sum(diag(W) * (Y - X %*% drop(b_hat))^2) / (nrow(X) - ncol(X))
+data.frame(rss, lm = summary(fit)$sigma^2)
+
+# Prediction at a point
+x0 <- data.frame(x0 = 1, tmp_data[i, c("om", "clay")]) %>% as.matrix()
+y_hat <- x0 %*% drop(b_hat)
+data.frame(y_hat = y_hat, lm = pred$fit)
+
+# Prediction error variance: RSS * (1 + x0 (X'X)⁻¹x0')
+pev <- rss * (1 + x0 %*% solve(t(X) %*% W %*% X) %*% t(x0)) %>% diag()
+data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2)
+```
+
+
 ```{r}
-camada$b0 <- 1
-i <- 103
 # fit <- lm(tom ~ om + clay, data = camada[1:100, ], weights = 1/om)
 # pred <- predict(fit, camada[101, ], weights = 1/om, se.fit = TRUE)
 fit <- lm(tom ~ om + clay, data = camada[1:100, ])
@@ -260,10 +302,6 @@ b_hat <- solve(t(X)%*%X) %*% t(X) %*% Y %>% drop
 x0 <- camada[i, c("b0", "om", "clay")] %>% as.matrix(ncol = 1, nrow = 3)
 y_hat <- sum(x0 * t(b_hat))
 sqrt(sqrt(sum(fit$residuals^2) / 97) * (1 + (x0 %*% solve(t(X)%*%X) %*% t(x0))));sqrt(pred$residual.scale^2 + pred$se.fit^2)
-```
-
-
-```{r}
 sqrt(pred$residual.scale^2 + pred$se.fit^2)
 ```
 
