@@ -313,8 +313,8 @@ for (k in 1:length(all_forms)) {
       pred <- predict.lm(object = lm_fit, newdata = dataset[i, ], se.fit = TRUE)
       out[i, ] <- c(pred$fit, pred$se.fit^2 + pred$residual.scale^2)
       # pred <- data.frame(pred = pred$fit, pev = pred$se.fit^2 + pred$residual.scale^2)
-      # out[i, ] <- 
-      #   c(pred = exp(pred$pred + 0.5 * pred$pev), 
+      # out[i, ] <-
+      #   c(pred = exp(pred$pred + 0.5 * pred$pev),
       #     pev = (exp(pred$pev) - 1) * exp(2 * pred$pred + pred$pev))
     }
     # Error statistics
@@ -341,7 +341,6 @@ names(full_cv) <- 1:3
 full_cv <- do.call(rbind, full_cv)
 ```
 
-
 ```{r}
 full_cv$p <- rep(c("y ~ x0 + x1", "y ~ x0 + x1 + x2", "y ~ x0 + x1 + x2 + x3"), each = 12) %>% as.factor()
 full_cv$y <- rep(soil_vars[, 1], 3) %>% as.factor()
@@ -367,7 +366,7 @@ col <- c("dodgerblue", "magenta", "olivedrab", "gold") %>% rep(each = 3)
 lty <- c(1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2)
 p1 <-
 xyplot(
-  MedRSE + MRSE + mAVE + AVE + MSE + MAE + ME ~ as.factor(p), full_cv, 
+  mAVE + AVE + MSE + MAE + ME ~ as.factor(p), full_cv, 
   groups = id,  type = "l", 
   # col = col, lty = lty, 
   lwd = 3,
