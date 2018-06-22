@@ -404,8 +404,28 @@ p1
 dev.off()
 ```
 
+An alternative to weighted least squares is quantile regression. With quantile regression we make predicitons 
+at many points of the probability distribution of the dependent variable and then compute the mean and variance
+of those estimates. We first evaluate the effect of the number of quantiles on the stability of the estimated
+variance. Apparently, irrespective of the dependent and predictor variable, the variance starts to stabilize 
+with 500 quantiles.
 
-
+```{r, eval=FALSE, fig.asp=1}
+length.out <- c(10, 50, 100, 500, 1000, 10000)
+n <- list()
+for (j in 1:length(length.out)) {
+  pred <- data.frame(id = NA_integer_, pred = NA_real_, pev = NA_real_)
+  for (i in 1:105) {
+    fit <- rq(oc ~ toc + I(toc^2) + clay, tau = seq(0.01, 0.99, length.out = length.out[j]), data = dataset[-i, ])
+    out <- predict(object = fit, newdata = dataset[i, ]) %>% as.numeric()
+    pred[i, ] <- c(length.out[j], mean(out), var(out))
+  }
+  n[[j]] <- pred
+}
+n <- do.call(rbind, n)
+n$id <- as.factor(n$id)
+bwplot(pev ~ id, n) + layer(panel.grid(h = -1, v = 0))
+```
 
 
 
