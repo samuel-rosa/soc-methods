@@ -83,7 +83,6 @@ camada <-
   mutate(topsoil = ifelse(profund_inf <= 20, 1, 0))
 ```
 
-
 Compute some summary statistics: number of taxonomic classes, and range of clay content.
 
 ```{r, eval = FALSE}
@@ -291,11 +290,26 @@ data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2)
 Test various predictor variables.
 
 ```{r, fig.asp=1}
-fit_lm <- 
-  lm(oc ~ om + I(om^2) + clay + topsoil + forest + agriculture + forestry + husbandry,
-     data = camada, weights = 1 / om)
-plot(fit_lm, 1)
-summary(fit_lm)
+camada <- camada[order(camada$tom), ]
+fit_lm1 <- 
+  lm(tom ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada, weights = 1 / tom)
+camada$y <- abs(resid(fit_lm1))
+fit_lm <- lm(y ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada)
+fit_lm2 <- 
+  lm(tom ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada, weights = 1/abs(fitted(fit_lm1))^2)
+fit_lm <- lm(y ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada)
+camada$y <- abs(resid(fit_lm2))
+fit_lm <- lm(y ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada)
+fit_lm3 <- 
+  lm(tom ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada, weights = 1/abs(fitted(fit_lm2))^2)
+camada$y <- abs(resid(fit_lm3))
+fit_lm <- lm(y ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada)
+fit_lm4 <- 
+  lm(tom ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada, weights = 1/abs(fitted(fit_lm3))^2)
+plot(fit_lm1, 1);plot(fit_lm2, 1);plot(fit_lm3, 1);plot(fit_lm4, 1)
+# lapply(list(fit_lm1, fit_lm2, fit_lm3, fit_lm4), function (x) coef(x) %>% signif(2))
+summary(fit_lm1);summary(fit_lm4)
+plot(weights(fit_lm1)/sum(weights(fit_lm1))*100);plot(weights(fit_lm2)/sum(weights(fit_lm2))*100);plot(weights(fit_lm3)/sum(weights(fit_lm3))*100);plot(weights(fit_lm4)/sum(weights(fit_lm4))*100)
 ```
 
 
