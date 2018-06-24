@@ -77,9 +77,7 @@ camada <-
   mutate(terra_usoatual = observacao$terra_usoatual) %>% 
   mutate(forest = ifelse(terra_usoatual == "FS", 1, 0)) %>% 
   mutate(agriculture = ifelse(terra_usoatual == "AA", 1, 0)) %>% 
-  mutate(forestry = ifelse(terra_usoatual == "FP", 1, 0)) %>% 
-  mutate(husbandry = ifelse(terra_usoatual == "HE", 1, 0)) %>% 
-  select(-terra_usoatual) %>% 
+  dplyr::select(-terra_usoatual) %>% 
   mutate(topsoil = ifelse(profund_inf <= 20, 1, 0))
 ```
 
@@ -288,6 +286,22 @@ data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2)
 ```
 
 Test various predictor variables.
+
+```{r, fig.asp=1}
+# tom ~ oc; om ~ oc; toc ~ oc
+# oc ~ toc; om ~ toc; tom ~ toc
+# tom ~ om; toc ~ om; oc ~ om
+# oc ~ tom; toc ~ tom; om ~ tom
+fit_lm0 <- lm(toc ~ tom, data = camada)
+fit_lm1 <- lm(toc ~ tom*clay + I(tom^2)*clay + topsoil + agriculture + forest, data = camada)
+fit_lm2 <- lm(toc ~ oc*clay + I(oc^2)*clay + topsoil + agriculture + forest, data = camada, weights = 1/toc)
+fit_lm3 <- lm(log(toc) ~ oc*clay + I(oc^2)*clay + topsoil + agriculture + forest, data = camada)
+fit_lm4 <- lm(log(toc) ~ oc*clay + log(oc)*clay + topsoil + agriculture + forest, data = camada)
+# summary(fit_lm0);summary(fit_lm1);summary(fit_lm2);summary(fit_lm3)
+plot(fit_lm0, 1);plot(fit_lm1, 1);plot(fit_lm2, 1);plot(fit_lm3, 1);plot(fit_lm4, 1)
+```
+
+
 
 ```{r, fig.asp=1}
 camada <- camada[order(camada$tom), ]
