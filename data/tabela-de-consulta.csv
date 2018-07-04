@@ -1,0 +1,56 @@
+tabela_id,campo_id,campo_codigo,campo_nome,campo_descricao
+observacao,taxon,P,Argissolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,PBAC,Argissolo Bruno-Acinzentado,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,PAC,Argissolo Acinzentado,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,PA,Argissolo Amarelo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,PV,Argissolo Vermelho,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,PVA,Argissolo Vermelho-Amarelo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,C,Cambissolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,CI,Cambissolo Hístico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,CH,Cambissolo Húmico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,CY,Cambissolo Flúvico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,CX,Cambissolo Háplico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,M,Chernossolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,MD,Chernossolo Rêndzico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,ME,Chernossolo Ebânico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,MT,Chernossolo Argilúvico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,MX,Chernossolo Háplico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,E,Espodossolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,EK,Espodossolo Humilúvico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,ES,Espodossolo Ferrilúvico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,ESK,Espodossolo Ferri-Humilúvico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,G,Gleissolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,GM,Gleissolo Melânico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,GX,Gleissolo Háplico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,L,Latossolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,LB,Latossolo Bruno,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,LA,Latossolo Amarelo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,LV,Latossolo Vermelho,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,LVA,Latossolo Vermelho-Amarelo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,T,Luvissolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,TC,Luvissolo Crômico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,TX,Luvissolo Háplico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,R,Neossolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,RL,Neossolo Litólico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,RY,Neossolo Flúvico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,RR,Neossolo Regolítico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,RQ,Neossolo Quartzarênico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,N,Nitossolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,NB,Nitossolo Bruno,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,NV,Nitossolo Vermelho,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,NX,Nitossolo Háplico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,O,Organossolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,OJ,Organossolo Tiomórfico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,OO,Organossolo Fólico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,OX,Organossolo Háplico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,S,Planossolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,SN,Planossolo Nátrico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,SX,Planossolo Háplico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,F,Plintossolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,FF,Plintossolo Pétrico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,FT,Plintossolo Argilúvico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,FX,Plintossolo Háplico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,V,Vertissolo,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,VG,Vertissolo Hidromórfico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,VE,Vertissolo Ebânico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
+observacao,taxon,VX,Vertissolo Háplico,Classe taxonômica do Sistema Brasileiro de Classificação de Solos edição 2013
