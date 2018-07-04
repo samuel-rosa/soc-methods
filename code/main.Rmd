@@ -55,6 +55,9 @@ Data on soil observations if processed. Land use info, `terra_usoatual`, is recl
 * HE (Campo nativo): Animal husbandry (extensive grazing)
 
 ```{r, echo=FALSE, message=FALSE}
+sibcs <- readr::read_csv('../data/tabela-de-consulta.csv')
+sibcs_recode <- as.list(sibcs$campo_codigo)
+names(sibcs_recode) <- sibcs$campo_nome  
 observacao <- readr::read_csv(
   '../data/observacao.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = '-')
 observacao <-
@@ -64,7 +67,8 @@ observacao <-
   mutate(terra_usoatual = gsub('Vegetação secundária', 'U', .data$terra_usoatual)) %>%
   mutate(terra_usoatual = gsub('Agricultura', 'AA', .data$terra_usoatual)) %>%
   mutate(terra_usoatual = gsub('Silvicultura', 'FP', .data$terra_usoatual)) %>%
-  mutate(terra_usoatual = gsub('Campo nativo', 'HE', .data$terra_usoatual))
+  mutate(terra_usoatual = gsub('Campo nativo', 'HE', .data$terra_usoatual)) %>% 
+  mutate(taxon = recode(taxon_sibcs_2009, !!!sibcs_recode))
 observacao
 ```
 
@@ -78,14 +82,15 @@ camada <-
   mutate(forest = ifelse(terra_usoatual == "FS", 1, 0)) %>% 
   mutate(agriculture = ifelse(terra_usoatual == "AA", 1, 0)) %>% 
   dplyr::select(-terra_usoatual) %>% 
-  mutate(topsoil = ifelse(profund_inf <= 20, 1, 0))
+  mutate(topsoil = ifelse(profund_inf <= 20, 1, 0)) %>% 
+  mutate(taxon = observacao$taxon_sibcs_2009)
 ```
 
 Compute some summary statistics: number of taxonomic classes, and range of clay content.
 
 ```{r, eval = FALSE}
 data.frame(
-  taxa = nlevels(as.factor(observacao$taxon_sibcs_2009)),
+  taxa = nlevels(as.factor(observacao$taxon)),
   min_clay = min(camada$clay, na.rm = TRUE),
   max_clay = max(camada$clay, na.rm = TRUE)
   )
@@ -121,7 +126,7 @@ p2 <- histogram(
     grid.text(label = "B)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   })
 p3 <- barchart(
-  observacao$taxon_sibcs_2009, xlab = 'Soil classification', ylab = 'Percent of total', horizontal = FALSE, 
+  observacao$taxon, xlab = 'Soil classification', ylab = 'Percent of total', horizontal = FALSE, 
   col = 'lightgray', scales = list(x = list(rot = 60)),
   panel = function (...) {
     lattice::panel.grid(h = -1, v = 0)
