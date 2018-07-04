@@ -302,12 +302,12 @@ data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2)
 Define formulas. We test six model formulations, starting with predictor variables that are more readly 
 available and ending with the most complex/expensive model. These are:
 
-1. y ~ x
-2. y ~ x + x^2
-3. y ~ x + x^2 + topsoil
-4. y ~ x + x^2 + topsoil + landuse
-5. y ~ x*clay + x^2*clay + topsoil + landuse
-6. y ~ x*clay + x^2*clay + topsoil + landuse + taxon
+A. y ~ x
+B. y ~ x + x^2
+C. y ~ x + x^2 + topsoil
+D. y ~ x + x^2 + topsoil + landuse
+E. y ~ x*clay + x^2*clay + topsoil + landuse
+F. y ~ x*clay + x^2*clay + topsoil + landuse + taxon
 
 ```{r}
 # Soil variables
@@ -324,12 +324,12 @@ formulas <- lapply(1:nrow(soil_vars), function (i) {
   y <- soil_vars[i, 1]
   x <- soil_vars[i, 2]
   list(
-    glue("{y} ~ {x}"),
-    glue("{y} ~ {x} + I({x}^2)"),
-    glue("{y} ~ {x} + I({x}^2) + topsoil"),
-    glue("{y} ~ {x} + I({x}^2) + topsoil + {landuse}"),
-    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse}"),
-    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse} + {taxon}")
+    glue("{y} ~ {x}"), # A
+    glue("{y} ~ {x} + I({x}^2)"), # B
+    glue("{y} ~ {x} + I({x}^2) + topsoil"), # C
+    glue("{y} ~ {x} + I({x}^2) + topsoil + {landuse}"), # D
+    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse}"), # E
+    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse} + {taxon}") # F
     )
 })
 names(formulas) <- sapply(formulas, function (x) x[[1]])
@@ -379,7 +379,11 @@ for (i in 1:length(formulas)) {
     loocv[[j]] <- data.frame(
       
       # Model
-      model = f,
+      f = f,
+      p = LETTERS[j] %>% as.factor(),
+      y = soil_vars[i, 1],
+      x = soil_vars[i, 2],
+      m = glue("{soil_vars[i, 1]} ~ {soil_vars[i, 2]}") %>% toupper() %>% as.factor(),
       
       # Median error measures
       MedE = median(error),
@@ -395,7 +399,56 @@ for (i in 1:length(formulas)) {
   cross_validation[[i]] <- do.call(rbind, loocv)
 }
 cross_validation <- do.call(rbind, cross_validation)
+cross_validation$f[which.min(cross_validation$mAVE)]
 ```
+
+```{r, fig.asp=1}
+col <- c("dodgerblue", "magenta", "olivedrab", "gold") %>% rep(each = 3)
+lty <- c(1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2)
+p1 <-
+  xyplot(
+    AVE + mAVE + MedAE + MedSE + MedE + MedSDR ~ p, data = cross_validation, groups = m,
+    type = "l", col = col, lty = lty, lwd = 3, xlab = "Model formulation", ylab = "",
+    key = list(lines = list(col = col, lty = lty, lwd = 3), columns = 4, 
+               text = list(levels(cross_validation$m))),
+    scales = list(x = list(relation = "same"), y = list(relation = "free")), layout = c(2, 3),
+    panel = function (...) {
+      panel.grid(h = -1, v = -1)
+      panel.xyplot(...)
+    })
+png("../res/fig/cross-validation.png", width = 480 * 4, height = 480 * 5, res = 72 * 3)
+p1
+dev.off()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -405,7 +458,7 @@ cross_validation <- do.call(rbind, cross_validation)
 
 We define the formulas for the linear models that will be tested.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 # Define formulas
 soil_vars <- c("toc", "oc", "om", "tom")
 soil_vars <- expand.grid(soil_vars, soil_vars, stringsAsFactors = FALSE)[, 2:1]
@@ -445,7 +498,7 @@ Run leave-one-out cross-validation and compute performance measures:
 
 The median is used instead of the mean because it is less sensitive to outliers.
 
-```{r}
+```{r, eval=FALSE}
 all_forms <- list(forms1, forms2, forms3)
 dataset <- camada[1:105, ]
 full_cv <- list()
