@@ -320,7 +320,7 @@ landuse <- "agriculture + grazing + forest"
 taxon <- "argissolo + cambissolo + latossolo + neossolo + planossolo"
 
 # Formulas
-forms <- lapply(1:nrow(soil_vars), function (i) {
+formulas <- lapply(1:nrow(soil_vars), function (i) {
   y <- soil_vars[i, 1]
   x <- soil_vars[i, 2]
   list(
@@ -332,52 +332,74 @@ forms <- lapply(1:nrow(soil_vars), function (i) {
     glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse} + {taxon}")
     )
 })
+names(formulas) <- sapply(formulas, function (x) x[[1]])
+```
+
+Run leave-one-out cross-validation and compute performance measures:
+
+* MedE: median error
+* MedSE: median squared error
+* MedAE: median absolute error
+* MedSDR: median squared deviation ratio
+* AVE: amount of variation explained (or model efficiency)
+* mAVE: modified amount of variation explained (or modified model efficiency)
+
+The median is used instead of the mean because it is less sensitive to outliers.
+
+```{r}
+cross_validation <- list()
+# i <- 1
+for (i in 1:length(formulas)) {
+  
+  forms <- formulas[[i]]
+  y <- camada[[soil_vars[i, 1]]]
+  resid <- mean(y) - y
+  x <- camada[[soil_vars[i, 2]]]
+  w <- 1 / x # weigths are inversely proportional to the predictor variable
+  
+  loocv <- list()
+  # j <- 1
+  for (j in 1:length(forms)) {
+    f <- forms[[j]]
+    
+    out <- data.frame(pred = NA_real_, pev = NA_real_)
+    # Leave-one-out cross-validation
+    # k <- 1
+    for (k in 1:nrow(camada)) {
+      # Weighted least squares regression
+      lm_fit <- lm(formula = f, data = camada[-k, ], weights = w[-k])
+      pred <- predict.lm(object = lm_fit, newdata = camada[k, ], se.fit = TRUE)
+      out[k, ] <- c(pred$fit, pred$se.fit^2 + pred$residual.scale^2)
+    }
+    
+    # Cross-validation statistics
+    error <- out$pred - y
+    error_sqr <- error * error
+    error_abs <- abs(error)
+    loocv[[j]] <- data.frame(
+      
+      # Model
+      model = f,
+      
+      # Median error measures
+      MedE = median(error),
+      MedAE = median(error_abs),
+      MedSE = median(error_sqr),
+      MedSDR = qchisq(0.5, 1) + median(out$pev / error_sqr),
+      
+      # Model efficiency
+      AVE = 1 - (sum(error_sqr) / sum(resid * resid)),
+      mAVE = 1 - (sum(error_abs) / sum(abs(resid))) # less sensitive to outliers than AVE
+    )
+  }
+  cross_validation[[i]] <- do.call(rbind, loocv)
+}
+cross_validation <- do.call(rbind, cross_validation)
 ```
 
 
 
 
-Test various predictor variables.
-
-```{r, fig.asp=1}
-# tom ~ oc; om ~ oc; toc ~ oc
-# oc ~ toc; om ~ toc; tom ~ toc
-# tom ~ om; toc ~ om; oc ~ om
-# oc ~ tom; toc ~ tom; om ~ tom
-fit_lm <- lm(toc ~ 0 + om, data = camada)
-fit_lm0 <- lm(toc ~ om, data = camada)
-fit_lm1 <- lm(toc ~ om + I(om^2), data = camada, weights = 1/toc)
-fit_lm2 <- lm(toc ~ om + I(om^2) + topsoil + grazing + agriculture + forest, data = camada, weights = 1/toc)
-fit_lm3 <- lm(toc ~ om*clay + I(om^2)*clay + topsoil + agriculture + forest, data = camada, weights = 1/toc)
-fit_lm4 <- lm(toc ~ om*clay + I(om^2)*clay + topsoil + agriculture + forest + latossolo + argissolo + planossolo + cambissolo + neossolo, data = camada, weights = 1/toc)
-# summary(fit_lm0);summary(fit_lm1);summary(fit_lm2);summary(fit_lm3);summary(fit_lm4)
-plot(fit_lm, 1);plot(fit_lm0, 1);plot(fit_lm1, 1);plot(fit_lm2, 1);plot(fit_lm3, 1);plot(fit_lm4, 1)
-```
-
-
-
-```{r, fig.asp=1}
-camada <- camada[order(camada$tom), ]
-fit_lm1 <- 
-  lm(tom ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada, weights = 1 / tom)
-camada$y <- abs(resid(fit_lm1))
-fit_lm <- lm(y ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada)
-fit_lm2 <- 
-  lm(tom ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada, weights = 1/abs(fitted(fit_lm1))^2)
-fit_lm <- lm(y ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada)
-camada$y <- abs(resid(fit_lm2))
-fit_lm <- lm(y ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada)
-fit_lm3 <- 
-  lm(tom ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada, weights = 1/abs(fitted(fit_lm2))^2)
-camada$y <- abs(resid(fit_lm3))
-fit_lm <- lm(y ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada)
-fit_lm4 <- 
-  lm(tom ~ oc + I(oc^2) + clay + topsoil + agriculture, data = camada, weights = 1/abs(fitted(fit_lm3))^2)
-plot(fit_lm1, 1);plot(fit_lm2, 1);plot(fit_lm3, 1);plot(fit_lm4, 1)
-# lapply(list(fit_lm1, fit_lm2, fit_lm3, fit_lm4), function (x) coef(x) %>% signif(2))
-summary(fit_lm1);summary(fit_lm4)
-plot(weights(fit_lm1)/sum(weights(fit_lm1))*100);plot(weights(fit_lm2)/sum(weights(fit_lm2))*100);plot(weights(fit_lm3)/sum(weights(fit_lm3))*100);plot(weights(fit_lm4)/sum(weights(fit_lm4))*100)
-```
 
 
 
