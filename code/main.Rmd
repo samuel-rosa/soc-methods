@@ -81,9 +81,18 @@ camada <-
   mutate(terra_usoatual = observacao$terra_usoatual) %>% 
   mutate(forest = ifelse(terra_usoatual == "FS", 1, 0)) %>% 
   mutate(agriculture = ifelse(terra_usoatual == "AA", 1, 0)) %>% 
+  mutate(grazing = ifelse(terra_usoatual == "HE", 1, 0)) %>% 
   dplyr::select(-terra_usoatual) %>% 
   mutate(topsoil = ifelse(profund_inf <= 20, 1, 0)) %>% 
-  mutate(taxon = observacao$taxon_sibcs_2009)
+  mutate(taxon2 = observacao$taxon_sibcs_2009) %>% 
+  mutate(taxon1 = sapply(taxon2, function (x) unlist(strsplit(x, " "))[1])) %>% 
+  mutate(latossolo = ifelse(taxon1 == "Latossolo", 1, 0)) %>% 
+  mutate(argissolo = ifelse(taxon1 == "Argissolo", 1, 0)) %>% 
+  mutate(cambissolo = ifelse(taxon1 == "Cambissolo", 1, 0)) %>% 
+  mutate(planossolo = ifelse(taxon1 == "Planossolo", 1, 0)) %>% 
+  mutate(neossolo = ifelse(taxon1 == "Neossolo", 1, 0)) %>% 
+  dplyr::select(-taxon1, -taxon2)
+camada
 ```
 
 Compute some summary statistics: number of taxonomic classes, and range of clay content.
@@ -290,6 +299,44 @@ pev <- rss * (1 + x0 %*% solve(t(X) %*% W %*% X) %*% t(x0)) %>% diag()
 data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2)
 ```
 
+Define formulas. We test six model formulations, starting with predictor variables that are more readly 
+available and ending with the most complex/expensive model. These are:
+
+1. y ~ x
+2. y ~ x + x^2
+3. y ~ x + x^2 + topsoil
+4. y ~ x + x^2 + topsoil + landuse
+5. y ~ x*clay + x^2*clay + topsoil + landuse
+6. y ~ x*clay + x^2*clay + topsoil + landuse + taxon
+
+```{r}
+# Soil variables
+soil_vars <- c("toc", "oc", "om", "tom")
+soil_vars <- expand.grid(soil_vars, soil_vars, stringsAsFactors = FALSE)[, 2:1]
+soil_vars <- soil_vars[!soil_vars[, 1] == soil_vars[, 2], ]
+
+# Predictor variables
+landuse <- "agriculture + grazing + forest"
+taxon <- "argissolo + cambissolo + latossolo + neossolo + planossolo"
+
+# Formulas
+forms <- lapply(1:nrow(soil_vars), function (i) {
+  y <- soil_vars[i, 1]
+  x <- soil_vars[i, 2]
+  list(
+    glue("{y} ~ {x}"),
+    glue("{y} ~ {x} + I({x}^2)"),
+    glue("{y} ~ {x} + I({x}^2) + topsoil"),
+    glue("{y} ~ {x} + I({x}^2) + topsoil + {landuse}"),
+    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse}"),
+    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse} + {taxon}")
+    )
+})
+```
+
+
+
+
 Test various predictor variables.
 
 ```{r, fig.asp=1}
@@ -297,13 +344,14 @@ Test various predictor variables.
 # oc ~ toc; om ~ toc; tom ~ toc
 # tom ~ om; toc ~ om; oc ~ om
 # oc ~ tom; toc ~ tom; om ~ tom
-fit_lm0 <- lm(toc ~ tom, data = camada)
-fit_lm1 <- lm(toc ~ tom*clay + I(tom^2)*clay + topsoil + agriculture + forest, data = camada)
-fit_lm2 <- lm(toc ~ oc*clay + I(oc^2)*clay + topsoil + agriculture + forest, data = camada, weights = 1/toc)
-fit_lm3 <- lm(log(toc) ~ oc*clay + I(oc^2)*clay + topsoil + agriculture + forest, data = camada)
-fit_lm4 <- lm(log(toc) ~ oc*clay + log(oc)*clay + topsoil + agriculture + forest, data = camada)
-# summary(fit_lm0);summary(fit_lm1);summary(fit_lm2);summary(fit_lm3)
-plot(fit_lm0, 1);plot(fit_lm1, 1);plot(fit_lm2, 1);plot(fit_lm3, 1);plot(fit_lm4, 1)
+fit_lm <- lm(toc ~ 0 + om, data = camada)
+fit_lm0 <- lm(toc ~ om, data = camada)
+fit_lm1 <- lm(toc ~ om + I(om^2), data = camada, weights = 1/toc)
+fit_lm2 <- lm(toc ~ om + I(om^2) + topsoil + grazing + agriculture + forest, data = camada, weights = 1/toc)
+fit_lm3 <- lm(toc ~ om*clay + I(om^2)*clay + topsoil + agriculture + forest, data = camada, weights = 1/toc)
+fit_lm4 <- lm(toc ~ om*clay + I(om^2)*clay + topsoil + agriculture + forest + latossolo + argissolo + planossolo + cambissolo + neossolo, data = camada, weights = 1/toc)
+# summary(fit_lm0);summary(fit_lm1);summary(fit_lm2);summary(fit_lm3);summary(fit_lm4)
+plot(fit_lm, 1);plot(fit_lm0, 1);plot(fit_lm1, 1);plot(fit_lm2, 1);plot(fit_lm3, 1);plot(fit_lm4, 1)
 ```
 
 
