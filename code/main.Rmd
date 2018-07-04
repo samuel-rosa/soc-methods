@@ -12,9 +12,8 @@ output: html_document
 # load packages
 library(dplyr)
 library(magrittr)
-library(grid)
+# library(grid)
 library(latticeExtra)
-library(quantreg)
 library(glue)
 ```
 
@@ -22,9 +21,14 @@ library(glue)
 
 ## Soil data
 
-The data can be downloaded from the Free Brazilian Repository for Open Soil Data. The dataset identification code is `ctb0029`. Here we use a copy of the data stored in folder `data`.
+The data can be downloaded from the Free Brazilian Repository for Open Soil Data. The dataset identification 
+code is `ctb0029`. Here we use a copy of the data stored in folder `data`.
 
-We create categorical variables using the clay content (`argila_naoh_esferas_pipeta`) and the organic matter content determined at the commercial soil analysis laboratory of the Universidade Federal de Santa Maria (`matorg_dicromato_30min80_eam`). For the latter, the classification is performed using the three classes used for fertilizer recommendations in Rio Grande do Sul and Santa Catarina.
+We create categorical variables using the clay content (`argila_naoh_esferas_pipeta`) and the organic matter
+content determined at the commercial soil analysis laboratory of the Universidade Federal de Santa Maria
+(`matorg_dicromato_30min80_eam`). For the latter, the classification is performed using the three classes used 
+for fertilizer recommendations in Rio Grande do Sul and Santa Catarina. For convenience, we rename key soil
+variables using short English names.
 
 ```{r, echo=FALSE, message=FALSE}
 camada <- readr::read_csv(
@@ -46,13 +50,18 @@ camada <-
 camada
 ```
 
-Data on soil observations if processed. Land use info, `terra_usoatual`, is reclassified using FAO guidelines for soil description. The following codes are used:
+Data on soil observations if processed. Land use info, `terra_usoatual`, is reclassified using FAO guidelines 
+for soil description. The following codes are used:
 
 * FS (Floresta): Semi-deciduous forest (vegetation slightly disturbed)
-* U (Vegetação secundária): Not used and not managed, vegetation strongly disturbed by clearing, burning, ploughing (secondary vegetation, mix of semi-deciduous shrubs and tall grassland)
+* U (Vegetação secundária): Not used and not managed, vegetation strongly disturbed by clearing, burning,
+  ploughing (secondary vegetation, mix of semi-deciduous shrubs and tall grassland)
 * AA (Agricultura): Annual field cropping
 * FP (Silvicultura): Plantation forestry
 * HE (Campo nativo): Animal husbandry (extensive grazing)
+
+Soil taxa is recoded for plotting purposes using a lookup table downloaded from the Free Brazilian Repository
+for Open Soil Data
 
 ```{r, echo=FALSE, message=FALSE}
 sibcs <- readr::read_csv('../data/tabela-de-consulta.csv')
@@ -72,7 +81,10 @@ observacao <-
 observacao
 ```
 
-Create new predictor variables.
+We create new categorical predictor variables using data on land use (forest, agriculture, grazing), sampling
+depth (topsoil), and taxonomy (latossolo, argissolo, cambissolo, planossolo, neossolo). These are dummy 
+variables composed of zeros and ones. Also, rows of the dataset not containing soil carbon / organic matter 
+data are eliminated.
 
 ```{r}
 camada <- camada[1:105, ]
@@ -111,7 +123,8 @@ Location of soil observations used in this study.
 
 ### Figure 2
 
-Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites, such as the soil classification and type of land use and occupation.
+Key characteristics of the soil samples, such as the clay content and sampling depth, and their sampling sites,
+such as the soil classification and type of land use and occupation.
 
 ```{r, eval = FALSE}
 p1 <- histogram(
@@ -170,7 +183,8 @@ Includes a description of the four analytical methods used:
 
 ### Figure 3
 
-Empirical probability density of carbon (A and B) and organic matter (C and D) content in soil samples according to the four analytical methods and the theoretical normal probability density function (dashed line).
+Empirical probability density of carbon (A and B) and organic matter (C and D) content in soil samples 
+according to the four analytical methods and the theoretical normal probability density function (dashed line).
 
 ```{r, eval = FALSE}
 l <- layer(
@@ -224,45 +238,58 @@ dev.off()
 
 # Pedotransfer functions
 
-## Quantile regression
+## Model formulation
 
-## Performance assessment
+We test six model formulations, starting with predictor variables that are more readly available and ending 
+with the most complex/expensive model. These are:
 
-# Results
+A. y ~ 0 + x
+B. y ~ 1 + x
+C. y ~ 1 + x + x^2
+D. y ~ 1 + x + x^2 + topsoil
+E. y ~ 1 + x + x^2 + topsoil + landuse
+F. y ~ 1 + x + x^2 + topsoil + landuse + clay
+G. y ~ 1 + x + x^2 + topsoil + landuse + clay + taxon
 
-## Carbon and organic matter data
+In models F and G, 'clay' is used to compose interaction terms with 'x' and 'x^2'.
 
-### Figure 4
+```{r}
+# Soil variables
+soil_vars <- c("toc", "oc", "om", "tom")
+soil_vars <- expand.grid(soil_vars, soil_vars, stringsAsFactors = FALSE)[, 2:1]
+soil_vars <- soil_vars[!soil_vars[, 1] == soil_vars[, 2], ]
 
-Scatter plot matrix of the soil carbon and organic matter content measured using four different analytical methods and their relation to the total clay content and class (0-250, 251-500, 501-1000 g kg-1). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.
+# Predictor variables
+landuse <- "agriculture + grazing + forest"
+taxon <- "argissolo + cambissolo + latossolo + neossolo + planossolo"
 
-```{r, eval = FALSE}
-outliers <- c(58, 74, 66, 69, 70, 101, 102, 103, 105)
-png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
-p1 <- 
-  camada %>% 
-  select(toc, oc, om, tom, clay) %>% 
-  splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
-        varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
-                     expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
-                     expression(atop('Clay', 'g kg'^'-1')))) +
-  latticeExtra::layer(panel.abline(a = 0, b = 1)) +
-  latticeExtra::layer(panel.lmline(x = x, y = y, lty = 'dashed'))
-# Potential outliers
-# p1 <- p1 + latticeExtra::layer(panel.text(x = x[outliers], y = y[outliers], outliers, pos = 1, cex = 0.7))
-p1
-dev.off()
+# Formulas
+formulas <- lapply(1:nrow(soil_vars), function (i) {
+  y <- soil_vars[i, 1]
+  x <- soil_vars[i, 2]
+  list(
+    glue("{y} ~ 0 + {x}"), # A
+    glue("{y} ~ {x}"), # B
+    glue("{y} ~ {x} + I({x}^2)"), # C
+    glue("{y} ~ {x} + I({x}^2) + topsoil"), # D
+    glue("{y} ~ {x} + I({x}^2) + topsoil + {landuse}"), # E
+    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse}"), # F
+    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse} + {taxon}") # G
+    )
+})
+names(formulas) <- sapply(formulas, function (x) x[[1]])
 ```
 
-# Results and Discussion
+## Model estimation
 
-We implement weighted least squares to estimate betas, make predictions and estimate prediction error
-variances. Estimates are compared with the output of `lm` and `predict.lm`. This is usefull to understand the
-estimation equations and their differences compared to ordinary least squares.
+We use weighted least squares (WLS) to estimate model parameters. Below, we test the implementation of WLS to
+estimate the betas, make predictions and estimate prediction error variances. Estimates are compared with the
+output of `lm` and `predict.lm`. This toy exercise is usefull to understand the estimation equations and their
+differences compared to ordinary least squares.
 
 ```{r, eval=FALSE}
 # Temporary data
-tmp_data <- camada[1:105, ]
+tmp_data <- camada
 
 # Test observations
 i <- 96:105
@@ -299,41 +326,39 @@ pev <- rss * (1 + x0 %*% solve(t(X) %*% W %*% X) %*% t(x0)) %>% diag()
 data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2)
 ```
 
-Define formulas. We test six model formulations, starting with predictor variables that are more readly 
-available and ending with the most complex/expensive model. These are:
+## Performance assessment
 
-A. y ~ x
-B. y ~ x + x^2
-C. y ~ x + x^2 + topsoil
-D. y ~ x + x^2 + topsoil + landuse
-E. y ~ x*clay + x^2*clay + topsoil + landuse
-F. y ~ x*clay + x^2*clay + topsoil + landuse + taxon
+# Results
 
-```{r}
-# Soil variables
-soil_vars <- c("toc", "oc", "om", "tom")
-soil_vars <- expand.grid(soil_vars, soil_vars, stringsAsFactors = FALSE)[, 2:1]
-soil_vars <- soil_vars[!soil_vars[, 1] == soil_vars[, 2], ]
+## Carbon and organic matter data
 
-# Predictor variables
-landuse <- "agriculture + grazing + forest"
-taxon <- "argissolo + cambissolo + latossolo + neossolo + planossolo"
+### Figure 4
 
-# Formulas
-formulas <- lapply(1:nrow(soil_vars), function (i) {
-  y <- soil_vars[i, 1]
-  x <- soil_vars[i, 2]
-  list(
-    glue("{y} ~ {x}"), # A
-    glue("{y} ~ {x} + I({x}^2)"), # B
-    glue("{y} ~ {x} + I({x}^2) + topsoil"), # C
-    glue("{y} ~ {x} + I({x}^2) + topsoil + {landuse}"), # D
-    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse}"), # E
-    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse} + {taxon}") # F
-    )
-})
-names(formulas) <- sapply(formulas, function (x) x[[1]])
+Scatter plot matrix of the soil carbon and organic matter content measured using four different analytical methods and their relation to the total clay content and class (0-250, 251-500, 501-1000 g kg-1). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.
+
+```{r, eval = FALSE}
+outliers <- c(58, 74, 66, 69, 70, 101, 102, 103, 105)
+png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
+p1 <- 
+  camada %>% 
+  select(toc, oc, om, tom, clay) %>% 
+  splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
+        varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
+                     expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
+                     expression(atop('Clay', 'g kg'^'-1')))) +
+  latticeExtra::layer(panel.abline(a = 0, b = 1)) +
+  latticeExtra::layer(panel.lmline(x = x, y = y, lty = 'dashed'))
+# Potential outliers
+# p1 <- p1 + latticeExtra::layer(panel.text(x = x[outliers], y = y[outliers], outliers, pos = 1, cex = 0.7))
+p1
+dev.off()
 ```
+
+# Results and Discussion
+
+
+
+
 
 Run leave-one-out cross-validation and compute performance measures:
 
@@ -399,7 +424,6 @@ for (i in 1:length(formulas)) {
   cross_validation[[i]] <- do.call(rbind, loocv)
 }
 cross_validation <- do.call(rbind, cross_validation)
-cross_validation$f[which.min(cross_validation$mAVE)]
 ```
 
 ```{r, fig.asp=1}
