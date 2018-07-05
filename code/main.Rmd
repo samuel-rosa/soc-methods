@@ -260,7 +260,7 @@ soil_vars <- expand.grid(soil_vars, soil_vars, stringsAsFactors = FALSE)[, 2:1]
 soil_vars <- soil_vars[!soil_vars[, 1] == soil_vars[, 2], ]
 
 # Predictor variables
-landuse <- "agriculture + grazing + forest"
+landuse <- "agriculture + forest + grazing"
 taxon <- "argissolo + cambissolo + latossolo + neossolo + planossolo"
 
 # Formulas
@@ -414,7 +414,7 @@ for (i in 1:length(formulas)) {
       MedE = median(error),
       MedAE = median(error_abs),
       MedSE = median(error_sqr),
-      MedSDR = qchisq(0.5, 1) + median(out$pev / error_sqr),
+      MedSDR = 1 - qchisq(p = 0.5, df = 1) + median(error_sqr / out$pev),
       
       # Model efficiency
       AVE = 1 - (sum(error_sqr) / sum(resid * resid)),
