@@ -349,7 +349,7 @@ line represents a perfect 1:1 linear relation, while the dashed line is the obse
 between variables.
 
 ```{r, eval = FALSE}
-outliers <- c(58, 74, 66, 69, 70, 101, 102, 103, 105)
+# outliers <- c(58, 74, 66, 69, 70, 101, 102, 103, 105)
 png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 p1 <- 
   camada %>% 
@@ -364,6 +364,23 @@ p1 <-
 # p1 <- p1 + latticeExtra::layer(panel.text(x = x[outliers], y = y[outliers], outliers, pos = 1, cex = 0.7))
 p1
 dev.off()
+```
+
+Compute the linear correlation coeeficient between variables. This is used to discuss Figure 4.
+
+```{r}
+cor(camada[, c("toc", "oc", "om", "tom", "clay")]) %>% round(3)
+```
+
+```{r}
+cor.test(camada$tom, camada$clay);cor.test(camada$om, camada$clay)
+```
+
+Compute the correlation between clay and TOM when TOM is very low (TOM < 50).
+
+```{r}
+cor.test(camada[camada$toc < 25, ]$tom, camada[camada$toc < 25, ]$clay)
+cor.test(camada[camada$toc < 25, ]$toc, camada[camada$toc < 25, ]$clay)
 ```
 
 ## Prediction performance
