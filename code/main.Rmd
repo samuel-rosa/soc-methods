@@ -1,10 +1,8 @@
 ---
 title: "Pedotransfer functions for prediction and harmonization of carbon and organic matter content data in southern Brazil: source code"
 author: "Alessandro Samuel-Rosa"
-date: "12 October 2017"
+date: "06 July 2018"
 url: "https://docs.google.com/document/d/13CJdr6huHhpuwKMfz_u03m8dJE3_xLqhmS7lwc5Y5yE/edit?usp=sharing"
-# bibliography: "/home/alessandrorosa/Dropbox/jabref/biblio.bib"
-# csl: pesquisa-agropecuaria-brasileira.csl
 output: html_document
 ---
 
@@ -326,7 +324,18 @@ pev <- rss * (1 + x0 %*% solve(t(X) %*% W %*% X) %*% t(x0)) %>% diag()
 data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2)
 ```
 
-## Performance assessment
+## Model validation
+
+Run leave-one-out cross-validation and compute performance measures:
+
+* MedE: median error
+* MedSE: median squared error
+* MedAE: median absolute error
+* MedSDR: median squared deviation ratio
+* AVE: amount of variation explained (or model efficiency)
+* mAVE: modified amount of variation explained (or modified model efficiency)
+
+The median is used instead of the mean because it is less sensitive to outliers.
 
 # Results
 
@@ -334,7 +343,10 @@ data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2)
 
 ### Figure 4
 
-Scatter plot matrix of the soil carbon and organic matter content measured using four different analytical methods and their relation to the total clay content and class (0-250, 251-500, 501-1000 g kg-1). The solid line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation between variables.
+Scatter plot matrix of the soil carbon and organic matter content measured using four different analytical 
+methods and their relation to the total clay content and class (0-250, 251-500, 501-1000 g kg-1). The solid 
+line represents a perfect 1:1 linear relation, while the dashed line is the observed empirical linear relation
+between variables.
 
 ```{r, eval = FALSE}
 outliers <- c(58, 74, 66, 69, 70, 101, 102, 103, 105)
@@ -354,22 +366,7 @@ p1
 dev.off()
 ```
 
-# Results and Discussion
-
-
-
-
-
-Run leave-one-out cross-validation and compute performance measures:
-
-* MedE: median error
-* MedSE: median squared error
-* MedAE: median absolute error
-* MedSDR: median squared deviation ratio
-* AVE: amount of variation explained (or model efficiency)
-* mAVE: modified amount of variation explained (or modified model efficiency)
-
-The median is used instead of the mean because it is less sensitive to outliers.
+## Prediction performance
 
 ```{r}
 cross_validation <- list()
@@ -414,7 +411,8 @@ for (i in 1:length(formulas)) {
       MedE = median(error),
       MedAE = median(error_abs),
       MedSE = median(error_sqr),
-      MedSDR = 1 - qchisq(p = 0.5, df = 1) + median(error_sqr / out$pev),
+      # MedSDR = 1 - qchisq(p = 0.5, df = 1) + median(error_sqr / out$pev),
+      MedSDR = median(error_sqr / out$pev),
       
       # Model efficiency
       AVE = 1 - (sum(error_sqr) / sum(resid * resid)),
@@ -425,6 +423,13 @@ for (i in 1:length(formulas)) {
 }
 cross_validation <- do.call(rbind, cross_validation)
 ```
+
+### Figure 5
+
+Leave-one-out cross-validation performance of PTFs estimated via WLS. Line color and type indicate the 
+dependent and predictor variable, respectively. Measurement units of MedE, MedAE, and MedSE are g kg-1 -- for 
+TOC, OC, and TOM -- and g dm-3 -- for OM, while MedSDR, AVE, and mAVE are unitless performance measures. Model
+formulations are described in Table 2. Performance measures are defined in Table 3.
 
 ```{r, fig.asp=1}
 col <- c("dodgerblue", "magenta", "olivedrab", "gold") %>% rep(each = 3)
