@@ -14,11 +14,11 @@ observacao_id,info_identificacao,provedor_id,observacao_autor,observacao_data,co
 89,AR-PQ-0-5,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,Latossolo Vermelho,Campo nativo
 91,AR-PQ-20-40,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,Latossolo Vermelho,Campo nativo
 98,AR-PQ-40-60,-,-,xx-xx-2006,EPSG:4326,"-50,42833300","-27,36944400",10000,WEB,BR,RS,André da Rocha,simples,1,1,Latossolo Vermelho,Campo nativo
-4,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,85111100","-28,33138900",10000,WEB,BR,RS,Paraíso do Sul,simples,1,1,Planossolo Háplico,Agricultura
-5,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,19305600","-28,31583300",10000,WEB,BR,RS,Santa Maria,simples,1,1,Planossolo Háplico,Agricultura
-12,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,19305600","-28,31583300",10000,WEB,BR,RS,Santa Maria,simples,1,1,Planossolo Háplico,Agricultura
-15,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,62500000","-28,18666700",10000,WEB,BR,RS,Restinga Seca,simples,1,1,Planossolo Háplico,Agricultura
-16,-,-,Carlos Alberto Casali,-,EPSG:4326,"-49,48027800","-28,18250000",10000,WEB,BR,RS,Santo Antônio da Patrulha,simples,1,1,Planossolo Háplico,Agricultura
+4,-,-,Carlos Alberto Casali,-,EPSG:4326,"-53,122124","-29,697885",10000,WEB,BR,RS,Paraíso do Sul,simples,1,1,Planossolo Háplico,Agricultura
+5,-,-,Carlos Alberto Casali,-,EPSG:4326,"-53,812761","-29,762041",10000,WEB,BR,RS,Santa Maria,simples,1,1,Planossolo Háplico,Agricultura
+12,-,-,Carlos Alberto Casali,-,EPSG:4326,"-53,812761","-29,762041",10000,WEB,BR,RS,Santa Maria,simples,1,1,Planossolo Háplico,Agricultura
+15,-,-,Carlos Alberto Casali,-,EPSG:4326,"-53,352172","-29,811012",10000,WEB,BR,RS,Restinga Seca,simples,1,1,Planossolo Háplico,Agricultura
+16,-,-,Carlos Alberto Casali,-,EPSG:4326,"-50,567081","-29,867146",10000,WEB,BR,RS,Santo Antônio da Patrulha,simples,1,1,Planossolo Háplico,Agricultura
 23,-,-,Carlos Alberto Casali,-,EPSG:4326,"-52,19305600","-28,31583300",10000,WEB,BR,RS,Santa Maria,simples,1,1,Planossolo Háplico,Agricultura
 26,-,-,Carlos Alberto Casali,-,EPSG:4326,"-53,68000000","-29,66361100",10000,WEB,BR,RS,São Gabriel,simples,1,1,Planossolo Háplico,Agricultura
 44,-,-,Carlos Alberto Casali,-,EPSG:4326,"-56,91166700","-28,24527800",10000,WEB,BR,RS,Uruguaiana,simples,1,1,Vertissolo Ebânico,Agricultura
