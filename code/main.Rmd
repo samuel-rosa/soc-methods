@@ -441,6 +441,26 @@ for (i in 1:length(formulas)) {
 cross_validation <- do.call(rbind, cross_validation)
 ```
 
+Prediction bias of the most complex models.
+
+```{r}
+cross_validation %>% filter(p == "G") %>% select(MedE) %>% c()
+```
+
+Spread of prediction errors for TOC ~ OC and OC ~ TOC accross model formulations.
+
+```{r}
+cross_validation %>% filter(m == "TOC ~ OC" | m == "OC ~ TOC") %>% select(MedSE, MedAE) %>% 
+  summarise(mean(MedSE), mean(MedAE)) %>% round(3)
+```
+
+Spread of prediction errors for TOM ~ OC and TOM ~ TOC accross model formulations.
+
+```{r}
+cross_validation %>% filter(m == "TOM ~ OC" | m == "TOM ~ TOC") %>% filter(p == "A" | p == "G") %>% 
+  select(m, p, MedSE, MedAE)
+```
+
 ### Figure 5
 
 Leave-one-out cross-validation performance of PTFs estimated via WLS. Line color and type indicate the 
