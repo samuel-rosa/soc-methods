@@ -386,6 +386,11 @@ cor.test(camada[camada$toc < 25, ]$toc, camada[camada$toc < 25, ]$clay)
 ## Prediction performance
 
 ```{r}
+camada %>% select(tom, om, oc, toc) %>% sapply(min)
+camada %>% select(tom, om, oc, toc) %>% sapply(max)
+```
+
+```{r}
 cross_validation <- list()
 # i <- 1
 for (i in 1:length(formulas)) {
@@ -415,6 +420,7 @@ for (i in 1:length(formulas)) {
     error <- out$pred - y
     error_sqr <- error * error
     error_abs <- abs(error)
+    denom <- max(y) # scale measures 
     loocv[[j]] <- data.frame(
       
       # Model
@@ -425,9 +431,9 @@ for (i in 1:length(formulas)) {
       m = glue("{soil_vars[i, 1]} ~ {soil_vars[i, 2]}") %>% toupper() %>% as.factor(),
       
       # Median error measures
-      MedE = median(error),
-      MedAE = median(error_abs),
-      MedSE = median(error_sqr),
+      MedE = median(error) / denom,
+      MedAE = median(error_abs) / denom,
+      MedSE = median(error_sqr) / (denom * denom),
       # MedSDR = 1 - qchisq(p = 0.5, df = 1) + median(error_sqr / out$pev),
       MedSDR = median(error_sqr / out$pev),
       
