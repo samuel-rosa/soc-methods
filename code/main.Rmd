@@ -385,6 +385,9 @@ cor.test(camada[camada$toc < 25, ]$toc, camada[camada$toc < 25, ]$clay)
 
 ## Prediction performance
 
+Identify minimum and maximum values to define a criterion to scale performance measures (MedE, MedAE, and 
+MedSE) so that they are comparable.
+
 ```{r}
 camada %>% select(tom, om, oc, toc) %>% sapply(min)
 camada %>% select(tom, om, oc, toc) %>% sapply(max)
