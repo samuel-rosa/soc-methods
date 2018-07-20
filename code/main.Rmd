@@ -132,12 +132,15 @@ data.frame(
   )
 ```
 
-### TODO: Figure 1
+### Figure 1
 
-We first download the necessary data to prepare the figure. This includes shapefile of the limits of the 
-state of Rio Grande do Sul, downloaded from IBGE geoservices, and a digital elevation model of the state
-of Rio Grande do Sul, prepared by the Geoprocessing Laboratory of the Federal University of Rio Grande do Sul.
-We also process the observations, so that observations from the same municipality are discarded for plotting.
+Study area and locations (municipalities) where soil samples were taken.
+
+We first download the necessary data to prepare the figure. This includes shapefiles of the limits of the 
+state of Rio Grande do Sul and water masses (Atlantic Ocean and lakes), obtained from IBGE geoservices, and a
+digital elevation model of the state of Rio Grande do Sul, prepared by the Geoprocessing Laboratory of the
+Federal University of Rio Grande do Sul. We also process the observations, so that a single observation from
+each municipality is ploted.
 
 ```{r, fig.asp=1}
 if (!file.exists("../data/rs.shp")) {
@@ -145,8 +148,6 @@ if (!file.exists("../data/rs.shp")) {
     src_datasource_name = "WFS:http://www.geoservicos.ibge.gov.br:80/geoserver/wfs", 
     dst_datasource_name = "../data/rs.shp",
     layer = "CGEO:C02_limite_estadual_2010")
-    # layer = "CGEO:C02_limite_estadual_2010",
-    # where = "NomUF = 'Rio Grande do Sul'")
 } else {
   rs <- shapefile("../data/rs.shp")
 }
@@ -214,8 +215,6 @@ col[rs$NomUF == "Rio Grande do Sul"] <- "firebrick"
 plot(rs, add = TRUE, col = col)
 dev.off()
 ```
-
-Location of soil observations used in this study.
 
 ### Figure 2
 
