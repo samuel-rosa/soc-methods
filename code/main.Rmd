@@ -61,7 +61,9 @@ camada <-
   rename(toc = carbono_fornalha_1min950_cgdct) %>%
   rename(oc = carbono_dicromato_30min150_mohr) %>% 
   rename(tom = matorg_fornalha_120min360_massa) %>% 
-  rename(om = matorg_dicromato_30min80_eam)
+  rename(om = matorg_dicromato_30min80_eam) %>% 
+  mutate(profund_sup = as.numeric(profund_sup)) %>% 
+  mutate(profund_inf = as.numeric(profund_inf))
 camada
 ```
 
@@ -187,11 +189,10 @@ oceano <- oceano %>% crop(extent(dem))
 
 ```{r, fig.asp=1}
 png("../res/fig/study-area.png", width = 480 * 2.29, height = 480 * 2, res = 72 * 2)
-n <- unique(dem) %>% length()
-col <- terrain.colors(n, alpha = 0.50)
-plot(hill, col = grey(0:100/100), legend = FALSE, ylab = "Latitude (°)", xlab = "Longitude (°)")
+col <- terrain.colors(24, alpha = 0.50)
+plot(hill, col = grey(0:100/100), legend = FALSE, ylab = "Latitude, °", xlab = "Longitude, °")
 plot(dem, col = col, add = TRUE, 
-     legend.args = list(text = '                 Elevation (m)', line = 1, side = 3, font = 2, cex = 0.8))
+     legend.args = list(text = '                 Elevation, m', line = 1, side = 3, font = 2, cex = 0.8))
 plot(rs[rs$NomUF == "Rio Grande do Sul", ], add = TRUE)
 plot(lagos, add = TRUE, col = "lightblue")
 plot(oceano, add = TRUE, col = "lightblue")
@@ -223,24 +224,24 @@ such as the soil classification and type of land use and occupation.
 
 ```{r, eval = FALSE}
 p1 <- histogram(
-  ~ clay, camada, xlab = 'Clay content (g/kg)', ylab = 'Percent of total', 
+  ~ clay, camada, xlab = expression('Clay content, g kg'^'-1'), ylab = 'Percent of total', 
   col = 'lightgray',
   panel = function (...) {
     lattice::panel.grid(v = -1, h = -1)
     lattice::panel.histogram(...)
   },
   page = function (n) {
-    grid.text(label = "A)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+    grid::grid.text(label = "A)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) +
   latticeExtra::layer(panel.abline(v = c(250, 500), lty = 'dotted'))
 p2 <- histogram(
-  ~ profund_sup, camada, xlab = 'Sampling depth (cm)', ylab = 'Percent of total', col = 'lightgray',
+  ~ profund_sup, camada, xlab = 'Sampling depth, cm', ylab = 'Percent of total', col = 'lightgray',
   panel = function (...) {
     lattice::panel.grid(v = -1, h = -1)
     lattice::panel.histogram(...)
   },
   page = function (n) {
-    grid.text(label = "B)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+    grid::grid.text(label = "B)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   })
 p3 <- barchart(
   observacao$taxon, xlab = 'Soil classification', ylab = 'Percent of total', horizontal = FALSE, 
@@ -250,7 +251,7 @@ p3 <- barchart(
     lattice::panel.barchart(...)
   },
   page = function (n) {
-    grid.text(label = "C)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+    grid::grid.text(label = "C)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   })
 p4 <- barchart(
   observacao$terra_usoatual, xlab = 'Land use and ocupation', ylab = 'Percent of total', horizontal = FALSE, 
@@ -260,7 +261,7 @@ p4 <- barchart(
     lattice::panel.barchart(...)
   },
   page = function (n) {
-    grid.text(label = "D)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+    grid::grid.text(label = "D)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   })
 png("../res/fig/features-soil-samples.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
@@ -294,7 +295,7 @@ p1 <- histogram(
     panel.histogram(...)
   },
   page = function (n) {
-    grid.text(label = "A)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+    grid::grid.text(label = "A)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) + l
 p2 <- histogram(
   ~ oc, camada, 
@@ -304,7 +305,7 @@ p2 <- histogram(
     panel.histogram(...)
   },
   page = function (n) {
-    grid.text(label = "B)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+    grid::grid.text(label = "B)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) + l
 p3 <- histogram(
   ~ om, camada, 
@@ -314,7 +315,7 @@ p3 <- histogram(
     panel.histogram(...)
   },
   page = function (n) {
-    grid.text(label = "C)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+    grid::grid.text(label = "C)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) + l
 p4 <- histogram(
   ~ tom, camada, 
@@ -324,7 +325,7 @@ p4 <- histogram(
     panel.histogram(...)
   },
   page = function (n) {
-    grid.text(label = "D)", x = unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
+    grid::grid.text(label = "D)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) + l
 png("../res/fig/carbon-histograms.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
@@ -450,7 +451,7 @@ between variables.
 png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 p1 <- 
   camada %>% 
-  select(toc, oc, om, tom, clay) %>% 
+  dplyr::select(toc, oc, om, tom, clay) %>% 
   splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
         varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
                      expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
@@ -486,8 +487,8 @@ Identify minimum and maximum values to define a criterion to scale performance m
 MedSE) so that they are comparable.
 
 ```{r}
-camada %>% select(tom, om, oc, toc) %>% sapply(min)
-camada %>% select(tom, om, oc, toc) %>% sapply(max)
+camada %>% dplyr::select(tom, om, oc, toc) %>% sapply(min)
+camada %>% dplyr::select(tom, om, oc, toc) %>% sapply(max)
 ```
 
 ```{r}
@@ -557,13 +558,13 @@ cross_validation <- do.call(rbind, cross_validation)
 Prediction bias of the most complex models.
 
 ```{r}
-cross_validation %>% filter(p == "G") %>% select(MedE) %>% c()
+cross_validation %>% filter(p == "G") %>% dplyr::select(MedE) %>% c()
 ```
 
 Spread of prediction errors for TOC ~ OC and OC ~ TOC accross model formulations.
 
 ```{r}
-cross_validation %>% filter(m == "TOC ~ OC" | m == "OC ~ TOC") %>% select(MedSE, MedAE) %>% 
+cross_validation %>% filter(m == "TOC ~ OC" | m == "OC ~ TOC") %>% dplyr::select(MedSE, MedAE) %>% 
   summarise(mean(MedSE), mean(MedAE)) %>% round(3)
 ```
 
@@ -571,7 +572,7 @@ Spread of prediction errors for TOM ~ OC and TOM ~ TOC accross model formulation
 
 ```{r}
 cross_validation %>% filter(m == "TOM ~ OC" | m == "TOM ~ TOC") %>% filter(p == "A" | p == "G") %>% 
-  select(m, p, MedSE, MedAE)
+  dplyr::select(m, p, MedSE, MedAE)
 ```
 
 ### Figure 5
@@ -602,6 +603,6 @@ dev.off()
 
 Check model coefficients.
 
-```{r}
+```{r, eval=FALSE}
 model_fit
 ```
