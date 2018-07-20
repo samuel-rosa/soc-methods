@@ -12,6 +12,9 @@ library(dplyr)
 library(magrittr)
 library(latticeExtra)
 library(glue)
+library(raster)
+library(gdalUtils)
+library(TeachingDemos)
 ```
 
 # Material and Methods
@@ -131,19 +134,86 @@ data.frame(
 
 ### TODO: Figure 1
 
-```{r}
+We first download the necessary data to prepare the figure. This includes shapefile of the limits of the 
+state of Rio Grande do Sul, downloaded from IBGE geoservices, and a digital elevation model of the state
+of Rio Grande do Sul, prepared by the Geoprocessing Laboratory of the Federal University of Rio Grande do Sul.
+We also process the observations, so that observations from the same municipality are discarded for plotting.
+
+```{r, fig.asp=1}
 if (!file.exists("../data/rs.shp")) {
   gdalUtils::ogr2ogr(
     src_datasource_name = "WFS:http://www.geoservicos.ibge.gov.br:80/geoserver/wfs", 
     dst_datasource_name = "../data/rs.shp",
-    layer = "CGEO:C02_limite_estadual_2010",
-    where = "NomUF = 'Rio Grande do Sul'")
+    layer = "CGEO:C02_limite_estadual_2010")
+    # layer = "CGEO:C02_limite_estadual_2010",
+    # where = "NomUF = 'Rio Grande do Sul'")
+} else {
+  rs <- shapefile("../data/rs.shp")
 }
-observacao %>% 
-  filter(!duplicated(municipio_id)) %>% 
-  write.csv(file = "../data/tmp_qgis_points.csv")
+if (!file.exists("../data/rs.zip")) {
+  download.file(
+    "http://www.ecologia.ufrgs.br/labgeo/arquivos/downloads/dados/SRTM/geotiff/rs.zip",
+    destfile = "../data/rs.zip")
+  unzip("../data/rs.zip", exdir = "../data/")
+}
+if (!file.exists("../data/lagos.shp")) {
+  gdalUtils::ogr2ogr(
+    src_datasource_name = "WFS:http://www.geoservicos.ibge.gov.br:80/geoserver/wfs", 
+    dst_datasource_name = "../data/lagos.shp",
+    layer = "CGEO:ANMS2010_03_massa_dagua",
+    where = "nome_massa = 'Lagoa dos Patos' OR nome_massa = 'Lagoa Mangueira' OR nome_massa = 'Lagoa Mirum'")
+} else {
+  lagos <- shapefile("../data/lagos.shp")
+}
+if (!file.exists("../data/oceano.shp")) {
+  gdalUtils::ogr2ogr(
+    src_datasource_name = "WFS:http://www.geoservicos.ibge.gov.br:80/geoserver/wfs", 
+    dst_datasource_name = "../data/oceano.shp",
+    layer = "CCAR:BCIM_Massa_Dagua_A",
+    where = "nome = 'Oceano Atlântico'")
+} else {
+  oceano <- shapefile("../data/oceano.shp")
+}
+gdalUtils::gdal_translate(
+  src_dataset = "../data/rs.tif", dst_dataset = "../data/rs1km.tif", tr = c(1000, 1000) / 111120)
+gdalUtils::gdaldem(
+  mode = "hillshade", input_dem = "../data/rs1km.tif", output = "../data/hillshade1km.tif", 
+  alg = "ZevenbergenThorne", z = 40, s = 111120)
+dem <- raster("../data/rs1km.tif")
+hill <- raster("../data/hillshade1km.tif")
+oceano <- oceano %>% crop(extent(dem))
 ```
 
+```{r, fig.asp=1}
+png("../res/fig/study-area.png", width = 480 * 2.29, height = 480 * 2, res = 72 * 2)
+n <- unique(dem) %>% length()
+col <- terrain.colors(n, alpha = 0.50)
+plot(hill, col = grey(0:100/100), legend = FALSE, ylab = "Latitude (°)", xlab = "Longitude (°)")
+plot(dem, col = col, add = TRUE, 
+     legend.args = list(text = '                 Elevation (m)', line = 1, side = 3, font = 2, cex = 0.8))
+plot(rs[rs$NomUF == "Rio Grande do Sul", ], add = TRUE)
+plot(lagos, add = TRUE, col = "lightblue")
+plot(oceano, add = TRUE, col = "lightblue")
+observacao %>% 
+  filter(!duplicated(municipio_id)) %>% 
+  dplyr::select(coord_x, coord_y) %>% 
+  points(bg = "firebrick", col = "ivory", pch = 21)
+TeachingDemos::shadowtext(x = -56.1, y = -28.1, labels = "Argentina", srt = 50)
+TeachingDemos::shadowtext(x = -55.5, y = -31.7, labels = "Uruguay", srt = -43)
+TeachingDemos::shadowtext(x = -50.5, y = -27.7, labels = "Santa Catarina", srt = -38)
+TeachingDemos::shadowtext(
+  x = coordinates(oceano)[1] + 0.5, y = coordinates(oceano)[2] + 0.5, labels = "Atlantic Ocean")
+TeachingDemos::shadowtext(
+  x = coordinates(rs[rs$NomUF == "Rio Grande do Sul", ])[1],
+  y = coordinates(rs[rs$NomUF == "Rio Grande do Sul", ])[2] + 0.5, labels = "Rio Grande do Sul")
+rect(xleft = -51, ybottom = extent(dem)[3], xright = extent(dem)[2], ytop = -32, col = "white", 
+     border = "black")
+par(fig = c(0.73, 0.77, 0.17, 0.21), new = TRUE)
+col <- rep("white", length(rs))
+col[rs$NomUF == "Rio Grande do Sul"] <- "firebrick"
+plot(rs, add = TRUE, col = col)
+dev.off()
+```
 
 Location of soil observations used in this study.
 
