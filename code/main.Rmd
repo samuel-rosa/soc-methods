@@ -1,7 +1,7 @@
 ---
 title: "Pedotransfer functions for prediction and harmonization of carbon and organic matter content data in southern Brazil: source code"
 author: "Alessandro Samuel-Rosa"
-date: "08 July 2018"
+date: "20 July 2018"
 url: "https://docs.google.com/document/d/13CJdr6huHhpuwKMfz_u03m8dJE3_xLqhmS7lwc5Y5yE/edit?usp=sharing"
 output: html_document
 ---
@@ -21,6 +21,21 @@ library(glue)
 The data can be downloaded from the Free Brazilian Repository for Open Soil Data. The dataset identification 
 code is `ctb0029`. Here we use a copy of the data stored in folder `data`.
 
+```{r}
+if (file.exists("../data/camada.rda")) {
+  load("../data/camada.rda")
+} else {
+  camada <- febr::layer("ctb0029", variable = "all")
+  save(camada, file = "../data/camada.rda")
+}
+if (file.exists("../data/observacao.rda")) {
+  load("../data/observacao.rda")
+} else {
+  observacao <- febr::observation("ctb0029", variable = "all")
+  save(observacao, file = "../data/observacao.rda")
+}
+```
+
 We create categorical variables using the clay content (`argila_naoh_esferas_pipeta`) and the organic matter
 content determined at the commercial soil analysis laboratory of the Universidade Federal de Santa Maria
 (`matorg_dicromato_30min80_eam`). For the latter, the classification is performed using the three classes used 
@@ -28,8 +43,8 @@ for fertilizer recommendations in Rio Grande do Sul and Santa Catarina. For conv
 variables using short English names.
 
 ```{r, echo=FALSE, message=FALSE}
-camada <- readr::read_csv(
-  '../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = "-")
+# camada <- readr::read_csv(
+  # '../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = "-")
 camada <-
   camada %>% 
   mutate(textura = ifelse(argila_naoh_esferas_pipeta <= 250, '0-250', '251-500')) %>% 
@@ -63,9 +78,9 @@ for Open Soil Data
 ```{r, echo=FALSE, message=FALSE}
 sibcs <- readr::read_csv('../data/tabela-de-consulta.csv')
 sibcs_recode <- as.list(sibcs$campo_codigo)
-names(sibcs_recode) <- sibcs$campo_nome  
-observacao <- readr::read_csv(
-  '../data/observacao.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = '-')
+names(sibcs_recode) <- sibcs$campo_nome
+# observacao <- readr::read_csv(
+  # '../data/observacao.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = '-')
 observacao <-
   observacao %>% 
   arrange(observacao_id) %>% 
