@@ -131,6 +131,20 @@ data.frame(
 
 ### TODO: Figure 1
 
+```{r}
+if (!file.exists("../data/rs.shp")) {
+  gdalUtils::ogr2ogr(
+    src_datasource_name = "WFS:http://www.geoservicos.ibge.gov.br:80/geoserver/wfs", 
+    dst_datasource_name = "../data/rs.shp",
+    layer = "CGEO:C02_limite_estadual_2010",
+    where = "NomUF = 'Rio Grande do Sul'")
+}
+observacao %>% 
+  filter(!duplicated(municipio_id)) %>% 
+  write.csv(file = "../data/tmp_qgis_points.csv")
+```
+
+
 Location of soil observations used in this study.
 
 ### Figure 2
