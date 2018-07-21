@@ -1,7 +1,7 @@
 ---
 title: "Pedotransfer functions for prediction and harmonization of carbon and organic matter content data in southern Brazil: source code"
 author: "Alessandro Samuel-Rosa"
-date: "20 July 2018"
+date: "21 July 2018"
 url: "https://docs.google.com/document/d/13CJdr6huHhpuwKMfz_u03m8dJE3_xLqhmS7lwc5Y5yE/edit?usp=sharing"
 output: html_document
 ---
@@ -24,7 +24,7 @@ library(TeachingDemos)
 The data can be downloaded from the Free Brazilian Repository for Open Soil Data. The dataset identification 
 code is `ctb0029`. Here we use a copy of the data stored in folder `data`.
 
-```{r}
+```{r, echo=FALSE, message=FALSE}
 if (file.exists("../data/camada.rda")) {
   load("../data/camada.rda")
 } else {
@@ -46,8 +46,6 @@ for fertilizer recommendations in Rio Grande do Sul and Santa Catarina. For conv
 variables using short English names.
 
 ```{r, echo=FALSE, message=FALSE}
-# camada <- readr::read_csv(
-  # '../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = "-")
 camada <-
   camada %>% 
   mutate(textura = ifelse(argila_naoh_esferas_pipeta <= 250, '0-250', '251-500')) %>% 
@@ -84,8 +82,6 @@ for Open Soil Data
 sibcs <- readr::read_csv('../data/tabela-de-consulta.csv')
 sibcs_recode <- as.list(sibcs$campo_codigo)
 names(sibcs_recode) <- sibcs$campo_nome
-# observacao <- readr::read_csv(
-  # '../data/observacao.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = '-')
 observacao <-
   observacao %>% 
   arrange(observacao_id) %>% 
@@ -365,12 +361,12 @@ formulas <- lapply(1:nrow(soil_vars), function (i) {
   x <- soil_vars[i, 2]
   list(
     glue("{y} ~ 0 + {x}"), # A
-    glue("{y} ~ {x}"), # B
-    glue("{y} ~ {x} + I({x}^2)"), # C
-    glue("{y} ~ {x} + I({x}^2) + topsoil"), # D
-    glue("{y} ~ {x} + I({x}^2) + topsoil + {landuse}"), # E
-    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse}"), # F
-    glue("{y} ~ {x}*clay + I({x}^2)*clay + topsoil + {landuse} + {taxon}") # G
+    glue("{y} ~ 1 + {x}"), # B
+    glue("{y} ~ 1 + {x} + I({x}^2)"), # C
+    glue("{y} ~ 1 + {x} + I({x}^2) + topsoil"), # D
+    glue("{y} ~ 1 + {x} + I({x}^2) + topsoil + {landuse}"), # E
+    glue("{y} ~ 1 + {x}*clay + I({x}^2)*clay + topsoil + {landuse}"), # F
+    glue("{y} ~ 1 + {x}*clay + I({x}^2)*clay + topsoil + {landuse} + {taxon}") # G
     )
 })
 names(formulas) <- sapply(formulas, function (x) x[[1]])
@@ -601,8 +597,8 @@ p1
 dev.off()
 ```
 
-Check model coefficients.
+Save fitted models and print model coefficients.
 
-```{r, eval=FALSE}
-model_fit
+```{r}
+save(model_fit, file = "../res/r/fitted-models.rda")
 ```
