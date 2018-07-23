@@ -497,6 +497,10 @@ camada %>% dplyr::select(tom, om, oc, toc) %>% sapply(max)
 ```
 
 ```{r}
+estimator <- "wls"
+```
+
+```{r loocv}
 model_fit <- list()
 cross_validation <- list()
 # i <- 1
@@ -506,7 +510,11 @@ for (i in 1:length(formulas)) {
   y <- camada[[soil_vars[i, 1]]]
   resid <- mean(y) - y
   x <- camada[[soil_vars[i, 2]]]
-  w <- 1 / x # weigths are inversely proportional to the predictor variable
+  if (estimator == "wls") {
+    w <- 1 / x # weigths are inversely proportional to the predictor variable
+  } else if (estimator == "ols") {
+    w <- rep(1, length(x))
+  }
   
   fit <- list()
   loocv <- list()
@@ -605,7 +613,7 @@ dependent and predictor variable, respectively. Measurement units of MedE, MedAE
 TOC, OC, and TOM -- and g dm-3 -- for OM, while MedSDR, AVE, and mAVE are unitless performance measures. Model
 formulations are described in Table 2. Performance measures are defined in Table 3.
 
-```{r, eval = FALSE}
+```{r loocvplot, eval = FALSE}
 col <- c("dodgerblue", "magenta", "olivedrab", "gold") %>% rep(each = 3)
 lty <- c(1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2)
 p1 <-
@@ -619,7 +627,7 @@ p1 <-
       panel.grid(h = -1, v = -1)
       panel.xyplot(...)
     })
-png("../res/fig/cross-validation.png", width = 480 * 4, height = 480 * 5, res = 72 * 3)
+png(glue("../res/fig/cross-validation-{estimator}2.png"), width = 480 * 4, height = 480 * 5, res = 72 * 3)
 p1
 dev.off()
 ```
@@ -629,3 +637,16 @@ Save fitted models and print model coefficients.
 ```{r}
 save(model_fit, file = "../res/r/model_fit.rda")
 ```
+
+```{r}
+estimator <- "ols"
+```
+
+```{r ref.label = 'loocv'}
+
+```
+
+```{r ref.label = 'loocvplot'}
+
+```
+
