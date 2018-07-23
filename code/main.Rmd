@@ -199,8 +199,7 @@ observacao %>%
 TeachingDemos::shadowtext(x = -56.1, y = -28.1, labels = "Argentina", srt = 50)
 TeachingDemos::shadowtext(x = -55.5, y = -31.7, labels = "Uruguay", srt = -43)
 TeachingDemos::shadowtext(x = -50.5, y = -27.7, labels = "Santa Catarina", srt = -38)
-TeachingDemos::shadowtext(
-  x = coordinates(oceano)[1] + 0.5, y = coordinates(oceano)[2] + 0.5, labels = "Atlantic Ocean")
+TeachingDemos::shadowtext(x = -50.3, y = -31.1, labels = "Atlantic Ocean", srt = 54)
 TeachingDemos::shadowtext(
   x = coordinates(rs[rs$NomUF == "Rio Grande do Sul", ])[1],
   y = coordinates(rs[rs$NomUF == "Rio Grande do Sul", ])[2] + 0.5, labels = "Rio Grande do Sul")
