@@ -501,6 +501,78 @@ camada %>% dplyr::select(tom, om, oc, toc) %>% sapply(min)
 camada %>% dplyr::select(tom, om, oc, toc) %>% sapply(max)
 ```
 
+```{r irwls, echo=FALSE, eval=FALSE}
+irwls <- 
+  function (formula, data, type = c("sd", "var"), maxit = 25, epsilon = 1e-8, trace = TRUE) {
+    
+    # Unweighted least squares fit
+    ols_fit <- lm(formula = formula, data = data)
+    deviance0 <- deviance(ols_fit)
+    if (trace) {
+      print(glue::glue("iteration: 0; deviance: {deviance0}\n"))
+    }
+    
+    # Choose between variance and standard deviation functions
+    type <- match.arg(type)
+    data$variance <- switch (
+      type,
+      sd = {
+        abs(residuals(ols_fit))
+      },
+      var = {
+        residuals(ols_fit)^2
+      })
+    
+    # Variance or standard deviation function
+    
+    f <- update.formula(formula, variance ~ .)
+    
+    # Iterations
+    for (i in 1:maxit) {
+      
+      # Estimate the variance or standard deviation function
+      var_fit <- lm(formula = f, data = data)
+      data$wgt <- switch (
+        type,
+        sd = {
+          1 / fitted(var_fit)^2
+        },
+        var = {
+          1 / abs(fitted(var_fit))
+        })
+      
+      # Estimate regression coefficients using WLS
+      wls_fit <- lm(formula = formula, data = data, weights = wgt)
+      
+      # Compute residual sum of squares (deviance) of fitted model
+      deviance1 <- deviance(wls_fit)
+      if (trace) {
+        print(glue::glue("iteration: {i}; deviance: {deviance1}\n"))
+      }
+      
+      # Test convergence
+      converged <- (abs(deviance1 - deviance0) / (abs(deviance1) + 0.1)) < epsilon
+      if (converged) {
+        break
+      } else {
+        deviance0 <- deviance(wls_fit)
+        
+        data$variance <- switch (
+          type,
+          sd = {
+            abs(residuals(wls_fit))
+          },
+          var = {
+            residuals(wls_fit)^2
+          })
+      }
+    }
+    
+    # Output
+    return (var_fit)
+  }
+```
+
 ```{r}
 estimator <- "wls"
 ```
@@ -523,7 +595,7 @@ for (i in 1:length(formulas)) {
   
   fit <- list()
   loocv <- list()
-  # j <- 1
+  # j <- 7
   for (j in 1:length(forms)) {
     f <- forms[[j]]
     
@@ -533,6 +605,7 @@ for (i in 1:length(formulas)) {
     out <- data.frame(pred = NA_real_, pev = NA_real_)
     # Leave-one-out cross-validation
     # k <- 1
+    print(f)
     for (k in 1:nrow(camada)) {
       # Weighted least squares regression
       # Predict value of dependent variable at new observation and return components of the error variance
@@ -540,6 +613,12 @@ for (i in 1:length(formulas)) {
       lm_fit <- lm(formula = f, data = camada[-k, ], weights = w[-k])
       pred <- predict.lm(object = lm_fit, newdata = camada[k, ], se.fit = TRUE)
       out[k, ] <- c(pred$fit, pred$se.fit^2 + pred$residual.scale^2 / w[k])
+      # IRWLS
+      # irls_fit <- irwls(formula = f, data = camada[-k, ], type = "sd", maxit = 100, epsilon = 1e-3)
+      # lm_fit <- lm(formula = f, data = camada[-k, ], weights = 1 / fitted(irls_fit)^2)
+      # pred <- predict.lm(object = lm_fit, newdata = camada[k, ], se.fit = TRUE)
+      # wgt <- predict.lm(object = irls_fit, newdata = camada[k, ])^2
+      # out[k, ] <- c(pred$fit, pred$se.fit^2 + pred$residual.scale^2 * wgt)
     }
     
     # Cross-validation statistics
@@ -600,15 +679,8 @@ Median squared deviation ratio of the least and most complex models.
 
 ```{r, fig.asp = 1}
 cross_validation %>% 
-  # filter(p == "A" | p == "G") %>% 
-  # dplyr::select(m, p, MedSDR) %>%
-  bwplot(MedSDR ~ p, data = ., 
-         panel = function (x, y, ...) {
-           panel.grid(v = 0, h = -1)
-           panel.abline(h = qchisq(p = 0.5, df = 1), col = "red")
-           panel.bwplot(x, y, ...)
-           panel.xyplot(x, y, ...)
-         })
+  filter(p == "A" | p == "G") %>%
+  dplyr::select(m, p, MedSDR)
 ```
 
 ### Figure 5
@@ -632,15 +704,18 @@ p1 <-
       panel.grid(h = -1, v = -1)
       panel.xyplot(...)
     })
-png(glue("../res/fig/cross-validation-{estimator}2.png"), width = 480 * 4, height = 480 * 5, res = 72 * 3)
+png(glue("../res/fig/cross-validation-{estimator}.png"), width = 480 * 4, height = 480 * 5, res = 72 * 3)
 p1
 dev.off()
 ```
 
-Save fitted models and print model coefficients.
+Save fitted models and print model summary.
 
 ```{r}
 save(model_fit, file = "../res/r/model_fit.rda")
+lapply(model_fit, function (x) {
+  lapply(x, summary)
+})
 ```
 
 ```{r}
