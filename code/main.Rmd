@@ -456,11 +456,17 @@ between variables.
 png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 p1 <- 
   camada %>% 
-  dplyr::select(toc, oc, om, tom, clay) %>% 
-  splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
-        varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
-                     expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
-                     expression(atop('Clay', 'g kg'^'-1')))) +
+  dplyr::select(toc, oc, om, tom) %>% 
+  # dplyr::select(toc, oc, om, tom, clay) %>%
+  # mutate(toc = toc / max(toc), oc = oc / max(oc), om = om / max(om), tom = tom / max(tom)) %>%
+  lattice::splom(
+    groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '', 
+    # prepanel.limits = function (x) c(0, 1),
+    # prepanel.limits = function (x) c(0, 450),
+    varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
+                 expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')))) +
+                 # expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
+                 # expression(atop('Clay', 'g kg'^'-1')))) +
   latticeExtra::layer(panel.abline(a = 0, b = 1)) +
   latticeExtra::layer(panel.lmline(x = x, y = y, lty = 'dashed'))
 # Potential outliers
