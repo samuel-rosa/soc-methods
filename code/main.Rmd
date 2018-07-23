@@ -1,7 +1,7 @@
 ---
 title: "Pedotransfer functions for prediction and harmonization of carbon and organic matter content data in southern Brazil: source code"
 author: "Alessandro Samuel-Rosa"
-date: "21 July 2018"
+date: "22 July 2018"
 url: "https://docs.google.com/document/d/13CJdr6huHhpuwKMfz_u03m8dJE3_xLqhmS7lwc5Y5yE/edit?usp=sharing"
 output: html_document
 ---
@@ -24,7 +24,7 @@ library(TeachingDemos)
 The data can be downloaded from the Free Brazilian Repository for Open Soil Data. The dataset identification 
 code is `ctb0029`. Here we use a copy of the data stored in folder `data`.
 
-```{r, echo=FALSE, message=FALSE}
+```{r}
 if (file.exists("../data/camada.rda")) {
   load("../data/camada.rda")
 } else {
@@ -45,7 +45,7 @@ content determined at the commercial soil analysis laboratory of the Universidad
 for fertilizer recommendations in Rio Grande do Sul and Santa Catarina. For convenience, we rename key soil
 variables using short English names.
 
-```{r, echo=FALSE, message=FALSE}
+```{r}
 camada <-
   camada %>% 
   mutate(textura = ifelse(argila_naoh_esferas_pipeta <= 250, '0-250', '251-500')) %>% 
@@ -78,7 +78,7 @@ for soil description. The following codes are used:
 Soil taxa is recoded for plotting purposes using a lookup table downloaded from the Free Brazilian Repository
 for Open Soil Data
 
-```{r, echo=FALSE, message=FALSE}
+```{r}
 sibcs <- readr::read_csv('../data/tabela-de-consulta.csv')
 sibcs_recode <- as.list(sibcs$campo_codigo)
 names(sibcs_recode) <- sibcs$campo_nome
@@ -122,7 +122,7 @@ camada
 
 Compute some summary statistics: number of taxonomic classes, and range of clay content.
 
-```{r, eval = FALSE}
+```{r}
 data.frame(
   taxa = nlevels(as.factor(observacao$taxon)),
   min_clay = min(camada$clay, na.rm = TRUE),
@@ -140,7 +140,7 @@ digital elevation model of the state of Rio Grande do Sul, prepared by the Geopr
 Federal University of Rio Grande do Sul. We also process the observations, so that a single observation from
 each municipality is ploted.
 
-```{r, fig.asp=1}
+```{r, eval = FALSE}
 if (!file.exists("../data/rs.shp")) {
   gdalUtils::ogr2ogr(
     src_datasource_name = "WFS:http://www.geoservicos.ibge.gov.br:80/geoserver/wfs", 
@@ -183,7 +183,7 @@ hill <- raster("../data/hillshade1km.tif")
 oceano <- oceano %>% crop(extent(dem))
 ```
 
-```{r, fig.asp=1}
+```{r, eval = FALSE}
 png("../res/fig/study-area.png", width = 480 * 2.29, height = 480 * 2, res = 72 * 2)
 col <- terrain.colors(24, alpha = 0.50)
 plot(hill, col = grey(0:100/100), legend = FALSE, ylab = "Latitude, °", xlab = "Longitude, °")
@@ -379,7 +379,7 @@ estimate the betas, make predictions and estimate prediction error variances. Es
 output of `lm` and `predict.lm`. This toy exercise is usefull to understand the estimation equations and their
 differences compared to ordinary least squares.
 
-```{r, eval=FALSE}
+```{r, eval = FALSE}
 # Temporary data
 tmp_data <- camada
 
@@ -387,8 +387,9 @@ tmp_data <- camada
 i <- 96:105
 
 # Estimate model using lm
-fit <- lm(tom ~ om + clay, data = tmp_data[-i, ], weights = 1/om)
-pred <- predict(fit, tmp_data[i, c("om", "clay")], se.fit = TRUE)
+fit <- lm(tom ~ om + clay, data = tmp_data[-i, ], weights = 1 / om)
+pred <- predict.lm(
+  fit, tmp_data[i, c("om", "clay")], se.fit = TRUE, weights = ~ 1 / om, interval = "prediction", level = 0.95)
 
 # Dependent variable
 Y <- tmp_data[-i, "tom"] %>% as.matrix()
@@ -411,11 +412,19 @@ data.frame(rss, lm = summary(fit)$sigma^2)
 # Prediction at a point
 x0 <- data.frame(x0 = 1, tmp_data[i, c("om", "clay")]) %>% as.matrix()
 y_hat <- x0 %*% drop(b_hat)
-data.frame(y_hat = y_hat, lm = pred$fit)
+data.frame(y_hat = y_hat, lm = pred$fit[, "fit"])
 
-# Prediction error variance: RSS * (1 + x0 (X'WX)⁻¹x0')
-pev <- rss * (1 + x0 %*% solve(t(X) %*% W %*% X) %*% t(x0)) %>% diag()
-data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2)
+# Prediction error variance:
+# OLS: RSS * (1 + x0 (X'WX)⁻¹x0')
+# WLS: RSS * (c + x0 (X'WX)⁻¹x0')
+# c = 1 / w_x0
+pev <- rss * diag(x0[, "om"] + x0 %*% solve(t(X) %*% W %*% X) %*% t(x0))
+data.frame(pev = pev, lm = pred$se.fit^2 + pred$residual.scale^2 * x0[, "om"])
+
+# Prediction intervals
+bounds <- qt(p = (1 - 0.95) / 2, df = fit$df.residual) * sqrt(pev) * -1
+bounds <- y_hat + data_frame(lwr = -bounds, upr = bounds)
+data.frame(bounds, lm = pred$fit[, -1])
 ```
 
 ## Model validation
@@ -505,24 +514,27 @@ for (i in 1:length(formulas)) {
   for (j in 1:length(forms)) {
     f <- forms[[j]]
     
-    # Record model fit summary
-    fit[[j]] <- lm(formula = f, data = camada, weights = w) %>% summary()
+    # Record fitted models for latter reuse
+    fit[[j]] <- lm(formula = f, data = camada, weights = w)
     
     out <- data.frame(pred = NA_real_, pev = NA_real_)
     # Leave-one-out cross-validation
     # k <- 1
     for (k in 1:nrow(camada)) {
       # Weighted least squares regression
+      # Predict value of dependent variable at new observation and return components of the error variance
+      # The residual standard deviation needs to be 'scaled' using the weight of the new observation
       lm_fit <- lm(formula = f, data = camada[-k, ], weights = w[-k])
       pred <- predict.lm(object = lm_fit, newdata = camada[k, ], se.fit = TRUE)
-      out[k, ] <- c(pred$fit, pred$se.fit^2 + pred$residual.scale^2)
+      out[k, ] <- c(pred$fit, pred$se.fit^2 + pred$residual.scale^2 / w[k])
     }
     
     # Cross-validation statistics
+    # Measures (MedE, MedSE, and MedAE) are scaled using the maximum observed value of the dependent variable
     error <- out$pred - y
     error_sqr <- error * error
     error_abs <- abs(error)
-    denom <- max(y) # scale measures 
+    denom <- max(y) # scale measures
     loocv[[j]] <- data.frame(
       
       # Model
@@ -536,7 +548,7 @@ for (i in 1:length(formulas)) {
       MedE = median(error) / denom,
       MedAE = median(error_abs) / denom,
       MedSE = median(error_sqr) / (denom * denom),
-      # MedSDR = 1 - qchisq(p = 0.5, df = 1) + median(error_sqr / out$pev),
+      # MedSDR = 1 - qchisq(p = 0.5, df = 1) + median(error_sqr / out$pev), # DEPRECATED
       MedSDR = median(error_sqr / out$pev),
       
       # Model efficiency
@@ -571,6 +583,21 @@ cross_validation %>% filter(m == "TOM ~ OC" | m == "TOM ~ TOC") %>% filter(p == 
   dplyr::select(m, p, MedSE, MedAE)
 ```
 
+Median squared deviation ratio of the least and most complex models.
+
+```{r, fig.asp = 1}
+cross_validation %>% 
+  # filter(p == "A" | p == "G") %>% 
+  # dplyr::select(m, p, MedSDR) %>%
+  bwplot(MedSDR ~ p, data = ., 
+         panel = function (x, y, ...) {
+           panel.grid(v = 0, h = -1)
+           panel.abline(h = qchisq(p = 0.5, df = 1), col = "red")
+           panel.bwplot(x, y, ...)
+           panel.xyplot(x, y, ...)
+         })
+```
+
 ### Figure 5
 
 Leave-one-out cross-validation performance of PTFs estimated via WLS. Line color and type indicate the 
@@ -578,7 +605,7 @@ dependent and predictor variable, respectively. Measurement units of MedE, MedAE
 TOC, OC, and TOM -- and g dm-3 -- for OM, while MedSDR, AVE, and mAVE are unitless performance measures. Model
 formulations are described in Table 2. Performance measures are defined in Table 3.
 
-```{r, fig.asp=1}
+```{r, eval = FALSE}
 col <- c("dodgerblue", "magenta", "olivedrab", "gold") %>% rep(each = 3)
 lty <- c(1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2)
 p1 <-
@@ -600,5 +627,5 @@ dev.off()
 Save fitted models and print model coefficients.
 
 ```{r}
-save(model_fit, file = "../res/r/fitted-models.rda")
+save(model_fit, file = "../res/r/model_fit.rda")
 ```
