@@ -452,21 +452,37 @@ line represents a perfect 1:1 linear relation, while the dashed line is the obse
 between variables.
 
 ```{r, eval = FALSE}
-# outliers <- c(58, 74, 66, 69, 70, 101, 102, 103, 105)
 png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
+lim <- 
 p1 <- 
   camada %>% 
-  dplyr::select(toc, oc, om, tom, clay) %>% 
-  splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
-        varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
-                     expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
-                     expression(atop('Clay', 'g kg'^'-1')))) +
+  dplyr::select(toc, oc, om, tom) %>% 
+  lattice::splom(
+    groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '', aspect = "iso",
+    varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
+                 expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')))) +
   latticeExtra::layer(panel.abline(a = 0, b = 1)) +
   latticeExtra::layer(panel.lmline(x = x, y = y, lty = 'dashed'))
-# Potential outliers
-# p1 <- p1 + latticeExtra::layer(panel.text(x = x[outliers], y = y[outliers], outliers, pos = 1, cex = 0.7))
 p1
 dev.off()
+```
+
+```{r, eval = FALSE}
+# outliers <- c(58, 74, 66, 69, 70, 101, 102, 103, 105)
+# png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
+# p1 <- 
+#   camada %>% 
+#   dplyr::select(toc, oc, om, tom, clay) %>% 
+#   splom(groups = camada$textura, grid = TRUE, auto.key = list(columns = 3), xlab = '',
+#         varnames = c(expression(atop('TOC', 'g kg'^'-1')), expression(atop('OC', 'g kg'^'-1')),
+#                      expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
+#                      expression(atop('Clay', 'g kg'^'-1')))) +
+#   latticeExtra::layer(panel.abline(a = 0, b = 1)) +
+#   latticeExtra::layer(panel.lmline(x = x, y = y, lty = 'dashed'))
+# Potential outliers
+# p1 <- p1 + latticeExtra::layer(panel.text(x = x[outliers], y = y[outliers], outliers, pos = 1, cex = 0.7))
+# p1
+# dev.off()
 ```
 
 Compute the linear correlation coeeficient between variables. This is used to discuss Figure 4.
