@@ -46,22 +46,27 @@ for fertilizer recommendations in Rio Grande do Sul and Santa Catarina. For conv
 variables using short English names.
 
 ```{r}
+# camada <- readr::read_csv(
+  # '../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = "-")
 camada <-
   camada %>% 
+  filter(!is.na(carbono_fornalha_1min950_cgdct)) %>% # delete observations with NAs (densidade_aliquota...)
   mutate(textura = ifelse(argila_naoh_esferas_pipeta <= 250, '0-250', '251-500')) %>% 
   mutate(textura = ifelse(argila_naoh_esferas_pipeta > 500, '501-1000', textura)) %>% 
   mutate(textura = as.factor(textura)) %>% 
-  mutate(matorg = ifelse(matorg_dicromato_30min80_eam <= 25, '<25', '26-50')) %>%
-  mutate(matorg = ifelse(matorg_dicromato_30min80_eam > 50, '>50', matorg)) %>%
-  mutate(matorg = as.factor(matorg)) %>% 
-  mutate(observacao_id = as.factor(observacao_id)) %>% 
+  # mutate(matorg = ifelse(matorg_dicromato_30min80_eam <= 25, '<25', '26-50')) %>%
+  # mutate(matorg = ifelse(matorg_dicromato_30min80_eam > 50, '>50', matorg)) %>%
+  # mutate(matorg = as.factor(matorg)) %>% 
+  # mutate(observacao_id = as.factor(observacao_id)) %>%
   rename(clay = argila_naoh_esferas_pipeta) %>% 
   rename(toc = carbono_fornalha_1min950_cgdct) %>%
   rename(oc = carbono_dicromato_30min150_mohr) %>% 
   rename(tom = matorg_fornalha_120min360_massa) %>% 
   rename(om = matorg_dicromato_30min80_eam) %>% 
-  mutate(profund_sup = as.numeric(profund_sup)) %>% 
-  mutate(profund_inf = as.numeric(profund_inf))
+  mutate(
+    profund_sup = as.numeric(profund_sup), 
+    profund_inf = as.numeric(profund_inf),
+    depth = profund_sup + (profund_inf - profund_sup) * 0.5)
 camada
 ```
 
@@ -82,15 +87,18 @@ for Open Soil Data
 sibcs <- readr::read_csv('../data/tabela-de-consulta.csv')
 sibcs_recode <- as.list(sibcs$campo_codigo)
 names(sibcs_recode) <- sibcs$campo_nome
+# observacao <- readr::read_csv(
+  # '../data/observacao.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = '-')
 observacao <-
   observacao %>% 
-  arrange(observacao_id) %>% 
-  mutate(terra_usoatual = gsub('Floresta', 'FS', .data$terra_usoatual)) %>% 
-  mutate(terra_usoatual = gsub('Vegetação secundária', 'U', .data$terra_usoatual)) %>%
-  mutate(terra_usoatual = gsub('Agricultura', 'AA', .data$terra_usoatual)) %>%
-  mutate(terra_usoatual = gsub('Silvicultura', 'FP', .data$terra_usoatual)) %>%
-  mutate(terra_usoatual = gsub('Campo nativo', 'HE', .data$terra_usoatual)) %>% 
-  mutate(taxon = recode(taxon_sibcs_2009, !!!sibcs_recode))
+  # arrange(observacao_id) %>% 
+  mutate(
+    terra_usoatual = gsub('Floresta', 'FS', .data$terra_usoatual),
+    terra_usoatual = gsub('Vegetação secundária', 'U', .data$terra_usoatual),
+    terra_usoatual = gsub('Agricultura', 'AA', .data$terra_usoatual),
+    terra_usoatual = gsub('Silvicultura', 'FP', .data$terra_usoatual),
+    terra_usoatual = gsub('Campo nativo', 'HE', .data$terra_usoatual),
+    taxon = recode(taxon_sibcs_2009, !!!sibcs_recode))
 observacao
 ```
 
@@ -100,23 +108,35 @@ variables composed of zeros and ones. Also, rows of the dataset not containing s
 data are eliminated.
 
 ```{r}
-camada <- camada[1:105, ]
-camada <- 
-  camada %>% 
-  mutate(terra_usoatual = observacao$terra_usoatual) %>% 
-  mutate(forest = ifelse(terra_usoatual == "FS", 1, 0)) %>% 
-  mutate(agriculture = ifelse(terra_usoatual == "AA", 1, 0)) %>% 
-  mutate(grazing = ifelse(terra_usoatual == "HE", 1, 0)) %>% 
-  dplyr::select(-terra_usoatual) %>% 
-  mutate(topsoil = ifelse(profund_inf <= 20, 1, 0)) %>% 
-  mutate(taxon2 = observacao$taxon_sibcs_2009) %>% 
-  mutate(taxon1 = sapply(taxon2, function (x) unlist(strsplit(x, " "))[1])) %>% 
-  mutate(latossolo = ifelse(taxon1 == "Latossolo", 1, 0)) %>% 
-  mutate(argissolo = ifelse(taxon1 == "Argissolo", 1, 0)) %>% 
-  mutate(cambissolo = ifelse(taxon1 == "Cambissolo", 1, 0)) %>% 
-  mutate(planossolo = ifelse(taxon1 == "Planossolo", 1, 0)) %>% 
-  mutate(neossolo = ifelse(taxon1 == "Neossolo", 1, 0)) %>% 
-  dplyr::select(-taxon1, -taxon2)
+camada <-
+  merge(camada, observacao, by = c("dataset_id", "observacao_id")) %>%
+  mutate(
+    forest = ifelse(terra_usoatual == "FS", 1, 0),
+    agriculture = ifelse(terra_usoatual == "AA", 1, 0),
+    grazing = ifelse(terra_usoatual == "HE", 1, 0),
+    topsoil = ifelse(profund_inf <= 20, 1, 0),
+    taxon = sapply(taxon_sibcs_2009, function (x) unlist(strsplit(x, " "))[1]),
+    latossolo = ifelse(taxon == "Latossolo", 1, 0),
+    argissolo = ifelse(taxon == "Argissolo", 1, 0),
+    cambissolo = ifelse(taxon == "Cambissolo", 1, 0),
+    planossolo = ifelse(taxon == "Planossolo", 1, 0),
+    neossolo = ifelse(taxon == "Neossolo", 1, 0))
+# camada <- 
+  # camada %>% 
+  # mutate(terra_usoatual = observacao$terra_usoatual) %>% 
+  # mutate(forest = ifelse(terra_usoatual == "FS", 1, 0)) %>% 
+  # mutate(agriculture = ifelse(terra_usoatual == "AA", 1, 0)) %>% 
+  # mutate(grazing = ifelse(terra_usoatual == "HE", 1, 0)) %>% 
+  # dplyr::select(-terra_usoatual) %>% 
+  # mutate(topsoil = ifelse(profund_inf <= 20, 1, 0)) %>% 
+  # mutate(taxon2 = observacao$taxon_sibcs_2009) %>% 
+  # mutate(taxon1 = sapply(taxon2, function (x) unlist(strsplit(x, " "))[1])) %>% 
+  # mutate(latossolo = ifelse(taxon1 == "Latossolo", 1, 0)) %>% 
+  # mutate(argissolo = ifelse(taxon1 == "Argissolo", 1, 0)) %>% 
+  # mutate(cambissolo = ifelse(taxon1 == "Cambissolo", 1, 0)) %>% 
+  # mutate(planossolo = ifelse(taxon1 == "Planossolo", 1, 0)) %>%
+  # mutate(neossolo = ifelse(taxon1 == "Neossolo", 1, 0)) %>% 
+  # dplyr::select(-taxon1, -taxon2)
 camada
 ```
 
@@ -224,16 +244,20 @@ p1 <- histogram(
   panel = function (...) {
     lattice::panel.grid(v = -1, h = -1)
     lattice::panel.histogram(...)
+    lattice::panel.rug(...)
   },
   page = function (n) {
     grid::grid.text(label = "A)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   }) +
   latticeExtra::layer(panel.abline(v = c(250, 500), lty = 'dotted'))
 p2 <- histogram(
-  ~ profund_sup, camada, xlab = 'Sampling depth, cm', ylab = 'Percent of total', col = 'lightgray',
+  # ~ profund_sup, camada, xlab = 'Sampling depth, cm', ylab = 'Percent of total', 
+  ~ depth, camada, xlab = 'Sampling depth, cm', ylab = 'Percent of total', 
+  col = 'lightgray',
   panel = function (...) {
     lattice::panel.grid(v = -1, h = -1)
     lattice::panel.histogram(...)
+    lattice::panel.rug(...)
   },
   page = function (n) {
     grid::grid.text(label = "B)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
@@ -263,6 +287,33 @@ gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 dev.off()
 ```
 
+Range of TOC in the topsoil.
+
+```{r}
+camada %>% 
+  group_by(topsoil) %>% 
+  summarise(min(toc), max(toc))
+```
+
+Range of TOC in the Neossolo.
+
+```{r}
+camada %>% 
+  group_by(neossolo) %>% 
+  summarise(min(toc), max(toc))
+```
+
+Proportion of Neossolo, agriculture, topsoil.
+
+```{r}
+data.frame(
+  neossolo = round(sum(camada$neossolo) / 105 * 100), 
+  agriculture = round(sum(camada$agriculture) / 105 * 100),
+  topsoil = round(sum(camada$topsoil) / 105 * 100),
+  forest = round(sum(camada$forest) / 105 * 100)
+)
+```
+
 ## Analytical methods
 
 Includes a description of the four analytical methods used:
@@ -288,6 +339,7 @@ p1 <- histogram(
   panel = function (...) {
     panel.grid(v = -1, h = -1)
     panel.histogram(...)
+    lattice::panel.rug(...)
   },
   page = function (n) {
     grid::grid.text(label = "A)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
@@ -298,6 +350,7 @@ p2 <- histogram(
   panel = function (...) {
     panel.grid(v = -1, h = -1)
     panel.histogram(...)
+    lattice::panel.rug(...)
   },
   page = function (n) {
     grid::grid.text(label = "B)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
@@ -308,6 +361,7 @@ p3 <- histogram(
   panel = function (...) {
     panel.grid(v = -1, h = -1)
     panel.histogram(...)
+    lattice::panel.rug(...)
   },
   page = function (n) {
     grid::grid.text(label = "C)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
@@ -318,6 +372,7 @@ p4 <- histogram(
   panel = function (...) {
     panel.grid(v = -1, h = -1)
     panel.histogram(...)
+    lattice::panel.rug(...)
   },
   page = function (n) {
     grid::grid.text(label = "D)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
@@ -378,7 +433,7 @@ estimate the betas, make predictions and estimate prediction error variances. Es
 output of `lm` and `predict.lm`. This toy exercise is usefull to understand the estimation equations and their
 differences compared to ordinary least squares.
 
-```{r, eval = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 # Temporary data
 tmp_data <- camada
 
@@ -573,10 +628,6 @@ irwls <-
   }
 ```
 
-```{r}
-estimator <- "wls"
-```
-
 ```{r loocv}
 model_fit <- list()
 cross_validation <- list()
@@ -588,9 +639,9 @@ for (i in 1:length(formulas)) {
   resid <- mean(y) - y
   x <- camada[[soil_vars[i, 2]]]
   if (estimator == "wls") {
-    w <- 1 / x # weigths are inversely proportional to the predictor variable
+    wgt <- 1 / x # weigths are inversely proportional to the predictor variable
   } else if (estimator == "ols") {
-    w <- rep(1, length(x))
+    wgt <- rep(1, length(x))
   }
   
   fit <- list()
@@ -600,7 +651,7 @@ for (i in 1:length(formulas)) {
     f <- forms[[j]]
     
     # Record fitted models for latter reuse
-    fit[[j]] <- lm(formula = f, data = camada, weights = w)
+    fit[[j]] <- lm(formula = f, data = camada, weights = wgt)
     
     out <- data.frame(pred = NA_real_, pev = NA_real_)
     # Leave-one-out cross-validation
@@ -610,9 +661,9 @@ for (i in 1:length(formulas)) {
       # Weighted least squares regression
       # Predict value of dependent variable at new observation and return components of the error variance
       # The residual standard deviation needs to be 'scaled' using the weight of the new observation
-      lm_fit <- lm(formula = f, data = camada[-k, ], weights = w[-k])
+      lm_fit <- lm(formula = f, data = camada[-k, ], weights = wgt[-k])
       pred <- predict.lm(object = lm_fit, newdata = camada[k, ], se.fit = TRUE)
-      out[k, ] <- c(pred$fit, pred$se.fit^2 + pred$residual.scale^2 / w[k])
+      out[k, ] <- c(pred$fit, pred$se.fit^2 + pred$residual.scale^2 / wgt[k])
       # IRWLS
       # irls_fit <- irwls(formula = f, data = camada[-k, ], type = "sd", maxit = 100, epsilon = 1e-3)
       # lm_fit <- lm(formula = f, data = camada[-k, ], weights = 1 / fitted(irls_fit)^2)
@@ -642,6 +693,7 @@ for (i in 1:length(formulas)) {
       MedSE = median(error_sqr) / (denom * denom),
       # MedSDR = 1 - qchisq(p = 0.5, df = 1) + median(error_sqr / out$pev), # DEPRECATED
       MedSDR = median(error_sqr / out$pev),
+      # MedSDR = mean(error_sqr / out$pev),
       
       # Model efficiency
       AVE = 1 - (sum(error_sqr) / sum(resid * resid)),
@@ -680,6 +732,15 @@ Median squared deviation ratio of the least and most complex models.
 ```{r, fig.asp = 1}
 cross_validation %>% 
   filter(p == "A" | p == "G") %>%
+  dplyr::select(m, MedSDR) %>% 
+  group_by(m) %>% 
+  summarise(dif = diff(MedSDR)) %>% 
+  arrange(dif)
+```
+
+```{r, fig.asp = 1}
+cross_validation %>% 
+  filter(p == "A" | p == "G") %>%
   dplyr::select(m, p, MedSDR)
 ```
 
@@ -693,6 +754,9 @@ formulations are described in Table 2. Performance measures are defined in Table
 ```{r loocvplot, eval = FALSE}
 col <- c("dodgerblue", "magenta", "olivedrab", "gold") %>% rep(each = 3)
 lty <- c(1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2)
+target <- c(1, 1, 0, 0, 0, qchisq(p = 0.5, df = 1))
+ylim <- list(c(0.6417854, 1.01), c(0.6417854, 1.01), c(-0.001, 0.046221295), c(-0.00005, 2.034973e-03), 
+             c(-0.02580879, 0.02289775), c(0.05160985, 0.60114634))
 p1 <-
   xyplot(
     AVE + mAVE + MedAE + MedSE + MedE + MedSDR ~ p, data = cross_validation, groups = m,
@@ -702,9 +766,11 @@ p1 <-
     scales = list(x = list(relation = "same"), y = list(relation = "free")), layout = c(2, 3),
     panel = function (...) {
       panel.grid(h = -1, v = -1)
+      panel.abline(h = target[panel.number()], col = "red")
       panel.xyplot(...)
     })
-png(glue("../res/fig/cross-validation-{estimator}.png"), width = 480 * 4, height = 480 * 5, res = 72 * 3)
+p1$y.limits <- ylim
+png(glue("../res/fig/cross-validation-wls.png"), width = 480 * 4, height = 480 * 5, res = 72 * 3)
 p1
 dev.off()
 ```
@@ -717,16 +783,3 @@ lapply(model_fit, function (x) {
   lapply(x, summary)
 })
 ```
-
-```{r}
-estimator <- "ols"
-```
-
-```{r ref.label = 'loocv'}
-
-```
-
-```{r ref.label = 'loocvplot'}
-
-```
-
