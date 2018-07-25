@@ -140,6 +140,16 @@ camada <-
 camada
 ```
 
+Save CSV with some data to be used as an example dataset with the Shiny App.
+
+```{r}
+camada %>% 
+  dplyr::select(
+    toc, oc, om, tom, clay, topsoil, agriculture, forest, grazing, argissolo,cambissolo, latossolo, neossolo,
+    planossolo) %>% 
+  write.csv(file = "../data/example.csv", row.names = FALSE)
+```
+
 Compute some summary statistics: number of taxonomic classes, and range of clay content.
 
 ```{r}

@@ -7,13 +7,16 @@
 #    http://shiny.rstudio.com/
 #
 
+if (!require(shiny)) {
+  utils::install.packages(pkgs = "shiny", dependencies = TRUE)
+}
 library(shiny)
 
 # Define UI for data upload app ----
 ui <- fluidPage(
   
   # App title ----
-  titlePanel("Pedotransfer functions for prediction and harmonization of carbon and organic matter content data in southern Brazil"),
+  titlePanel("New carbon and organic matter pedotransfer functions for southern Brazil – a multi-predictor weighted least squares approach"),
   
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
@@ -54,6 +57,15 @@ ui <- fluidPage(
                     "y ~ 1 + x*clay + x^2*clay + topsoil + landuse + clay" = "F", 
                     "y ~ 1 + x*clay + x^2*clay + topsoil + landuse + clay + taxon" = "G"),
         selected = "A"),
+      
+      # Level for prediciton interval computation
+      sliderInput(
+        inputId = "level",
+        label = "Prediction interval",
+        min = 0, 
+        max = 1, 
+        value = 0.95,
+        step = 0.01),
       
       # Horizontal line ----
       tags$hr(),
@@ -155,12 +167,12 @@ getModel <-
 
 # Prediction
 makePrediction <- 
-  function (object, newdata, level = 0.95, weights) {
+  function (object, newdata, level, weights) {
     
     # Prediction
     pred <- predict.lm(
       object = object, newdata = newdata, interval = "prediction", level = level, se.fit = TRUE,
-      weights = 1 / (newdata[[weights]] / 10))
+      weights = 1 / newdata[[weights]])
     out <- as.data.frame(pred$fit)
     colnames(out)[1] <- paste("pred.", names(object$model)[1], sep = "")
     colnames(out)[2:3] <- paste("pred.", colnames(out)[2:3], sep = "")
@@ -201,7 +213,7 @@ server <- function (input, output) {
     model <- getModel(y = input$y, x = input$x, f = input$f)
     
     # Make prediction
-    makePrediction(object = model, newdata = observations, weights = input$x)
+    makePrediction(object = model, newdata = observations, weights = input$x, level = input$level)
   })
   
   # Prepara tabela com os dados para apresentação, inclusive predições
