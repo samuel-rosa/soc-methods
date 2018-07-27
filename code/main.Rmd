@@ -142,7 +142,7 @@ camada
 
 Save CSV with some data to be used as an example dataset with the Shiny App.
 
-```{r}
+```{r, eval = FALSE, echo = FALSE}
 camada %>% 
   dplyr::select(
     toc, oc, om, tom, clay, topsoil, agriculture, forest, grazing, argissolo,cambissolo, latossolo, neossolo,
