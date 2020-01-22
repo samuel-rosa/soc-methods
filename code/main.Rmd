@@ -22,16 +22,18 @@ library(TeachingDemos)
 ## Soil data
 
 The data can be downloaded from the Free Brazilian Repository for Open Soil Data. The dataset identification 
-code is `ctb0029`. Here we use a copy of the data stored in folder `data`.
+code is `ctb0029`. Here we use a copy of the data stored in folder `data` -- except in case a new version of 
+the dataset has been published.
 
 ```{r}
-if (file.exists("../data/camada.rda")) {
+update <- FALSE
+if (!update & file.exists("../data/camada.rda")) {
   load("../data/camada.rda")
 } else {
   camada <- febr::layer("ctb0029", variable = "all")
   save(camada, file = "../data/camada.rda")
 }
-if (file.exists("../data/observacao.rda")) {
+if (!update & file.exists("../data/observacao.rda")) {
   load("../data/observacao.rda")
 } else {
   observacao <- febr::observation("ctb0029", variable = "all")
@@ -39,9 +41,9 @@ if (file.exists("../data/observacao.rda")) {
 }
 ```
 
-We create categorical variables using the clay content (`argila_naoh_esferas_pipeta`) and the organic matter
-content determined at the commercial soil analysis laboratory of the Universidade Federal de Santa Maria
-(`matorg_dicromato_30min80_eam`). For the latter, the classification is performed using the three classes used 
+We create categorical variables using the clay content (`argila_naoh_pipeta`) and the organic matter content
+determined at the commercial soil analysis laboratory of the Universidade Federal de Santa Maria
+(`matorg_cromo_30min80_eamcalc`). For the latter, the classification is performed using the three classes used 
 for fertilizer recommendations in Rio Grande do Sul and Santa Catarina. For convenience, we rename key soil
 variables using short English names.
 
@@ -50,19 +52,19 @@ variables using short English names.
   # '../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = "-")
 camada <-
   camada %>% 
-  filter(!is.na(carbono_fornalha_1min950_cgdct)) %>% # delete observations with NAs (densidade_aliquota...)
-  mutate(textura = ifelse(argila_naoh_esferas_pipeta <= 250, '0-250', '251-500')) %>% 
-  mutate(textura = ifelse(argila_naoh_esferas_pipeta > 500, '501-1000', textura)) %>% 
+  filter(!is.na(carbono_forno_1min950_cgdct)) %>% # delete observations with NAs (densidade_aliquota...)
+  mutate(textura = ifelse(argila_naoh_pipeta <= 250, '0-250', '251-500')) %>% 
+  mutate(textura = ifelse(argila_naoh_pipeta > 500, '501-1000', textura)) %>% 
   mutate(textura = as.factor(textura)) %>% 
   # mutate(matorg = ifelse(matorg_dicromato_30min80_eam <= 25, '<25', '26-50')) %>%
   # mutate(matorg = ifelse(matorg_dicromato_30min80_eam > 50, '>50', matorg)) %>%
   # mutate(matorg = as.factor(matorg)) %>% 
   # mutate(observacao_id = as.factor(observacao_id)) %>%
-  rename(clay = argila_naoh_esferas_pipeta) %>% 
-  rename(toc = carbono_fornalha_1min950_cgdct) %>%
-  rename(oc = carbono_dicromato_30min150_mohr) %>% 
-  rename(tom = matorg_fornalha_120min360_massa) %>% 
-  rename(om = matorg_dicromato_30min80_eam) %>% 
+  rename(clay = argila_naoh_pipeta) %>% 
+  rename(toc = carbono_forno_1min950_cgdct) %>%
+  rename(oc = carbono_cromo_30min150_mohr) %>% 
+  rename(tom = matorg_forno_120min360_massa) %>% 
+  rename(om = matorg_cromo_30min80_eamcalc) %>% 
   mutate(
     profund_sup = as.numeric(profund_sup), 
     profund_inf = as.numeric(profund_inf),
@@ -532,8 +534,8 @@ p1 <-
       s <- diff(range(x, y, finite = TRUE))
       x1 <- (x - m) / s
       y1 <- (y - m) / s
-      panel.splom(x1, y1, ...)
-      panel.lmline(x = x1, y = y1, lty = 'dashed')
+      lattice::panel.splom(x1, y1, ...)
+      lattice::panel.lmline(x = x1, y = y1, lty = 'dashed')
     },
     # prepanel.limits = function (x) c(0, 1),
     # prepanel.limits = function (x) c(0, 450),
