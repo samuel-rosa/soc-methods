@@ -16,7 +16,7 @@ library(shiny)
 ui <- fluidPage(
   
   # App title ----
-  titlePanel("New carbon and organic matter pedotransfer functions for southern Brazil – a multi-predictor weighted least squares approach"),
+  titlePanel("Pedotransfer functions for southern Brazil - carbon and organic matter"),
   
   # Sidebar layout with input and output definitions ----
   sidebarLayout(

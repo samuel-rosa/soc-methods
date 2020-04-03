@@ -1,5 +1,5 @@
 ---
-title: "Pedotransfer functions for prediction and harmonization of carbon and organic matter content data in southern Brazil: source code"
+title: "New carbon and organic matter pedotransfer functions for southern Brazil - a multi-predictor weighted least squares approach: source code"
 author: "Alessandro Samuel-Rosa"
 date: "22 July 2018"
 url: "https://docs.google.com/document/d/13CJdr6huHhpuwKMfz_u03m8dJE3_xLqhmS7lwc5Y5yE/edit?usp=sharing"
@@ -53,6 +53,7 @@ variables using short English names.
 camada <-
   camada %>% 
   filter(!is.na(carbono_forno_1min950_cgdct)) %>% # delete observations with NAs (densidade_aliquota...)
+  mutate(argila_naoh_pipeta = argila_naoh_pipeta * 10) %>% 
   mutate(textura = ifelse(argila_naoh_pipeta <= 250, '0-250', '251-500')) %>% 
   mutate(textura = ifelse(argila_naoh_pipeta > 500, '501-1000', textura)) %>% 
   mutate(textura = as.factor(textura)) %>% 
@@ -539,10 +540,11 @@ p1 <-
     },
     # prepanel.limits = function (x) c(0, 1),
     # prepanel.limits = function (x) c(0, 450),
-    varnames = c(expression(atop('TOC', '4\u2013162 g kg'^'-1')), 
+    varnames = c(expression(atop('TOC', '4\u2013162 g kg'^'-1')),
                  expression(atop('OC', '4\u2013175 g kg'^'-1')),
-                 expression(atop('OM', '5\u2013189 g dm'^'-3')), 
-                 expression(atop('TOM', '8\u2013419 g kg'^'-1')))) #+
+                 expression(atop('OM', '5\u2013189 g dm'^'-3')),
+                 expression(atop('TOM', '8\u2013419 g kg'^'-1')))
+    ) #+
                  # expression(atop('OM', 'g dm'^'-3')), expression(atop('TOM', 'g kg'^'-1')),
                  # expression(atop('Clay', 'g kg'^'-1')))) +
   # latticeExtra::layer(panel.abline(a = 0, b = 1)) +
