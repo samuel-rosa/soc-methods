@@ -520,7 +520,7 @@ between variables.
 
 ```{r, eval = FALSE}
 # outliers <- c(58, 74, 66, 69, 70, 101, 102, 103, 105)
-png("../res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
+png("res/fig/scatter-plot-matrix.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 p1 <- 
   camada %>% 
   dplyr::select(toc, oc, om, tom) %>% 
@@ -797,7 +797,7 @@ p1 <-
       panel.grid(h = -1, v = -1)
       panel.xyplot(...)
     })
-png(glue("../res/fig/cross-validation-{estimator}.png"), width = 480 * 4, height = 480 * 5, res = 72 * 3)
+png(glue("res/fig/cross-validation-{estimator}.png"), width = 480 * 4, height = 480 * 5, res = 72 * 3)
 p1
 dev.off()
 ```
@@ -805,7 +805,7 @@ dev.off()
 Save fitted models and print model summary.
 
 ```{r}
-save(model_fit, file = "../res/r/model_fit.rda")
+save(model_fit, file = "res/r/model_fit.rda")
 lapply(model_fit, function (x) {
   lapply(x, summary)
 })
