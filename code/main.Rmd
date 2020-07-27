@@ -27,17 +27,17 @@ the dataset has been published.
 
 ```{r}
 update <- FALSE
-if (!update & file.exists("../data/camada.rda")) {
-  load("../data/camada.rda")
+if (!update & file.exists("data/camada.rda")) {
+  load("data/camada.rda")
 } else {
   camada <- febr::layer("ctb0029", variable = "all")
-  save(camada, file = "../data/camada.rda")
+  save(camada, file = "data/camada.rda")
 }
-if (!update & file.exists("../data/observacao.rda")) {
-  load("../data/observacao.rda")
+if (!update & file.exists("data/observacao.rda")) {
+  load("data/observacao.rda")
 } else {
   observacao <- febr::observation("ctb0029", variable = "all")
-  save(observacao, file = "../data/observacao.rda")
+  save(observacao, file = "data/observacao.rda")
 }
 ```
 
