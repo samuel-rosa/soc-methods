@@ -49,7 +49,7 @@ variables using short English names.
 
 ```{r}
 # camada <- readr::read_csv(
-  # '../data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = "-")
+  # 'data/camada.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = "-")
 camada <-
   camada %>% 
   filter(!is.na(carbono_forno_1min950_cgdct)) %>% # delete observations with NAs (densidade_aliquota...)
@@ -87,11 +87,11 @@ Soil taxa is recoded for plotting purposes using a lookup table downloaded from 
 for Open Soil Data
 
 ```{r}
-sibcs <- readr::read_csv('../data/tabela-de-consulta.csv')
+sibcs <- readr::read_csv('data/tabela-de-consulta.csv')
 sibcs_recode <- as.list(sibcs$campo_codigo)
 names(sibcs_recode) <- sibcs$campo_nome
 # observacao <- readr::read_csv(
-  # '../data/observacao.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = '-')
+  # 'data/observacao.csv', locale = readr::locale(decimal_mark = ','), comment = '#unidade', na = '-')
 observacao <-
   observacao %>% 
   # arrange(observacao_id) %>% 
@@ -150,7 +150,7 @@ camada %>%
   dplyr::select(
     toc, oc, om, tom, clay, topsoil, agriculture, forest, grazing, argissolo,cambissolo, latossolo, neossolo,
     planossolo) %>% 
-  write.csv(file = "../data/example.csv", row.names = FALSE)
+  write.csv(file = "data/example.csv", row.names = FALSE)
 ```
 
 Compute some summary statistics: number of taxonomic classes, and range of clay content.
@@ -174,45 +174,45 @@ Federal University of Rio Grande do Sul. We also process the observations, so th
 each municipality is ploted.
 
 ```{r, eval = FALSE}
-if (!file.exists("../data/rs.shp")) {
+if (!file.exists("data/rs.shp")) {
   gdalUtils::ogr2ogr(
     src_datasource_name = "WFS:http://www.geoservicos.ibge.gov.br:80/geoserver/wfs", 
-    dst_datasource_name = "../data/rs.shp",
+    dst_datasource_name = "data/rs.shp",
     layer = "CGEO:C02_limite_estadual_2010")
 } else {
-  rs <- shapefile("../data/rs.shp")
+  rs <- shapefile("data/rs.shp")
 }
-if (!file.exists("../data/rs.zip")) {
+if (!file.exists("data/rs.zip")) {
   download.file(
     "http://www.ecologia.ufrgs.br/labgeo/arquivos/downloads/dados/SRTM/geotiff/rs.zip",
-    destfile = "../data/rs.zip")
-  unzip("../data/rs.zip", exdir = "../data/")
+    destfile = "data/rs.zip")
+  unzip("data/rs.zip", exdir = "data/")
 }
-if (!file.exists("../data/lagos.shp")) {
+if (!file.exists("data/lagos.shp")) {
   gdalUtils::ogr2ogr(
     src_datasource_name = "WFS:http://www.geoservicos.ibge.gov.br:80/geoserver/wfs", 
-    dst_datasource_name = "../data/lagos.shp",
+    dst_datasource_name = "data/lagos.shp",
     layer = "CGEO:ANMS2010_03_massa_dagua",
     where = "nome_massa = 'Lagoa dos Patos' OR nome_massa = 'Lagoa Mangueira' OR nome_massa = 'Lagoa Mirum'")
 } else {
-  lagos <- shapefile("../data/lagos.shp")
+  lagos <- shapefile("data/lagos.shp")
 }
-if (!file.exists("../data/oceano.shp")) {
+if (!file.exists("data/oceano.shp")) {
   gdalUtils::ogr2ogr(
     src_datasource_name = "WFS:http://www.geoservicos.ibge.gov.br:80/geoserver/wfs", 
-    dst_datasource_name = "../data/oceano.shp",
+    dst_datasource_name = "data/oceano.shp",
     layer = "CCAR:BCIM_Massa_Dagua_A",
     where = "nome = 'Oceano Atlântico'")
 } else {
-  oceano <- shapefile("../data/oceano.shp")
+  oceano <- shapefile("data/oceano.shp")
 }
 gdalUtils::gdal_translate(
-  src_dataset = "../data/rs.tif", dst_dataset = "../data/rs1km.tif", tr = c(1000, 1000) / 111120)
+  src_dataset = "data/rs.tif", dst_dataset = "data/rs1km.tif", tr = c(1000, 1000) / 111120)
 gdalUtils::gdaldem(
-  mode = "hillshade", input_dem = "../data/rs1km.tif", output = "../data/hillshade1km.tif", 
+  mode = "hillshade", input_dem = "data/rs1km.tif", output = "data/hillshade1km.tif", 
   alg = "ZevenbergenThorne", z = 40, s = 111120)
-dem <- raster("../data/rs1km.tif")
-hill <- raster("../data/hillshade1km.tif")
+dem <- raster("data/rs1km.tif")
+hill <- raster("data/hillshade1km.tif")
 oceano <- oceano %>% crop(extent(dem))
 ```
 
