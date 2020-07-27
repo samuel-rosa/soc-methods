@@ -217,7 +217,7 @@ oceano <- oceano %>% crop(extent(dem))
 ```
 
 ```{r, eval = FALSE}
-png("../res/fig/study-area.png", width = 480 * 2.29, height = 480 * 2, res = 72 * 2)
+png("res/fig/study-area.png", width = 480 * 2.29, height = 480 * 2, res = 72 * 2)
 col <- terrain.colors(24, alpha = 0.50)
 plot(hill, col = grey(0:100/100), legend = FALSE, ylab = "Latitude, °", xlab = "Longitude, °")
 plot(dem, col = col, add = TRUE, 
@@ -295,7 +295,7 @@ p4 <- barchart(
   page = function (n) {
     grid::grid.text(label = "D)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
   })
-png("../res/fig/features-soil-samples.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
+png("res/fig/features-soil-samples.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 dev.off()
 ```
@@ -342,13 +342,13 @@ Empirical probability density of carbon (A and B) and organic matter (C and D) c
 according to the four analytical methods and the theoretical normal probability density function (dashed line).
 
 ```{r, eval = FALSE}
-l <- layer(
-  panel.mathdensity(
-    dmath = dnorm, args = list(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)), n = length(x), 
-    col = 'black', lty = 'dashed'))
+#l <- layer(
+#  panel.mathdensity(
+#    dmath = dnorm, args = list(mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE)), n = length(x), 
+#    col = 'black', lty = 'dashed'))
 p1 <- histogram(
   ~ toc, camada, 
-  xlab = expression('Total organic carbon (TOC), g kg'^'-1'), col = 'lightgray', type = "density", 
+  xlab = expression('Total organic carbon (TOC), g kg'^'-1'), col = 'lightgray', type = "percent", 
   panel = function (...) {
     panel.grid(v = -1, h = -1)
     panel.histogram(...)
@@ -356,10 +356,10 @@ p1 <- histogram(
   },
   page = function (n) {
     grid::grid.text(label = "A)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
-  }) + l
+  })# + l
 p2 <- histogram(
   ~ oc, camada, 
-  xlab = expression('Organic carbon (OC), g kg'^'-1'), col = 'lightgray', type = "density", 
+  xlab = expression('Organic carbon (OC), g kg'^'-1'), col = 'lightgray', type = "percent", 
   panel = function (...) {
     panel.grid(v = -1, h = -1)
     panel.histogram(...)
@@ -367,10 +367,10 @@ p2 <- histogram(
   },
   page = function (n) {
     grid::grid.text(label = "B)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
-  }) + l
+  })# + l
 p3 <- histogram(
   ~ om, camada, 
-  xlab = expression('Organic matter (OM), g dm'^'-3'), col = 'lightgray', type = "density", 
+  xlab = expression('Organic matter (OM), g dm'^'-3'), col = 'lightgray', type = "percent", 
   panel = function (...) {
     panel.grid(v = -1, h = -1)
     panel.histogram(...)
@@ -378,10 +378,10 @@ p3 <- histogram(
   },
   page = function (n) {
     grid::grid.text(label = "C)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
-  }) + l
+  })# + l
 p4 <- histogram(
   ~ tom, camada, 
-  xlab = expression('Total organic matter (TOM), g kg'^'-1'), col = 'lightgray', type = "density", 
+  xlab = expression('Total organic matter (TOM), g kg'^'-1'), col = 'lightgray', type = "percent", 
   panel = function (...) {
     panel.grid(v = -1, h = -1)
     panel.histogram(...)
@@ -389,8 +389,8 @@ p4 <- histogram(
   },
   page = function (n) {
     grid::grid.text(label = "D)", x = grid::unit(0.04, "npc"), y = grid::unit(0.95, "npc"))
-  }) + l
-png("../res/fig/carbon-histograms.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
+  })# + l
+png("res/fig/carbon-histograms.png", width = 480 * 4, height = 480 * 4, res = 72 * 3)
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 dev.off()
 ```
